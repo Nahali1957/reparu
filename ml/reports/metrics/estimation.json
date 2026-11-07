@@ -1,0 +1,58 @@
+{
+  "nom": "estimation",
+  "version": "v1.1",
+  "tache": "régression du temps de réparation (minutes)",
+  "metrique_selection": "mae_min",
+  "plus_grand_est_meilleur": false,
+  "baseline": "baseline_mediane_par_panne",
+  "retenu": "ridge",
+  "gain_vs_baseline": 0.15,
+  "candidats": {
+    "baseline_mediane_par_panne": {
+      "mae_min": 9.6,
+      "r2": 0.6999
+    },
+    "ridge": {
+      "mae_min": 9.45,
+      "r2": 0.7153
+    },
+    "random_forest": {
+      "mae_min": 9.88,
+      "r2": 0.6822
+    },
+    "gradient_boosting": {
+      "mae_min": 9.75,
+      "r2": 0.6874
+    }
+  },
+  "n_train": 940,
+  "n_test": 236,
+  "colonnes": [
+    "panne=ecran",
+    "panne=batterie",
+    "panne=connecteur",
+    "panne=camera",
+    "panne=haut_parleur",
+    "panne=pmic",
+    "panne=oxydation",
+    "panne=thermique",
+    "modele=iPhone 13",
+    "modele=iPhone 12",
+    "modele=Galaxy S22",
+    "modele=Galaxy S21",
+    "modele=Redmi Note 11",
+    "modele=Pixel 7",
+    "modele=iPhone 11",
+    "modele=iPhone 14",
+    "modele=Galaxy A52",
+    "modele=Galaxy A53",
+    "modele=Redmi Note 12",
+    "modele=iPhone SE 2022",
+    "modele=Pixel 6a",
+    "marque=Apple",
+    "marque=Google",
+    "marque=Samsung",
+    "marque=Xiaomi"
+  ],
+  "erreur_p80_min": 13.4
+}

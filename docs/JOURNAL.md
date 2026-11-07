@@ -24,3 +24,8 @@ Matrice RBAC unique (`core/rbac.py`) et dépendance `require_role` : 403 explici
 62 opérations REST typées (clients/appareils, dossiers, Kanban, planning, devis/factures/PDF, stocks, bons de commande, fournisseurs, tableau de bord, rapports CSV/PDF, recherche, cloche), chacune protégée par `require_role`.
 Règles serveur : Luhn et unicité de l'IMEI, 2 photos avant diagnostic, devis avant intervention, test de sortie avant « Prêt », encaissement avant restitution, mouvements de stock nominatifs, numérotation DV/FA/BC continue.
 54 tests verts, couverture `services/` 91 %. Tous les endpoints répondent en moins de 0,6 s sur la base MySQL (PDF compris). Les tests ont corrigé le score fournisseur (ratio au lieu de min-max) et le planning (jours passés = temps pointé).
+
+## M5 · Pipeline IA (2026-11-07)
+Trois modèles comparés à une baseline sur découpage temporel : diagnostic (régression logistique retenue, top-3 97,7 % contre 77,7 %), estimation (Ridge, MAE 9,45 min contre 9,6) et prévision (moyenne mobile 30 j, MAE 0,355 contre 0,380). Sélection automatique, Joblib versionné (`v1.x`), métriques JSON, `ml/reports/evaluation.md`.
+Temps de réponse mesurés sur MySQL : diagnostic 59 ms, estimation 23 ms, prévision des 56 pièces 1,15 s, recommandation 74 ms, fiabilité 18 ms (exigence < 3 s).
+61 tests verts, couverture `services` + `ml` 91 %. Un bug de pickle (`__main__.Colonne`) a été corrigé en isolant les baselines dans un module.

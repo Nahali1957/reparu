@@ -1,0 +1,84 @@
+{
+  "nom": "diagnostic",
+  "version": "v1.1",
+  "tache": "classification des pannes (top 3)",
+  "metrique_selection": "top3_accuracy",
+  "plus_grand_est_meilleur": true,
+  "baseline": "baseline_panne_frequente_par_modele",
+  "retenu": "logistic_regression",
+  "gain_vs_baseline": 0.2,
+  "candidats": {
+    "baseline_panne_frequente_par_modele": {
+      "accuracy": 0.2885,
+      "top3_accuracy": 0.7769,
+      "f1_macro": 0.0783,
+      "duree_entrainement_s": 0.01
+    },
+    "logistic_regression": {
+      "accuracy": 0.9154,
+      "top3_accuracy": 0.9769,
+      "f1_macro": 0.857,
+      "duree_entrainement_s": 0.02
+    },
+    "random_forest": {
+      "accuracy": 0.9154,
+      "top3_accuracy": 0.9769,
+      "f1_macro": 0.8647,
+      "duree_entrainement_s": 0.77
+    },
+    "gradient_boosting": {
+      "accuracy": 0.8808,
+      "top3_accuracy": 0.9731,
+      "f1_macro": 0.8076,
+      "duree_entrainement_s": 1.53
+    }
+  },
+  "n_train": 1037,
+  "n_test": 260,
+  "colonnes": [
+    "sym=ecran_fissure",
+    "sym=tactile",
+    "sym=affichage",
+    "sym=autonomie",
+    "sym=gonflement",
+    "sym=charge_ko",
+    "sym=faux_contact",
+    "sym=photo_floue",
+    "sym=son_ko",
+    "sym=micro_ko",
+    "sym=ne_s_allume_pas",
+    "sym=eteint_seul",
+    "sym=chauffe",
+    "sym=lent",
+    "sym=liquide",
+    "sym=chute",
+    "modele=iPhone 13",
+    "modele=iPhone 12",
+    "modele=Galaxy S22",
+    "modele=Galaxy S21",
+    "modele=Redmi Note 11",
+    "modele=Pixel 7",
+    "modele=iPhone 11",
+    "modele=iPhone 14",
+    "modele=Galaxy A52",
+    "modele=Galaxy A53",
+    "modele=Redmi Note 12",
+    "modele=iPhone SE 2022",
+    "modele=Pixel 6a",
+    "marque=Apple",
+    "marque=Google",
+    "marque=Samsung",
+    "marque=Xiaomi",
+    "ete"
+  ],
+  "classes": [
+    "batterie",
+    "camera",
+    "connecteur",
+    "ecran",
+    "haut_parleur",
+    "oxydation",
+    "pmic",
+    "thermique"
+  ]
+}

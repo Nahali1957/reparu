@@ -38,13 +38,13 @@ Les numéros d'écran (5.x) renvoient à `docs/maquette/`.
 - Acceptation : Swagger complet, couverture tests ≥ 70 % sur `services/`
 
 ## M5 · Pipeline IA (F-04, F-05, F-07, F-11)
-- [ ] Prétraitement + feature engineering (Pandas/NumPy)
-- [ ] Modèle 1 diagnostic : top 3 pannes + pièces + probabilité. Comparer LogisticRegression, RandomForest, GradientBoosting contre la baseline « panne la plus fréquente par modèle d'appareil »
-- [ ] Modèle 2 estimation : régression du temps de réparation + règles de prix (coût pièces + temps × taux + marge visée) ; renvoie coût, prix client, marge brute
-- [ ] Modèle 3 prévision : consommation par pièce et par semaine ; comparer moyenne mobile 30 j contre régression sur lags ; quantité à commander = prévision + stock de sécurité − stock actuel
-- [ ] Recommandation d'achat fournisseur (5.9) : score prix, délai, fiabilité
-- [ ] Sélection automatique du meilleur modèle, sauvegarde Joblib, versionnage (`modèle v1.x`), métriques en JSON
-- [ ] Endpoints `/api/ia/diagnostic`, `/api/ia/estimation`, `/api/ia/prevision`, `/api/ia/recommandation-achat`, `/api/ia/fiabilite`
+- [x] Prétraitement + feature engineering (Pandas/NumPy)
+- [x] Modèle 1 diagnostic : top 3 pannes + pièces + probabilité. Comparer LogisticRegression, RandomForest, GradientBoosting contre la baseline « panne la plus fréquente par modèle d'appareil »
+- [x] Modèle 2 estimation : régression du temps de réparation + règles de prix (coût pièces + temps × taux + marge visée) ; renvoie coût, prix client, marge brute
+- [x] Modèle 3 prévision : consommation par pièce et par semaine ; comparer moyenne mobile 30 j contre régression sur lags ; quantité à commander = prévision + stock de sécurité − stock actuel
+- [x] Recommandation d'achat fournisseur (5.9) : score prix, délai, fiabilité
+- [x] Sélection automatique du meilleur modèle, sauvegarde Joblib, versionnage (`modèle v1.x`), métriques en JSON
+- [x] Endpoints `/api/ia/diagnostic`, `/api/ia/estimation`, `/api/ia/prevision`, `/api/ia/recommandation-achat`, `/api/ia/fiabilite`
 - Acceptation : `ml/reports/evaluation.md` avec tableaux de métriques, chaque appel < 3 s
 
 ## M6 · IoT sécurisé (Bloc 4, écran 5.10)

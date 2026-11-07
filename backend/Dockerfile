@@ -16,4 +16,4 @@ USER app
 
 EXPOSE 8000
 HEALTHCHECK --interval=15s --timeout=3s --retries=5 CMD curl -fs http://localhost:8000/api/health || exit 1
-CMD ["sh", "-c", "alembic upgrade head && python -m app.seed && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers"]
+CMD ["sh", "-c", "alembic upgrade head && python -m app.seed && python -m app.ml.train --si-absent && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers"]
