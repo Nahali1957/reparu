@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div>
+
+  <sc-if value="{{ isPlanning }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;flex-wrap:wrap;gap:11px;align-items:center;padding:13px 15px;border-radius:13px;background:oklch(0.96 0.02 258);border:1px solid oklch(0.90 0.03 258)">
+        <span aria-hidden="true" style="color:oklch(0.40 0.11 258);font-size:15px">⧉</span>
+        <span style="flex:1;min-width:200px;font-size:12.5px;line-height:1.5;color:oklch(0.34 0.06 258)"><strong>{{ pendingN }}</strong> — sélectionnez un dossier puis un technicien, ou utilisez le menu de chaque carte. La charge se recalcule immédiatement.</span>
+        <span data-badge="1" style="{{ balanceBadge }}"><span aria-hidden="true">{{ balanceIcon }}</span>{{ balanceLabel }}</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:13px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:13px;background:oklch(0.965 0.005 258);border:1.5px dashed oklch(0.84 0.01 258)">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span aria-hidden="true" style="color:oklch(0.48 0.02 255)">◌</span>
+            <span style="flex:1;font-size:12.5px;font-weight:700;color:oklch(0.34 0.02 255)">Non affectés</span>
+            <span style="min-width:22px;padding:2px 7px;border-radius:7px;background:oklch(0.50 0.02 255);color:#fff;font-size:11px;font-weight:700;text-align:center">{{ poolCount }}</span>
+          </div>
+          <sc-for list="{{ pool }}" as="c" hint-placeholder-count="2">
+            <button onClick="{{ c.onSelect }}" aria-pressed="{{ c.selected }}" style="{{ c.style }}">
+              <span style="display:flex;align-items:center;gap:7px;width:100%">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;color:oklch(0.42 0.13 258)">{{ c.numero }}</span>
+                <span style="{{ c.prioStyle }}">{{ c.priorite }}</span>
+              </span>
+              <span style="font-size:13px;font-weight:700;color:oklch(0.24 0.02 255);text-align:left">{{ c.appareil }}</span>
+              <span data-tiny="1" style="font-size:11px;line-height:1.4;color:oklch(0.48 0.02 255);text-align:left">{{ c.besoin }}</span>
+            </button>
+          </sc-for>
+          <sc-if value="{{ poolEmpty }}" hint-placeholder-val="{{ false }}">
+            <span data-tiny="1" style="display:block;padding:20px 10px;text-align:center;font-size:11.5px;color:oklch(0.55 0.02 255)">Tous les dossiers sont affectés.</span>
+          </sc-if>
+        </div>
+
+        <sc-for list="{{ techs }}" as="t" hint-placeholder-count="3">
+          <div style="{{ t.colStyle }}">
+            <div style="display:flex;align-items:center;gap:9px">
+              <span aria-hidden="true" style="width:28px;height:28px;border-radius:50%;background:oklch(0.95 0.02 258);color:oklch(0.40 0.10 258);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ t.init }}</span>
+              <span style="flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25">
+                <span style="font-size:12.5px;font-weight:700;color:oklch(0.24 0.02 255)">{{ t.nom }}</span>
+                <span data-tiny="1" style="font-size:10.5px;color:oklch(0.50 0.02 255)">{{ t.specialite }}</span>
+              </span>
+              <span data-badge="1" style="{{ t.badge }}">{{ t.charge }}</span>
+            </div>
+            <span style="height:6px;border-radius:99px;background:oklch(0.93 0.008 258);overflow:hidden;display:block">
+              <span style="{{ t.fill }}"></span>
+            </span>
+            <sc-if value="{{ t.canAssign }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ t.onAssign }}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;border-radius:10px;background:oklch(0.52 0.15 258);color:#fff;font-size:12.5px;font-weight:700">
+                <span aria-hidden="true">↓</span><span>Affecter {{ t.selectedNum }}</span>
+              </button>
+            </sc-if>
+            <sc-for list="{{ t.cards }}" as="c" hint-placeholder-count="2">
+              <div style="display:flex;flex-direction:column;gap:6px;padding:10px;border-radius:11px;background:#fff;border:1px solid oklch(0.92 0.008 258)">
+                <span style="display:flex;align-items:center;gap:7px">
+                  <button onClick="{{ c.onOpen }}" data-underline="1" style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;color:oklch(0.42 0.13 258)">{{ c.numero }}</button>
+                  <span style="flex:1"></span>
+                  <span data-badge="1" style="{{ c.statutBadge }}"><span aria-hidden="true">{{ c.statutIcon }}</span>{{ c.statut }}</span>
+                </span>
+                <span style="font-size:12.5px;font-weight:700;color:oklch(0.26 0.02 255)">{{ c.appareil }}</span>
+                <span style="display:flex;align-items:center;gap:6px">
+                  <span data-tiny="1" style="flex:1;font-size:10.5px;color:oklch(0.50 0.02 255)">{{ c.age }}</span>
+                  <button onClick="{{ c.onUnassign }}" style="padding:4px 9px;border-radius:7px;border:1px solid oklch(0.91 0.008 258);font-size:10.5px;font-weight:600;color:oklch(0.44 0.02 255)">Retirer</button>
+                </span>
+              </div>
+            </sc-for>
+            <sc-if value="{{ t.isEmpty }}" hint-placeholder-val="{{ false }}">
+              <span data-tiny="1" style="display:block;padding:16px 10px;text-align:center;font-size:11.5px;color:oklch(0.58 0.02 255);border:1px dashed oklch(0.89 0.008 258);border-radius:10px">Disponible</span>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:11px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between">
+          <h3 style="margin:0;font-size:14px;font-weight:700">Capacité de la semaine</h3>
+          <span data-muted="1" style="font-size:11.5px;color:oklch(0.50 0.02 255)">7 h de production nette par technicien et par jour</span>
+        </div>
+        <div style="display:flex;gap:9px;align-items:flex-end;height:120px">
+          <sc-for list="{{ semaine }}" as="j" hint-placeholder-count="6">
+            <span style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end">
+              <span data-tiny="1" style="font-size:10.5px;font-family:'IBM Plex Mono',monospace;color:{{ j.color }}">{{ j.pct }}</span>
+              <span style="{{ j.bar }}"></span>
+              <span data-tiny="1" style="font-size:10.5px;font-weight:{{ j.weight }};color:oklch(0.44 0.02 255)">{{ j.jour }}</span>
+            </span>
+          </sc-for>
+        </div>
+        <span data-tiny="1" style="font-size:11px;line-height:1.5;color:oklch(0.52 0.02 255)">Au-delà de 85 % la file d'attente s'allonge mécaniquement : refuser ou reprogrammer les dépôts non urgents.</span>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isFacture }}" hint-placeholder-val="{{ false }}">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;align-items:start">
+
+      <div style="display:flex;flex-direction:column;gap:0;border-radius:14px;overflow:hidden;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;padding:22px;background:oklch(0.21 0.025 258);color:#fff">
+          <span style="display:flex;align-items:center;gap:10px;flex:1;min-width:170px">
+            <span aria-hidden="true" style="width:32px;height:32px;border-radius:9px;background:oklch(0.55 0.16 258);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">Ʀ</span>
+            <span style="display:flex;flex-direction:column;line-height:1.3">
+              <span style="font-size:14px;font-weight:700">Repar U</span>
+              <span data-tiny="1" style="font-size:10.5px;color:oklch(0.76 0.02 258)">14 rue des Ateliers · 34000 Montpellier · SIRET 902 118 447</span>
+            </span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:3px;text-align:right">
+            <span data-tiny="1" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:oklch(0.74 0.03 258)">{{ docType }}</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:600">{{ docNum }}</span>
+            <span data-tiny="1" style="font-size:11px;color:oklch(0.76 0.02 258)">émis le {{ docDate }}</span>
+          </span>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:20px;padding:20px 22px;border-bottom:1px solid oklch(0.94 0.006 258)">
+          <span style="display:flex;flex-direction:column;gap:4px;flex:1;min-width:150px">
+            <span data-tiny="1" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:oklch(0.52 0.02 255)">Client</span>
+            <span style="font-size:14px;font-weight:700">{{ fClient }}</span>
+            <span data-tiny="1" style="font-size:11.5px;color:oklch(0.46 0.02 255)">{{ fTel }} · {{ fVille }}</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:4px;flex:1;min-width:150px">
+            <span data-tiny="1" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:oklch(0.52 0.02 255)">Appareil</span>
+            <span style="font-size:14px;font-weight:700">{{ fAppareil }}</span>
+            <span data-tiny="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:oklch(0.46 0.02 255)">IMEI {{ fImei }}</span>
+          </span>
+          <span style="display:flex;flex-direction:column;gap:4px;flex:1;min-width:150px">
+            <span data-tiny="1" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:oklch(0.52 0.02 255)">Dossier</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600">{{ fNumero }}</span>
+            <span data-tiny="1" style="font-size:11.5px;color:oklch(0.46 0.02 255)">technicien {{ fTech }}</span>
+          </span>
+        </div>
+
+        <div data-table="1" style="padding:0 6px">
+          <table style="width:100%;font-size:13px">
+            <thead>
+              <tr style="border-bottom:1px solid oklch(0.92 0.008 258)">
+                <sc-for list="{{ fCols }}" as="c" hint-placeholder-count="4">
+                  <th scope="col" style="{{ c.style }}">{{ c.label }}</th>
+                </sc-for>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{ fLignes }}" as="l" hint-placeholder-count="3">
+                <tr style="border-bottom:1px solid oklch(0.96 0.006 258)">
+                  <td style="padding:12px 16px">
+                    <span style="display:flex;flex-direction:column;line-height:1.35">
+                      <span style="font-size:12.5px;font-weight:600;color:oklch(0.26 0.02 255)">{{ l.designation }}</span>
+                      <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">{{ l.detail }}</span>
+                    </span>
+                  </td>
+                  <td style="padding:12px 16px;text-align:right;font-variant-numeric:tabular-nums;color:oklch(0.38 0.02 255)">{{ l.qte }}</td>
+                  <td style="padding:12px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;color:oklch(0.38 0.02 255)">{{ l.pu }}</td>
+                  <td style="padding:12px 16px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;font-variant-numeric:tabular-nums">{{ l.total }}</td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;padding:16px 22px 20px">
+          <span style="display:flex;flex-direction:column;gap:7px;min-width:250px">
+            <sc-for list="{{ totaux }}" as="t" hint-placeholder-count="4">
+              <span style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;{{ t.sep }}">
+                <span style="font-size:{{ t.size }};font-weight:{{ t.weight }};color:{{ t.color }}">{{ t.k }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:{{ t.size }};font-weight:{{ t.weight }};font-variant-numeric:tabular-nums;color:{{ t.color }}">{{ t.v }}</span>
+              </span>
+            </sc-for>
+          </span>
+        </div>
+
+        <div style="padding:14px 22px;background:oklch(0.975 0.004 258);border-top:1px solid oklch(0.94 0.006 258)">
+          <span data-tiny="1" style="font-size:11px;line-height:1.55;color:oklch(0.50 0.02 255)">Garantie pièce et main-d'œuvre : 6 mois à compter de la date de restitution, hors casse et oxydation. TVA 20 % — TVA acquittée sur les débits. Pénalités de retard : 3 × le taux d'intérêt légal.</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:13px">
+        <div style="display:flex;flex-direction:column;gap:12px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <h3 style="margin:0;font-size:13.5px;font-weight:700">Statut du règlement</h3>
+            <span data-badge="1" style="{{ payBadge }}"><span aria-hidden="true">{{ payIcon }}</span>{{ payLabel }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <sc-for list="{{ payFlow }}" as="s" hint-placeholder-count="4">
+              <span style="display:flex;gap:11px;align-items:flex-start">
+                <span style="display:flex;flex-direction:column;align-items:center;flex:0 0 auto;align-self:stretch">
+                  <span aria-hidden="true" style="{{ s.dot }}"></span>
+                  <span aria-hidden="true" style="{{ s.line }}"></span>
+                </span>
+                <span style="display:flex;flex-direction:column;gap:2px;padding-bottom:13px">
+                  <span style="font-size:12.5px;font-weight:{{ s.weight }};color:{{ s.color }}">{{ s.label }}</span>
+                  <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">{{ s.sub }}</span>
+                </span>
+              </span>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Mode de règlement</span>
+            <div role="radiogroup" aria-label="Mode de règlement" style="display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ modes }}" as="m" hint-placeholder-count="4">
+                <button role="radio" aria-checked="{{ m.checked }}" onClick="{{ m.onClick }}" style="{{ m.style }}">
+                  <span aria-hidden="true">{{ m.icon }}</span><span>{{ m.label }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+          <button onClick="{{ markPaid }}" disabled="{{ paidLocked }}" style="{{ payBtnStyle }}">{{ payBtnLabel }}</button>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:9px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <h3 style="margin:0;font-size:13.5px;font-weight:700">Actions</h3>
+          <sc-for list="{{ actionsList }}" as="ac" hint-placeholder-count="4">
+            <button onClick="{{ ac.onClick }}" style="{{ ac.style }}">
+              <span aria-hidden="true" style="width:18px;text-align:center">{{ ac.icon }}</span>
+              <span style="flex:1;text-align:left">{{ ac.label }}</span>
+              <span aria-hidden="true" style="color:oklch(0.58 0.02 255)">›</span>
+            </button>
+          </sc-for>
+          <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+            <div role="status" style="display:flex;align-items:center;gap:9px;padding:11px 13px;border-radius:10px;background:oklch(0.965 0.03 152);border:1px solid oklch(0.86 0.06 152)">
+              <span aria-hidden="true" style="color:oklch(0.38 0.11 152);font-weight:700">✓</span>
+              <span style="font-size:12.5px;font-weight:600;color:oklch(0.34 0.10 152)">{{ toastLabel }}</span>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:760}}">
+const eur = (n) => (Math.round(n * 100) / 100).toFixed(2).replace(".", ",").replace("-", "−") + " €";
+const initials = (s) => (s || "").split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+const badge = (m, size) => "display:inline-flex;align-items:center;gap:5px;padding:" + (size === "s" ? "2px 7px" : "4px 9px") + ";border-radius:7px;font-size:" + (size === "s" ? "10.5px" : "11.5px") + ";font-weight:700;white-space:nowrap;background:" + m.bg + ";color:" + m.fg + ";border:1px solid " + m.bd;
+const GREEN = { bg: "oklch(0.965 0.03 152)", fg: "oklch(0.36 0.10 152)", bd: "oklch(0.84 0.06 152)" };
+const ORANGE = { bg: "oklch(0.965 0.05 70)", fg: "oklch(0.42 0.11 62)", bd: "oklch(0.86 0.09 70)" };
+const RED = { bg: "oklch(0.96 0.04 25)", fg: "oklch(0.42 0.15 25)", bd: "oklch(0.86 0.08 25)" };
+const th = (align) => "padding:12px 16px;text-align:" + align + ";font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.48 0.02 255)";
+const prio = (p) => {
+  const m = p === "Haute" ? RED : p === "Basse" ? { bg: "oklch(0.96 0.005 258)", fg: "oklch(0.46 0.02 255)", bd: "oklch(0.90 0.008 258)" } : { bg: "oklch(0.965 0.02 258)", fg: "oklch(0.42 0.08 258)", bd: "oklch(0.89 0.03 258)" };
+  return "display:inline-flex;align-items:center;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:700;text-transform:uppercase;background:" + m.bg + ";color:" + m.fg + ";border:1px solid " + m.bd;
+};
+
+class Component extends DCLogic {
+  state = { picked: null, mode: "cb", paid: false, toast: "" };
+
+  renderVals() {
+    const p = this.props || {};
+    const d = p.data || {};
+    const a = p.actions || {};
+    const st = this.state;
+    const screen = p.screen || "affectation";
+    const reps = d.reparations || [];
+    const users = d.users || [];
+    const clients = d.clients || [];
+    const appareils = d.appareils || [];
+    const pieces = d.pieces || [];
+    const statuts = d.statuts || [];
+    const sel = a.sel || {};
+    const app = (id) => appareils.find((x) => x.id === id) || {};
+    const stt = (k) => statuts.find((s) => s.key === k) || { label: k, hue: "oklch(0.45 0.02 258)", soft: "oklch(0.96 0.005 258)", icon: "●" };
+    const label = (r) => { const x = app(r.appareil_id); return x.marque + " " + x.modele; };
+
+    const open = reps.filter((r) => r.statut !== "livre");
+    const pool = open.filter((r) => !r.tech_id);
+    const techs = users.filter((u) => u.role === "Technicien" && u.statut === "Actif");
+    const loads = techs.map((u) => open.filter((r) => r.tech_id === u.id).length);
+    const spread = loads.length ? Math.max.apply(null, loads) - Math.min.apply(null, loads) : 0;
+
+    // --- facture ---
+    const r = reps.find((x) => x.id === (sel.reparation || "r1")) || reps[0] || { id: "", numero: "—", statut: "recu", recu_le: "—", cout: 0, valide: null, pieces: [] };
+    const cl = clients.find((x) => x.id === r.client_id) || {};
+    const ap = app(r.appareil_id);
+    const tech = users.find((u) => u.id === r.tech_id);
+    const lignes = (r.pieces || []).map((x) => {
+      const pc = pieces.find((y) => y.id === x.piece_id) || {};
+      const pu = (pc.prix_achat || 0) * 1.9;
+      return { designation: pc.designation + " " + (pc.compat || ""), detail: "réf. " + (pc.ref || "—") + " · garantie 6 mois", qte: String(x.qte || 1), pu: eur(pu), total: eur(pu * (x.qte || 1)), ht: pu * (x.qte || 1) };
+    });
+    const mo = { designation: "Main-d'œuvre atelier", detail: (r.ia && r.ia.duree ? r.ia.duree : "45 min") + " · taux horaire 45 € HT", qte: "0,75 h", pu: eur(45), total: eur(33.75), ht: 33.75 };
+    const diag = { designation: "Forfait diagnostic", detail: "déduit si réparation acceptée", qte: "1", pu: eur(0), total: "offert", ht: 0 };
+    const allLignes = lignes.concat([mo, diag]);
+    const ht = allLignes.reduce((s, x) => s + x.ht, 0);
+    const tva = ht * 0.2;
+    const paid = st.paid || r.statut === "livre";
+
+    return {
+      isPlanning: screen === "affectation", isFacture: screen === "facturation",
+
+      pendingN: pool.length ? pool.length + (pool.length > 1 ? " dossiers attendent une affectation" : " dossier attend une affectation") : "Aucun dossier en attente d'affectation",
+      poolCount: String(pool.length), poolEmpty: pool.length === 0,
+      balanceLabel: spread >= 3 ? "Charge déséquilibrée" : spread === 2 ? "Écart modéré" : "Charge équilibrée",
+      balanceIcon: spread >= 3 ? "▲" : spread === 2 ? "◐" : "●",
+      balanceBadge: badge(spread >= 3 ? ORANGE : spread === 2 ? { bg: "oklch(0.965 0.025 195)", fg: "oklch(0.36 0.08 195)", bd: "oklch(0.88 0.04 195)" } : GREEN, "s"),
+      pool: pool.map((x) => {
+        const on = st.picked === x.id;
+        return {
+          numero: x.numero, appareil: label(x), priorite: x.priorite, prioStyle: prio(x.priorite),
+          besoin: x.ia && x.ia.pannes && x.ia.pannes[0] ? "Hypothèse : " + x.ia.pannes[0].label : "Diagnostic à réaliser",
+          selected: on ? "true" : "false", onSelect: () => this.setState({ picked: on ? null : x.id }),
+          style: "display:flex;flex-direction:column;gap:6px;padding:11px;border-radius:11px;background:#fff;border:1.5px solid " + (on ? "oklch(0.55 0.15 258)" : "oklch(0.92 0.008 258)") + ";box-shadow:" + (on ? "0 0 0 3px oklch(0.55 0.15 258 / 0.16)" : "0 1px 2px oklch(0.22 0.02 255 / 0.05)"),
+        };
+      }),
+      techs: techs.map((u, i) => {
+        const mine = open.filter((x) => x.tech_id === u.id);
+        const n = mine.length;
+        const m = n >= 4 ? RED : n >= 2 ? ORANGE : GREEN;
+        const picked = reps.find((x) => x.id === st.picked);
+        return {
+          nom: u.nom, init: initials(u.nom), specialite: u.specialite,
+          charge: n + (n > 1 ? " dossiers" : " dossier"), badge: badge(m, "s"),
+          fill: "display:block;height:100%;border-radius:99px;width:" + Math.min(100, n * 25) + "%;background:" + m.fg,
+          colStyle: "display:flex;flex-direction:column;gap:9px;padding:13px;border-radius:13px;background:oklch(0.965 0.005 258);border:1.5px solid " + (st.picked ? "oklch(0.86 0.05 258)" : "oklch(0.92 0.008 258)"),
+          canAssign: !!st.picked, selectedNum: picked ? picked.numero : "",
+          onAssign: () => { if (st.picked) { a.patchRep && a.patchRep(st.picked, { tech_id: u.id }); this.setState({ picked: null }); } },
+          isEmpty: n === 0,
+          cards: mine.map((x) => {
+            const s = stt(x.statut);
+            return {
+              numero: x.numero, appareil: label(x), age: "reçu le " + x.recu_le.slice(0, 5),
+              statut: s.label, statutIcon: s.icon, statutBadge: badge({ bg: s.soft, fg: s.hue, bd: s.hue + " / 0.35" }, "s"),
+              onOpen: () => a.select && a.select("reparation", x.id, "dossier"),
+              onUnassign: () => a.patchRep && a.patchRep(x.id, { tech_id: null }),
+            };
+          }),
+        };
+      }),
+      semaine: [
+        { jour: "Lun", pct: 72 }, { jour: "Mar", pct: 88 }, { jour: "Mer", pct: 94 },
+        { jour: "Jeu", pct: 66 }, { jour: "Ven", pct: 81 }, { jour: "Sam", pct: 45 },
+      ].map((j, i) => ({
+        jour: j.jour, pct: j.pct + " %", weight: i === 2 ? "700" : "500",
+        color: j.pct >= 85 ? "oklch(0.44 0.13 62)" : "oklch(0.44 0.02 255)",
+        bar: "display:block;width:100%;max-width:44px;border-radius:6px 6px 3px 3px;height:" + j.pct + "%;background:" + (j.pct >= 85 ? "oklch(0.66 0.13 62)" : "oklch(0.62 0.10 258)"),
+      })),
+
+      docType: paid ? "Facture acquittée" : r.valide == null ? "Devis" : "Facture",
+      docNum: (paid || r.valide != null ? "FA-2026-" : "DV-2026-") + String(r.numero || "—").replace("REP-", ""),
+      docDate: "26/07/2026",
+      fClient: cl.nom, fTel: cl.tel, fVille: cl.ville,
+      fAppareil: ap.marque + " " + ap.modele, fImei: ap.imei, fNumero: r.numero,
+      fTech: tech ? tech.nom : "non affecté",
+      fCols: [{ label: "Désignation", style: th("left") }, { label: "Qté", style: th("right") }, { label: "P.U. HT", style: th("right") }, { label: "Total HT", style: th("right") }],
+      fLignes: allLignes,
+      totaux: [
+        { k: "Total HT", v: eur(ht), size: "12.5px", weight: "500", color: "oklch(0.40 0.02 255)", sep: "" },
+        { k: "TVA 20 %", v: eur(tva), size: "12.5px", weight: "500", color: "oklch(0.40 0.02 255)", sep: "" },
+        { k: "Total TTC", v: eur(ht + tva), size: "19px", weight: "700", color: "oklch(0.22 0.02 255)", sep: "padding-top:9px;border-top:2px solid oklch(0.90 0.008 258)" },
+        { k: "Marge nette atelier", v: eur(ht - (r.cout || 0)), size: "12.5px", weight: "700", color: "oklch(0.34 0.10 152)", sep: "" },
+      ],
+      payLabel: paid ? "Réglée" : r.valide == null ? "Devis en attente" : "À encaisser",
+      payIcon: paid ? "✓" : "◷",
+      payBadge: badge(paid ? GREEN : ORANGE, "s"),
+      payFlow: [
+        { label: "Devis émis", sub: "envoyé par SMS le 24/07 à 10:12", done: true },
+        { label: "Accepté par le client", sub: r.valide == null ? "en attente de réponse" : "accepté le 24/07 à 11:40", done: r.valide != null },
+        { label: "Réparation terminée", sub: r.statut === "pret" || r.statut === "livre" ? "test de sortie validé" : "en cours", done: r.statut === "pret" || r.statut === "livre" },
+        { label: "Règlement encaissé", sub: paid ? "carte bancaire · 26/07" : "en attente", done: paid },
+      ].map((s, i, arr) => ({
+        label: s.label, sub: s.sub, weight: s.done ? "700" : "500",
+        color: s.done ? "oklch(0.34 0.10 152)" : "oklch(0.46 0.02 255)",
+        dot: "width:11px;height:11px;border-radius:50%;flex:0 0 auto;margin-top:3px;background:" + (s.done ? "oklch(0.50 0.12 152)" : "#fff") + ";border:2px solid " + (s.done ? "oklch(0.50 0.12 152)" : "oklch(0.84 0.01 258)"),
+        line: i === arr.length - 1 ? "display:none" : "flex:1;width:2px;background:" + (s.done ? "oklch(0.84 0.06 152)" : "oklch(0.92 0.008 258)") + ";margin:3px 0",
+      })),
+      modes: [
+        { k: "cb", l: "Carte", i: "▭" }, { k: "esp", l: "Espèces", i: "◫" },
+        { k: "vir", l: "Virement", i: "⇄" }, { k: "x3", l: "3 fois", i: "⋯" },
+      ].map((m) => ({
+        label: m.l, icon: m.i, checked: st.mode === m.k ? "true" : "false", onClick: () => this.setState({ mode: m.k }),
+        style: "display:flex;align-items:center;gap:7px;padding:9px 12px;border-radius:9px;font-size:12.5px;font-weight:" + (st.mode === m.k ? "700" : "500") + ";border:1.5px solid " + (st.mode === m.k ? "oklch(0.82 0.06 258)" : "oklch(0.91 0.008 258)") + ";background:" + (st.mode === m.k ? "oklch(0.96 0.025 258)" : "#fff") + ";color:" + (st.mode === m.k ? "oklch(0.36 0.12 258)" : "oklch(0.40 0.02 255)"),
+      })),
+      paidLocked: paid,
+      payBtnLabel: paid ? "Règlement encaissé ✓" : "Encaisser " + eur(ht + tva),
+      payBtnStyle: "padding:13px;border-radius:10px;font-size:13.5px;font-weight:700;" + (paid ? "background:oklch(0.965 0.03 152);color:oklch(0.34 0.10 152);border:1px solid oklch(0.86 0.06 152)" : "background:oklch(0.52 0.15 258);color:#fff"),
+      markPaid: () => { if (!paid) { this.setState({ paid: true, toast: "Règlement enregistré — reçu envoyé au client." }); a.moveRep && a.moveRep(r.id, "livre"); } },
+      actionsList: [
+        { icon: "⤓", label: "Télécharger le PDF", t: "PDF généré — prêt à imprimer." },
+        { icon: "✉", label: "Envoyer au client par e-mail", t: "Document envoyé à " + (cl.email || "—") + "." },
+        { icon: "🏷", label: "Imprimer le bon de restitution", t: "Bon de restitution envoyé à l'imprimante." },
+        { icon: "◍", label: "Revenir au dossier de réparation", t: "" },
+      ].map((x, i) => ({
+        icon: x.icon, label: x.label,
+        onClick: () => { if (i === 3) a.go && a.go("dossier"); else this.setState({ toast: x.t }); },
+        style: "display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;border:1px solid oklch(0.92 0.008 258);background:oklch(0.985 0.003 258);font-size:12.5px;font-weight:600;color:oklch(0.32 0.02 255)",
+      })),
+      toast: !!st.toast, toastLabel: st.toast,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

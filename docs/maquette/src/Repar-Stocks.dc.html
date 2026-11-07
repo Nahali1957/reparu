@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div>
+
+  <sc-if value="{{ isInventaire }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <sc-if value="{{ readOnly }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:11px;background:oklch(0.96 0.02 258);border:1px solid oklch(0.89 0.03 258)">
+          <span aria-hidden="true" style="color:oklch(0.40 0.11 258)">👁</span>
+          <span style="font-size:12.5px;line-height:1.5;color:oklch(0.34 0.07 258)"><strong>Consultation seule.</strong> En tant que Technicien vous voyez les niveaux de stock mais ne pouvez pas les corriger. Signalez un écart à l'administrateur.</span>
+        </div>
+      </sc-if>
+      <div style="display:flex;flex-wrap:wrap;gap:9px;align-items:center">
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <sc-for list="{{ statusFilters }}" as="f" hint-placeholder-count="4">
+            <button onClick="{{ f.onClick }}" aria-pressed="{{ f.checked }}" style="{{ f.style }}">
+              <span aria-hidden="true">{{ f.icon }}</span><span>{{ f.label }}</span><span style="{{ f.countStyle }}">{{ f.count }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <span style="flex:1"></span>
+        <button style="{{ orderBtnStyle }}"><span aria-hidden="true">⇄</span><span>Générer un bon de commande</span></button>
+      </div>
+
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <div data-table="1" style="border-radius:14px;overflow:hidden;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <table style="width:100%;font-size:13px">
+            <thead>
+              <tr style="background:oklch(0.965 0.005 258);border-bottom:1px solid oklch(0.91 0.008 258)">
+                <sc-for list="{{ invCols }}" as="c" hint-placeholder-count="6">
+                  <th scope="col" style="{{ c.style }}">{{ c.label }}</th>
+                </sc-for>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{ invRows }}" as="r" hint-placeholder-count="8">
+                <tr style="border-bottom:1px solid oklch(0.955 0.006 258)">
+                  <td style="padding:12px 14px">
+                    <span style="display:flex;flex-direction:column;line-height:1.35">
+                      <span style="font-size:13px;font-weight:700;color:oklch(0.26 0.02 255)">{{ r.designation }}</span>
+                      <span data-tiny="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:oklch(0.50 0.02 255)">réf. {{ r.ref }}</span>
+                    </span>
+                  </td>
+                  <td style="padding:12px 14px;color:oklch(0.38 0.02 255)">{{ r.compat }}</td>
+                  <td style="padding:12px 14px;min-width:150px">
+                    <span style="display:flex;align-items:center;gap:9px">
+                      <span style="flex:1;height:8px;border-radius:99px;background:oklch(0.93 0.008 258);overflow:hidden;display:block">
+                        <span style="{{ r.fill }}"></span>
+                      </span>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ r.color }};min-width:44px;text-align:right">{{ r.stock }}/{{ r.seuil }}</span>
+                    </span>
+                  </td>
+                  <td style="padding:12px 14px"><span data-badge="1" style="{{ r.badge }}"><span aria-hidden="true">{{ r.icon }}</span>{{ r.statut }}</span></td>
+                  <td style="padding:12px 14px">
+                    <span style="display:flex;flex-direction:column;gap:2px">
+                      <span style="{{ r.srcStyle }}"><span aria-hidden="true">{{ r.srcIcon }}</span>{{ r.src }}</span>
+                      <span data-tiny="1" style="font-size:10.5px;color:oklch(0.52 0.02 255)">{{ r.srcWhen }}</span>
+                    </span>
+                  </td>
+                  <td style="padding:12px 14px;text-align:right;font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums">{{ r.prix }}</td>
+                  <td style="padding:10px 14px">
+                    <span style="display:flex;gap:5px;justify-content:flex-end">
+                      <button onClick="{{ r.onMinus }}" disabled="{{ r.locked }}" aria-label="{{ r.minusLabel }}" style="{{ r.minusStyle }}"><span aria-hidden="true">−</span></button>
+                      <button onClick="{{ r.onPlus }}" disabled="{{ r.locked }}" aria-label="{{ r.plusLabel }}" style="{{ r.plusStyle }}"><span aria-hidden="true">+</span></button>
+                      <button onClick="{{ r.onCompare }}" style="padding:7px 10px;border-radius:8px;border:1px solid oklch(0.90 0.008 258);background:#fff;font-size:11.5px;font-weight:600;color:oklch(0.36 0.02 255)">Comparer</button>
+                    </span>
+                  </td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <sc-for list="{{ invRows }}" as="r" hint-placeholder-count="5">
+            <div style="display:flex;flex-direction:column;gap:9px;padding:13px;border-radius:12px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+              <span style="display:flex;align-items:flex-start;gap:9px">
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.35">
+                  <span style="font-size:14px;font-weight:700">{{ r.designation }}</span>
+                  <span data-tiny="1" style="font-size:11.5px;color:oklch(0.48 0.02 255)">{{ r.compat }}</span>
+                </span>
+                <span data-badge="1" style="{{ r.badge }}"><span aria-hidden="true">{{ r.icon }}</span>{{ r.statut }}</span>
+              </span>
+              <span style="display:flex;align-items:center;gap:9px">
+                <span style="flex:1;height:9px;border-radius:99px;background:oklch(0.93 0.008 258);overflow:hidden;display:block">
+                  <span style="{{ r.fill }}"></span>
+                </span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:{{ r.color }}">{{ r.stock }}/{{ r.seuil }}</span>
+              </span>
+              <span style="display:flex;align-items:center;gap:8px">
+                <span style="{{ r.srcStyle }}"><span aria-hidden="true">{{ r.srcIcon }}</span>{{ r.src }}</span>
+                <span style="flex:1"></span>
+                <button onClick="{{ r.onMinus }}" disabled="{{ r.locked }}" aria-label="{{ r.minusLabel }}" style="{{ r.minusStyle }}"><span aria-hidden="true">−</span></button>
+                <button onClick="{{ r.onPlus }}" disabled="{{ r.locked }}" aria-label="{{ r.plusLabel }}" style="{{ r.plusStyle }}"><span aria-hidden="true">+</span></button>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:10px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <h3 style="margin:0;font-size:13.5px;font-weight:700">Mouvements récents</h3>
+            <span style="display:flex;gap:7px;align-items:center">
+              <span style="display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;color:oklch(0.36 0.08 195)"><span aria-hidden="true">◉</span>capteur</span>
+              <span style="display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;color:oklch(0.44 0.02 255)"><span aria-hidden="true">✎</span>manuel</span>
+            </span>
+          </div>
+          <sc-for list="{{ mouvements }}" as="m" hint-placeholder-count="6">
+            <div style="display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:10px;border:1px solid oklch(0.95 0.006 258);background:oklch(0.985 0.003 258)">
+              <span style="{{ m.qteStyle }}">{{ m.qte }}</span>
+              <span style="flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.35">
+                <span style="font-size:12.5px;font-weight:600;color:oklch(0.28 0.02 255)">{{ m.piece }}</span>
+                <span data-tiny="1" style="font-size:11px;color:oklch(0.48 0.02 255)">{{ m.ref }} · {{ m.par }}</span>
+              </span>
+              <span style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+                <span style="{{ m.srcStyle }}"><span aria-hidden="true">{{ m.srcIcon }}</span>{{ m.src }}</span>
+                <span data-tiny="1" style="font-size:10.5px;font-family:'IBM Plex Mono',monospace;color:oklch(0.52 0.02 255)">{{ m.le }}</span>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+            <h3 style="margin:0;font-size:13.5px;font-weight:700">Prévision de consommation</h3>
+            <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">moyennes mobiles · 30 j</span>
+          </div>
+          <sc-for list="{{ previsions }}" as="pv" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:11px;padding:11px;border-radius:10px;border:1px solid oklch(0.95 0.006 258);background:oklch(0.985 0.003 258)">
+              <span style="flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.35">
+                <span style="font-size:12.5px;font-weight:700;color:oklch(0.28 0.02 255)">{{ pv.piece }}</span>
+                <span data-tiny="1" style="font-size:11px;color:oklch(0.48 0.02 255)">{{ pv.conso }} consommées → {{ pv.prev }} prévues · couverture {{ pv.couv }}</span>
+              </span>
+              <span data-badge="1" style="{{ pv.badge }}">{{ pv.action }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isFournisseurs }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;flex-wrap:wrap;gap:11px;align-items:flex-end;justify-content:space-between">
+        <label style="display:flex;flex-direction:column;gap:6px;min-width:250px">
+          <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Pièce à comparer</span>
+          <select value="{{ cmpPiece }}" onChange="{{ setCmpPiece }}" style="padding:11px 12px;border-radius:10px;border:1px solid oklch(0.88 0.008 258);font-size:13.5px;background:#fff">
+            <sc-for list="{{ pieceOptions }}" as="o" hint-placeholder-count="4">
+              <option value="{{ o.id }}">{{ o.label }}</option>
+            </sc-for>
+          </select>
+        </label>
+        <button style="display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;background:oklch(0.52 0.15 258);color:#fff;font-size:13px;font-weight:700"><span aria-hidden="true">+</span><span>Ajouter un fournisseur</span></button>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:11px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between">
+          <h3 style="margin:0;font-size:14.5px;font-weight:700">Offres pour {{ cmpLabel }}</h3>
+          <span data-muted="1" style="font-size:12px;color:oklch(0.48 0.02 255)">prix unitaire HT · {{ cmpCount }} fournisseurs référencés</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:11px">
+          <sc-for list="{{ offres }}" as="o" hint-placeholder-count="4">
+            <div style="{{ o.style }}">
+              <span style="display:flex;align-items:center;gap:8px">
+                <span style="flex:1;font-size:13px;font-weight:700;color:oklch(0.24 0.02 255)">{{ o.nom }}</span>
+                <span style="{{ o.tagStyle }}">{{ o.tag }}</span>
+              </span>
+              <span style="display:flex;align-items:baseline;gap:7px">
+                <span style="font-size:25px;font-weight:700;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;color:{{ o.priceColor }}">{{ o.prix }}</span>
+                <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">/ unité</span>
+              </span>
+              <span style="display:flex;flex-direction:column;gap:5px">
+                <sc-for list="{{ o.lines }}" as="l" hint-placeholder-count="3">
+                  <span style="display:flex;align-items:center;justify-content:space-between;gap:9px;font-size:11.5px">
+                    <span data-muted="1" style="color:oklch(0.48 0.02 255)">{{ l.k }}</span>
+                    <span style="font-weight:600;color:{{ l.color }}">{{ l.v }}</span>
+                  </span>
+                </sc-for>
+              </span>
+              <button style="{{ o.btnStyle }}">{{ o.btnLabel }}</button>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 13px;border-radius:11px;background:oklch(0.975 0.008 195);border:1px solid oklch(0.88 0.03 195)">
+          <span aria-hidden="true" style="color:oklch(0.42 0.08 195)">🧠</span>
+          <span style="font-size:12.5px;line-height:1.55;color:oklch(0.34 0.05 195)"><strong>Recommandation d'achat.</strong> {{ recoText }}</span>
+        </div>
+      </div>
+
+      <div data-table="1" style="border-radius:14px;overflow:hidden;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+        <table style="width:100%;font-size:13px">
+          <thead>
+            <tr style="background:oklch(0.965 0.005 258);border-bottom:1px solid oklch(0.91 0.008 258)">
+              <sc-for list="{{ fCols }}" as="c" hint-placeholder-count="5">
+                <th scope="col" style="{{ c.style }}">{{ c.label }}</th>
+              </sc-for>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ fournisseurs }}" as="f" hint-placeholder-count="4">
+              <tr style="border-bottom:1px solid oklch(0.955 0.006 258)">
+                <td style="padding:12px 14px">
+                  <span style="display:flex;flex-direction:column;line-height:1.35">
+                    <span style="font-size:13px;font-weight:700">{{ f.nom }}</span>
+                    <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">{{ f.contact }}</span>
+                  </span>
+                </td>
+                <td style="padding:12px 14px;color:oklch(0.40 0.02 255)">{{ f.ville }}</td>
+                <td style="padding:12px 14px;text-align:right;font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums">{{ f.delai }}</td>
+                <td style="padding:12px 14px;text-align:right;font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums">{{ f.refs }}</td>
+                <td style="padding:12px 14px"><span data-badge="1" style="{{ f.badge }}"><span aria-hidden="true">{{ f.icon }}</span>{{ f.fiabilite }}</span></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isIot }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px">
+        <sc-for list="{{ iotKpis }}" as="k" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:6px;padding:15px;border-radius:13px;background:#fff;border:1px solid {{ k.border }}">
+            <span style="display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:oklch(0.50 0.02 255)"><span aria-hidden="true">{{ k.icon }}</span>{{ k.label }}</span>
+            <span style="font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ k.color }}">{{ k.value }}</span>
+            <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">{{ k.sub }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ hasAnomalie }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:13px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.86 0.09 70);border-left:4px solid oklch(0.62 0.14 62)">
+          <div style="display:flex;flex-wrap:wrap;gap:11px;align-items:center">
+            <span aria-hidden="true" style="width:32px;height:32px;border-radius:10px;background:oklch(0.965 0.05 70);color:oklch(0.46 0.13 62);display:flex;align-items:center;justify-content:center;font-size:15px">▲</span>
+            <span style="flex:1;min-width:180px;display:flex;flex-direction:column;line-height:1.35">
+              <span style="font-size:14.5px;font-weight:700">Anomalie détectée — {{ anoPiece }}</span>
+              <span data-muted="1" style="font-size:12px;color:oklch(0.46 0.02 255)">{{ anoEmplacement }} · capteur {{ anoDevice }}</span>
+            </span>
+            <span data-badge="1" style="display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:8px;font-size:11.5px;font-weight:700;background:oklch(0.965 0.05 70);color:oklch(0.42 0.11 62);border:1px solid oklch(0.86 0.09 70)">variation incohérente</span>
+          </div>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:oklch(0.36 0.02 255);text-wrap:pretty">Le niveau mesuré est passé de <strong>7 à 1 unité</strong> le {{ anoDate }}, sans mouvement de stock manuel ni réparation consommant cette pièce à cette date. Le stock affiché <strong>n'a pas été modifié automatiquement</strong> : un recomptage humain est requis.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:9px;align-items:flex-end">
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Quantité recomptée</span>
+              <input type="number" value="{{ recount }}" onChange="{{ setRecount }}" style="width:110px;padding:10px 12px;border-radius:9px;border:1.5px solid oklch(0.80 0.06 258);font-size:14px;font-weight:700;font-variant-numeric:tabular-nums" />
+            </label>
+            <button onClick="{{ fixStock }}" disabled="{{ fixLocked }}" style="{{ fixStyle }}"><span aria-hidden="true">✓</span><span>Vérifier et corriger le stock</span></button>
+            <button style="padding:12px 15px;border-radius:10px;border:1px solid oklch(0.89 0.008 258);font-size:13px;font-weight:600;color:oklch(0.36 0.02 255)">Ignorer (faux positif)</button>
+          </div>
+          <sc-if value="{{ fixed }}" hint-placeholder-val="{{ false }}">
+            <div role="status" style="display:flex;align-items:center;gap:9px;padding:11px 13px;border-radius:10px;background:oklch(0.965 0.03 152);border:1px solid oklch(0.86 0.06 152)">
+              <span aria-hidden="true" style="color:oklch(0.38 0.11 152);font-weight:700">✓</span>
+              <span style="font-size:12.5px;font-weight:600;color:oklch(0.34 0.10 152)">Stock corrigé et mouvement tracé (source : saisie manuelle après vérification).</span>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <sc-for list="{{ capteurs }}" as="cp" hint-placeholder-count="4">
+          <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;padding:15px 17px;border-radius:14px;background:#fff;border:1px solid {{ cp.border }}">
+            <span style="display:flex;align-items:center;gap:10px;min-width:210px;flex:1">
+              <span aria-hidden="true" style="{{ cp.dot }}"></span>
+              <span style="display:flex;flex-direction:column;line-height:1.35;min-width:0">
+                <span style="font-size:13.5px;font-weight:700">{{ cp.piece }}</span>
+                <span data-tiny="1" style="font-size:11px;color:oklch(0.48 0.02 255)">{{ cp.emplacement }}</span>
+              </span>
+            </span>
+            <span style="display:flex;align-items:flex-end;gap:4px;height:38px">
+              <sc-for list="{{ cp.spark }}" as="s" hint-placeholder-count="6">
+                <span aria-hidden="true" style="{{ s.style }}"></span>
+              </sc-for>
+            </span>
+            <span style="display:flex;flex-direction:column;gap:2px;min-width:96px">
+              <span data-tiny="1" style="font-size:10.5px;font-family:'IBM Plex Mono',monospace;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.52 0.02 255)">Dernière lecture</span>
+              <span style="font-size:15px;font-weight:700;font-variant-numeric:tabular-nums">{{ cp.niveau }} unités</span>
+              <span data-tiny="1" style="font-size:10.5px;font-family:'IBM Plex Mono',monospace;color:oklch(0.52 0.02 255)">{{ cp.ts }}</span>
+            </span>
+            <span style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+              <span data-badge="1" style="{{ cp.badge }}"><span aria-hidden="true">{{ cp.icon }}</span>{{ cp.statut }}</span>
+              <span data-tiny="1" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:oklch(0.52 0.02 255)">{{ cp.device }}</span>
+            </span>
+          </div>
+        </sc-for>
+      </div>
+      <span data-tiny="1" style="font-size:11.5px;line-height:1.55;color:oklch(0.50 0.02 255)">Les lectures capteurs alimentent la prévision mais ne remplacent jamais le stock comptable : toute correction passe par un mouvement tracé et nominatif.</span>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:760}}">
+const eur = (n) => (Math.round(n * 100) / 100).toFixed(2).replace(".", ",") + " €";
+const badge = (m, size) => "display:inline-flex;align-items:center;gap:5px;padding:" + (size === "s" ? "2px 7px" : "4px 9px") + ";border-radius:7px;font-size:" + (size === "s" ? "10.5px" : "11.5px") + ";font-weight:700;white-space:nowrap;background:" + m.bg + ";color:" + m.fg + ";border:1px solid " + m.bd;
+const GREEN = { bg: "oklch(0.965 0.03 152)", fg: "oklch(0.36 0.10 152)", bd: "oklch(0.84 0.06 152)" };
+const ORANGE = { bg: "oklch(0.965 0.05 70)", fg: "oklch(0.42 0.11 62)", bd: "oklch(0.86 0.09 70)" };
+const RED = { bg: "oklch(0.96 0.04 25)", fg: "oklch(0.42 0.15 25)", bd: "oklch(0.86 0.08 25)" };
+const NEUTRAL = { bg: "oklch(0.96 0.005 258)", fg: "oklch(0.42 0.02 255)", bd: "oklch(0.90 0.008 258)" };
+const stockMeta = (p) => (p.stock === 0 ? Object.assign({ label: "Rupture", icon: "■" }, RED) : p.stock <= p.seuil ? Object.assign({ label: "Seuil bas", icon: "▲" }, ORANGE) : Object.assign({ label: "En stock", icon: "●" }, GREEN));
+const th = (align) => "padding:11px 14px;text-align:" + align + ";font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.46 0.02 255)";
+
+class Component extends DCLogic {
+  state = { filter: "tous", cmp: "p1", recount: 3, fixed: false };
+
+  renderVals() {
+    const p = this.props || {};
+    const d = p.data || {};
+    const a = p.actions || {};
+    const st = this.state;
+    const screen = p.screen || "inventaire";
+    const isDesktop = p.mode !== "mobile";
+    const pieces = d.pieces || [];
+    const mouvements = d.mouvements || [];
+    const fournisseurs = d.fournisseurs || [];
+    const offres = d.offres || {};
+    const capteurs = d.capteurs || [];
+    const lectures = d.lectures || [];
+    const previsions = d.previsions || [];
+    const readOnly = p.role === "Technicien";
+    const piece = (id) => pieces.find((x) => x.id === id) || {};
+    const four = (id) => fournisseurs.find((x) => x.id === id) || {};
+
+    const counts = {
+      tous: pieces.length,
+      stock: pieces.filter((x) => x.stock > x.seuil).length,
+      bas: pieces.filter((x) => x.stock > 0 && x.stock <= x.seuil).length,
+      rupture: pieces.filter((x) => x.stock === 0).length,
+    };
+    const filtered = pieces.filter((x) => st.filter === "tous" || (st.filter === "stock" && x.stock > x.seuil) || (st.filter === "bas" && x.stock > 0 && x.stock <= x.seuil) || (st.filter === "rupture" && x.stock === 0));
+    const lastMv = (pid) => mouvements.find((m) => m.piece_id === pid);
+    const srcChip = (src) => "display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:6px;font-size:10.5px;font-weight:700;white-space:nowrap;" + (src === "capteur" ? "background:oklch(0.965 0.025 195);color:oklch(0.36 0.08 195);border:1px solid oklch(0.88 0.04 195)" : "background:oklch(0.96 0.005 258);color:oklch(0.42 0.02 255);border:1px solid oklch(0.90 0.008 258)");
+
+    // IoT
+    const readingsOf = (cid) => lectures.filter((l) => l.capteur_id === cid);
+    const anomalie = lectures.find((l) => l.statut === "anomalie") || {};
+    const anoCapteur = capteurs.find((c) => c.id === anomalie.capteur_id) || {};
+    const anoPiece = piece(anoCapteur.piece_id);
+    const anomalieCount = lectures.filter((l) => l.statut === "anomalie").length;
+
+    // Comparaison fournisseurs
+    const cmpList = (offres[st.cmp] || []).slice().sort((x, y) => x.prix - y.prix);
+    const cheapest = cmpList[0] || {};
+    const fastest = cmpList.slice().sort((x, y) => x.delai - y.delai)[0] || {};
+    const cmpPiece = piece(st.cmp);
+
+    return {
+      isDesktop, isMobile: !isDesktop,
+      isInventaire: screen === "inventaire", isFournisseurs: screen === "fournisseurs", isIot: screen === "iot",
+      readOnly,
+      orderBtnStyle: "display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;font-size:13px;font-weight:700;" + (readOnly ? "border:1px solid oklch(0.92 0.008 258);background:oklch(0.97 0.004 258);color:oklch(0.68 0.01 258)" : "background:oklch(0.52 0.15 258);color:#fff"),
+
+      statusFilters: [
+        { k: "tous", l: "Toutes", i: "▤", n: counts.tous, m: NEUTRAL },
+        { k: "stock", l: "En stock", i: "●", n: counts.stock, m: GREEN },
+        { k: "bas", l: "Seuil bas", i: "▲", n: counts.bas, m: ORANGE },
+        { k: "rupture", l: "Rupture", i: "■", n: counts.rupture, m: RED },
+      ].map((x) => {
+        const on = st.filter === x.k;
+        return {
+          label: x.l, icon: x.i, count: String(x.n), checked: on ? "true" : "false", onClick: () => this.setState({ filter: x.k }),
+          style: "display:flex;align-items:center;gap:7px;padding:9px 13px;border-radius:10px;font-size:12.5px;font-weight:" + (on ? "700" : "500") + ";background:" + (on ? x.m.bg : "#fff") + ";color:" + (on ? x.m.fg : "oklch(0.40 0.02 255)") + ";border:1.5px solid " + (on ? x.m.bd : "oklch(0.91 0.008 258)"),
+          countStyle: "min-width:19px;padding:1px 5px;border-radius:6px;font-size:10.5px;font-weight:700;text-align:center;background:" + (on ? "oklch(1 0 0 / 0.6)" : "oklch(0.96 0.005 258)") + ";color:" + (on ? x.m.fg : "oklch(0.46 0.02 255)"),
+        };
+      }),
+      invCols: [
+        { label: "Pièce détachée", style: th("left") }, { label: "Compatibilité", style: th("left") },
+        { label: "Niveau de stock", style: th("left") }, { label: "Statut", style: th("left") },
+        { label: "Dernier mouvement", style: th("left") }, { label: "Prix achat", style: th("right") }, { label: "", style: th("right") },
+      ],
+      invRows: filtered.map((x) => {
+        const m = stockMeta(x);
+        const mv = lastMv(x.id);
+        return {
+          designation: x.designation, ref: x.ref, compat: x.compat, stock: String(x.stock), seuil: String(x.seuil),
+          statut: m.label, icon: m.icon, badge: badge(m, "s"), color: m.fg, prix: eur(x.prix_achat),
+          fill: "display:block;height:100%;border-radius:99px;width:" + Math.min(100, Math.max(3, Math.round((x.stock / Math.max(x.seuil * 1.6, 1)) * 100))) + "%;background:" + m.fg,
+          src: mv ? (mv.source === "capteur" ? "Capteur IoT" : "Saisie manuelle") : "—",
+          srcIcon: mv ? (mv.source === "capteur" ? "◉" : "✎") : "",
+          srcStyle: srcChip(mv ? mv.source : "manuelle"),
+          srcWhen: mv ? mv.le : "aucun mouvement",
+          locked: readOnly,
+          minusLabel: "Retirer une unité de " + x.designation, plusLabel: "Ajouter une unité de " + x.designation,
+          minusStyle: "padding:7px 11px;border-radius:8px;font-size:13px;font-weight:700;border:1px solid " + (readOnly ? "oklch(0.94 0.006 258)" : "oklch(0.90 0.008 258)") + ";background:" + (readOnly ? "oklch(0.98 0.003 258)" : "#fff") + ";color:" + (readOnly ? "oklch(0.80 0.008 258)" : "oklch(0.36 0.02 255)"),
+          plusStyle: "padding:7px 11px;border-radius:8px;font-size:13px;font-weight:700;border:1px solid " + (readOnly ? "oklch(0.94 0.006 258)" : "oklch(0.84 0.05 258)") + ";background:" + (readOnly ? "oklch(0.98 0.003 258)" : "oklch(0.96 0.025 258)") + ";color:" + (readOnly ? "oklch(0.80 0.008 258)" : "oklch(0.38 0.12 258)"),
+          onMinus: () => !readOnly && a.adjustStock && a.adjustStock(x.id, -1, "Ajustement inventaire"),
+          onPlus: () => !readOnly && a.adjustStock && a.adjustStock(x.id, 1, "Réception fournisseur"),
+          onCompare: () => { this.setState({ cmp: offres[x.id] ? x.id : "p1" }); a.go && a.go("fournisseurs"); },
+        };
+      }),
+      mouvements: mouvements.slice(0, 6).map((m) => ({
+        piece: piece(m.piece_id).designation || "—", ref: m.ref, par: m.par, le: m.le,
+        qte: (m.qte > 0 ? "+" : "") + m.qte,
+        qteStyle: "min-width:38px;text-align:center;padding:4px 7px;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;" + (m.qte > 0 ? "background:oklch(0.965 0.03 152);color:oklch(0.36 0.10 152)" : "background:oklch(0.96 0.04 25);color:oklch(0.44 0.14 25)"),
+        src: m.source === "capteur" ? "Capteur" : "Manuel", srcIcon: m.source === "capteur" ? "◉" : "✎", srcStyle: srcChip(m.source),
+      })),
+      previsions: previsions.map((pv) => {
+        const pc = piece(pv.piece_id);
+        const urgent = pv.action.indexOf("urgent") >= 0;
+        const commander = pv.action.indexOf("Commander") >= 0;
+        return {
+          piece: pc.designation + " — " + pc.compat, conso: String(pv.conso_30j), prev: String(pv.prevision_30j), couv: pv.couverture,
+          action: pv.action, badge: badge(urgent ? RED : commander ? ORANGE : GREEN, "s"),
+        };
+      }),
+
+      // fournisseurs
+      cmpPiece: st.cmp, setCmpPiece: (e) => this.setState({ cmp: e.target.value }),
+      pieceOptions: Object.keys(offres).map((id) => ({ id, label: piece(id).designation + " — " + piece(id).compat })),
+      cmpLabel: (cmpPiece.designation || "") + " — " + (cmpPiece.compat || ""),
+      cmpCount: String(cmpList.length),
+      offres: cmpList.map((o, i) => {
+        const f = four(o.fournisseur_id);
+        const best = i === 0;
+        const quick = o.fournisseur_id === fastest.fournisseur_id;
+        const rupture = o.dispo === "Rupture";
+        return {
+          nom: f.nom, prix: eur(o.prix), priceColor: best ? "oklch(0.34 0.10 152)" : "oklch(0.24 0.02 255)",
+          tag: rupture ? "Indisponible" : best ? "Meilleur prix" : quick ? "Plus rapide" : "",
+          tagStyle: rupture ? badge(RED, "s") : best ? badge(GREEN, "s") : quick ? badge({ bg: "oklch(0.965 0.025 195)", fg: "oklch(0.36 0.08 195)", bd: "oklch(0.88 0.04 195)" }, "s") : "display:none",
+          style: "display:flex;flex-direction:column;gap:11px;padding:15px;border-radius:13px;background:" + (best ? "oklch(0.985 0.012 152)" : "oklch(0.985 0.003 258)") + ";border:1.5px solid " + (best ? "oklch(0.84 0.06 152)" : "oklch(0.92 0.008 258)"),
+          lines: [
+            { k: "Délai de livraison", v: o.delai + (o.delai > 1 ? " jours" : " jour"), color: quick ? "oklch(0.36 0.08 195)" : "oklch(0.30 0.02 255)" },
+            { k: "Disponibilité", v: o.dispo, color: rupture ? "oklch(0.44 0.14 25)" : "oklch(0.30 0.02 255)" },
+            { k: "Quantité mini", v: String(o.mini), color: "oklch(0.30 0.02 255)" },
+          ],
+          btnLabel: rupture ? "Indisponible" : "Commander chez " + (f.nom || "").split(" ")[0],
+          btnStyle: "padding:10px;border-radius:9px;font-size:12.5px;font-weight:700;" + (rupture ? "background:oklch(0.97 0.004 258);color:oklch(0.68 0.01 258);border:1px solid oklch(0.93 0.008 258)" : best ? "background:oklch(0.44 0.11 152);color:#fff" : "background:#fff;border:1px solid oklch(0.88 0.008 258);color:oklch(0.34 0.02 255)"),
+        };
+      }),
+      recoText: cmpList.length ? four(cheapest.fournisseur_id).nom + " propose le meilleur prix (" + eur(cheapest.prix) + ", −" + Math.round(((cmpList[cmpList.length - 1].prix - cheapest.prix) / cmpList[cmpList.length - 1].prix) * 100) + " % vs l'offre la plus chère) avec un délai de " + cheapest.delai + " j. Pour un dossier urgent, " + four(fastest.fournisseur_id).nom + " livre en " + fastest.delai + " j pour " + eur(fastest.prix) + "." : "Aucune offre référencée.",
+      fCols: [{ label: "Fournisseur", style: th("left") }, { label: "Localisation", style: th("left") }, { label: "Délai (j)", style: th("right") }, { label: "Références", style: th("right") }, { label: "Fiabilité", style: th("left") }],
+      fournisseurs: fournisseurs.map((f) => ({
+        nom: f.nom, contact: f.contact, ville: f.ville, delai: String(f.delai), refs: String(f.refs),
+        fiabilite: f.fiabilite, icon: f.fiabilite === "Excellente" ? "●" : f.fiabilite === "Bonne" ? "◐" : "○",
+        badge: badge(f.fiabilite === "Excellente" ? GREEN : f.fiabilite === "Bonne" ? { bg: "oklch(0.965 0.025 195)", fg: "oklch(0.36 0.08 195)", bd: "oklch(0.88 0.04 195)" } : ORANGE, "s"),
+      })),
+
+      // iot
+      iotKpis: [
+        { label: "Capteurs actifs", icon: "◉", value: String(capteurs.filter((c) => c.actif).length) + "/" + String(capteurs.length), sub: "MQTT sécurisé (TLS)", color: "oklch(0.24 0.02 255)", border: "oklch(0.91 0.008 258)" },
+        { label: "Anomalies ouvertes", icon: "▲", value: String(anomalieCount), sub: "à vérifier par l'administrateur", color: "oklch(0.44 0.13 62)", border: "oklch(0.88 0.07 70)" },
+        { label: "Dernière remontée", icon: "◷", value: "06:00", sub: "26/07/2026 · toutes les 6 h", color: "oklch(0.24 0.02 255)", border: "oklch(0.91 0.008 258)" },
+      ],
+      hasAnomalie: anomalieCount > 0 && !st.fixed,
+      anoPiece: anoPiece.designation ? anoPiece.designation + " " + anoPiece.compat : "—",
+      anoEmplacement: anoCapteur.emplacement || "—", anoDevice: anoCapteur.device_id || "—", anoDate: anomalie.ts || "—",
+      recount: String(st.recount), setRecount: (e) => this.setState({ recount: parseInt(e.target.value || "0", 10) }),
+      fixLocked: readOnly,
+      fixStyle: "display:flex;align-items:center;gap:8px;padding:12px 17px;border-radius:10px;font-size:13px;font-weight:700;" + (readOnly ? "background:oklch(0.97 0.004 258);color:oklch(0.68 0.01 258);border:1px solid oklch(0.93 0.008 258)" : "background:oklch(0.52 0.15 258);color:#fff"),
+      fixed: st.fixed,
+      fixStock: () => {
+        if (readOnly) return;
+        const cur = piece(anoCapteur.piece_id).stock || 0;
+        a.adjustStock && a.adjustStock(anoCapteur.piece_id, st.recount - cur, "Recomptage après anomalie capteur " + (anoCapteur.device_id || ""));
+        this.setState({ fixed: true });
+      },
+      capteurs: capteurs.map((c) => {
+        const rd = readingsOf(c.id);
+        const last = rd[rd.length - 1] || {};
+        const hasAno = rd.some((l) => l.statut === "anomalie");
+        const pc = piece(c.piece_id);
+        const maxv = Math.max.apply(null, rd.map((l) => l.niveau).concat([1]));
+        return {
+          piece: (pc.designation || "—") + " — " + (pc.compat || ""), emplacement: c.emplacement, device: c.device_id,
+          niveau: String(last.niveau == null ? "—" : last.niveau), ts: last.ts || "—",
+          statut: hasAno ? "Anomalie" : "Normal", icon: hasAno ? "▲" : "●",
+          badge: badge(hasAno ? ORANGE : GREEN, "s"),
+          border: hasAno ? "oklch(0.88 0.07 70)" : "oklch(0.91 0.008 258)",
+          dot: "width:10px;height:10px;border-radius:50%;flex:0 0 auto;background:" + (hasAno ? "oklch(0.62 0.14 62)" : "oklch(0.55 0.13 152)") + ";animation:pulseDot 2.4s ease-in-out infinite",
+          spark: rd.map((l) => ({
+            style: "display:block;width:7px;border-radius:2px;height:" + Math.max(4, Math.round((l.niveau / maxv) * 36)) + "px;background:" + (l.statut === "anomalie" ? "oklch(0.62 0.14 62)" : "oklch(0.78 0.05 258)"),
+          })),
+        };
+      }),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

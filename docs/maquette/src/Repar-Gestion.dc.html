@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div>
+
+  <sc-if value="{{ isClients }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+        <label style="flex:1;min-width:200px;display:flex;align-items:center;gap:9px;padding:10px 13px;border-radius:10px;background:#fff;border:1px solid oklch(0.89 0.008 258)">
+          <span aria-hidden="true" style="color:oklch(0.55 0.02 255)">⌕</span>
+          <input type="search" value="{{ q }}" onChange="{{ setQ }}" placeholder="Rechercher par nom ou téléphone…" aria-label="Rechercher un client" style="border:0;background:none;outline:none;width:100%;font-size:13.5px" />
+        </label>
+        <button onClick="{{ toggleForm }}" style="{{ addBtnStyle }}"><span aria-hidden="true">+</span><span>{{ addBtnLabel }}</span></button>
+      </div>
+
+      <sc-if value="{{ formOpen }}" hint-placeholder-val="{{ false }}">
+        <form onSubmit="{{ submitClient }}" style="display:flex;flex-direction:column;gap:13px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.84 0.04 258);border-left:4px solid oklch(0.52 0.15 258)">
+          <span style="font-size:14px;font-weight:700">Nouveau client</span>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px">
+            <sc-for list="{{ clientFields }}" as="f" hint-placeholder-count="4">
+              <label style="display:flex;flex-direction:column;gap:6px">
+                <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">{{ f.label }}<span aria-hidden="true" style="{{ f.reqStyle }}"> *</span></span>
+                <input type="text" value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" style="{{ f.style }}" />
+                <span style="{{ f.errStyle }}">{{ f.err }}</span>
+              </label>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:9px">
+            <button type="submit" style="padding:11px 17px;border-radius:10px;background:oklch(0.52 0.15 258);color:#fff;font-size:13px;font-weight:700">Créer la fiche client</button>
+            <button type="button" onClick="{{ toggleForm }}" style="padding:11px 15px;border-radius:10px;border:1px solid oklch(0.89 0.008 258);font-size:13px;font-weight:600;color:oklch(0.36 0.02 255)">Annuler</button>
+          </div>
+        </form>
+      </sc-if>
+
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <div data-table="1" style="border-radius:14px;overflow:hidden;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <table style="width:100%;font-size:13px">
+            <thead>
+              <tr style="background:oklch(0.965 0.005 258);border-bottom:1px solid oklch(0.91 0.008 258)">
+                <sc-for list="{{ clientCols }}" as="c" hint-placeholder-count="6">
+                  <th scope="col" style="{{ c.style }}">{{ c.label }}</th>
+                </sc-for>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{ clientRows }}" as="r" hint-placeholder-count="6">
+                <tr style="border-bottom:1px solid oklch(0.955 0.006 258)">
+                  <td style="padding:12px 14px">
+                    <button onClick="{{ r.onOpen }}" style="display:flex;align-items:center;gap:10px;text-align:left">
+                      <span aria-hidden="true" style="width:30px;height:30px;border-radius:50%;background:oklch(0.95 0.02 258);color:oklch(0.40 0.10 258);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ r.init }}</span>
+                      <span style="display:flex;flex-direction:column;line-height:1.3">
+                        <span data-underline="1" style="font-size:13px;font-weight:700;color:oklch(0.34 0.12 258)">{{ r.nom }}</span>
+                        <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">client depuis {{ r.depuis }}</span>
+                      </span>
+                    </button>
+                  </td>
+                  <td style="padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:oklch(0.34 0.02 255)">{{ r.tel }}</td>
+                  <td style="padding:12px 14px;color:oklch(0.40 0.02 255)">{{ r.ville }}</td>
+                  <td style="padding:12px 14px">
+                    <span style="display:inline-flex;flex-wrap:wrap;gap:5px">
+                      <sc-for list="{{ r.devices }}" as="dv" hint-placeholder-count="1">
+                        <span style="padding:3px 8px;border-radius:7px;background:oklch(0.96 0.006 258);border:1px solid oklch(0.92 0.008 258);font-size:11.5px;color:oklch(0.36 0.02 255)">{{ dv }}</span>
+                      </sc-for>
+                    </span>
+                  </td>
+                  <td style="padding:12px 14px;text-align:right;font-variant-numeric:tabular-nums;color:oklch(0.36 0.02 255)">{{ r.nb }}</td>
+                  <td style="padding:12px 14px;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;font-variant-numeric:tabular-nums">{{ r.total }}</td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;background:oklch(0.98 0.003 258)">
+            <span data-tiny="1" style="font-size:11.5px;color:oklch(0.50 0.02 255)">{{ count }} clients · tri par nom</span>
+            <span style="display:flex;gap:6px">
+              <button style="padding:6px 11px;border-radius:8px;border:1px solid oklch(0.90 0.008 258);background:#fff;font-size:12px">‹ Précédent</button>
+              <button style="padding:6px 11px;border-radius:8px;border:1px solid oklch(0.90 0.008 258);background:#fff;font-size:12px">Suivant ›</button>
+            </span>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <sc-for list="{{ clientRows }}" as="r" hint-placeholder-count="5">
+            <button onClick="{{ r.onOpen }}" style="display:flex;align-items:center;gap:11px;padding:13px;border-radius:12px;background:#fff;border:1px solid oklch(0.91 0.008 258);text-align:left">
+              <span aria-hidden="true" style="width:38px;height:38px;border-radius:50%;background:oklch(0.95 0.02 258);color:oklch(0.40 0.10 258);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 auto">{{ r.init }}</span>
+              <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+                <span style="font-size:14px;font-weight:700">{{ r.nom }}</span>
+                <span data-tiny="1" style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:oklch(0.48 0.02 255)">{{ r.tel }} · {{ r.ville }}</span>
+              </span>
+              <span style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:700">{{ r.total }}</span>
+                <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">{{ r.nb }} rép.</span>
+              </span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isClient }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:18px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+        <span aria-hidden="true" style="width:52px;height:52px;border-radius:50%;background:oklch(0.95 0.02 258);color:oklch(0.38 0.11 258);font-size:17px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ c_init }}</span>
+        <div style="flex:1;min-width:170px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:21px;font-weight:700;letter-spacing:-0.02em">{{ c_nom }}</span>
+          <span data-muted="1" style="font-size:12.5px;color:oklch(0.46 0.02 255)">client depuis {{ c_depuis }} · {{ c_ville }}</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <sc-for list="{{ c_stats }}" as="s" hint-placeholder-count="3">
+            <span style="display:flex;flex-direction:column;gap:2px;padding:10px 14px;border-radius:11px;background:oklch(0.975 0.004 258);border:1px solid oklch(0.93 0.008 258);min-width:104px">
+              <span data-tiny="1" style="font-size:10.5px;font-family:'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:oklch(0.50 0.02 255)">{{ s.label }}</span>
+              <span style="font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ s.color }}">{{ s.value }}</span>
+            </span>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button style="padding:10px 14px;border-radius:9px;border:1px solid oklch(0.89 0.008 258);background:#fff;font-size:12.5px;font-weight:600">✎ Éditer</button>
+          <button onClick="{{ c_goAppareil }}" style="padding:10px 14px;border-radius:9px;background:oklch(0.52 0.15 258);color:#fff;font-size:12.5px;font-weight:700">+ Appareil</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:11px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <h3 style="margin:0;font-size:13.5px;font-weight:700">Coordonnées</h3>
+          <sc-for list="{{ c_fields }}" as="f" hint-placeholder-count="4">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:9px;border-bottom:1px solid oklch(0.955 0.006 258)">
+              <span data-muted="1" style="font-size:12px;color:oklch(0.48 0.02 255)">{{ f.label }}</span>
+              <span style="font-size:13px;font-weight:600;text-align:right;{{ f.mono }}">{{ f.value }}</span>
+            </div>
+          </sc-for>
+          <span data-tiny="1" style="font-size:11px;line-height:1.5;color:oklch(0.52 0.02 255)">Données personnelles — conservation 3 ans après la dernière intervention (registre RGPD).</span>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:11px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <h3 style="margin:0;font-size:13.5px;font-weight:700">Appareils rattachés</h3>
+            <span style="font-size:11.5px;font-family:'IBM Plex Mono',monospace;color:oklch(0.50 0.02 255)">{{ c_devN }}</span>
+          </div>
+          <sc-for list="{{ c_devices }}" as="dv" hint-placeholder-count="2">
+            <div style="display:flex;align-items:center;gap:11px;padding:11px;border-radius:11px;border:1px solid oklch(0.94 0.006 258);background:oklch(0.985 0.003 258)">
+              <span aria-hidden="true" style="width:30px;height:38px;border-radius:6px;border:1.5px solid oklch(0.72 0.02 258);background:oklch(0.93 0.008 258);flex:0 0 auto"></span>
+              <span style="flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.35">
+                <span style="font-size:13px;font-weight:700">{{ dv.nom }}</span>
+                <span data-tiny="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:oklch(0.48 0.02 255)">IMEI {{ dv.imei }} · {{ dv.couleur }}</span>
+              </span>
+              <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">déposé {{ dv.depose }}</span>
+            </div>
+          </sc-for>
+          <sc-if value="{{ c_noDevices }}" hint-placeholder-val="{{ false }}">
+            <span data-tiny="1" style="display:block;padding:14px;text-align:center;font-size:12px;color:oklch(0.55 0.02 255);border:1px dashed oklch(0.89 0.008 258);border-radius:10px">Aucun appareil rattaché — ajoutez-en un pour ouvrir un dossier.</span>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:11px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+        <h3 style="margin:0;font-size:13.5px;font-weight:700">Historique des réparations</h3>
+        <sc-for list="{{ c_reps }}" as="r" hint-placeholder-count="3">
+          <button onClick="{{ r.onOpen }}" style="display:flex;flex-wrap:wrap;align-items:center;gap:11px;padding:12px;border-radius:11px;border:1px solid oklch(0.94 0.006 258);background:oklch(0.985 0.003 258);text-align:left">
+            <span data-underline="1" style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:oklch(0.42 0.13 258)">{{ r.numero }}</span>
+            <span style="flex:1;min-width:140px;display:flex;flex-direction:column;line-height:1.35">
+              <span style="font-size:13px;font-weight:700;color:oklch(0.26 0.02 255)">{{ r.appareil }}</span>
+              <span data-tiny="1" style="font-size:11.5px;color:oklch(0.48 0.02 255)">{{ r.resume }}</span>
+            </span>
+            <span data-badge="1" style="{{ r.badge }}"><span aria-hidden="true">{{ r.icon }}</span>{{ r.statut }}</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;min-width:74px;text-align:right">{{ r.prix }}</span>
+          </button>
+        </sc-for>
+        <sc-if value="{{ c_noReps }}" hint-placeholder-val="{{ false }}">
+          <span data-tiny="1" style="display:block;padding:14px;text-align:center;font-size:12px;color:oklch(0.55 0.02 255);border:1px dashed oklch(0.89 0.008 258);border-radius:10px">Aucune intervention pour ce client.</span>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isAppareil }}" hint-placeholder-val="{{ false }}">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;align-items:start">
+      <form onSubmit="{{ submitDevice }}" style="display:flex;flex-direction:column;gap:14px;padding:18px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <h3 style="margin:0;font-size:16px;font-weight:700">Rattacher un appareil</h3>
+          <span data-muted="1" style="font-size:12.5px;color:oklch(0.48 0.02 255)">Un appareil appartient obligatoirement à un client (intégrité référentielle).</span>
+        </div>
+        <label style="display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Client<span style="color:oklch(0.50 0.16 25)"> *</span></span>
+          <select value="{{ dClient }}" onChange="{{ setDClient }}" style="width:100%;padding:11px 12px;border-radius:10px;border:1px solid oklch(0.88 0.008 258);font-size:13.5px;background:#fff">
+            <sc-for list="{{ clientOptions }}" as="o" hint-placeholder-count="6">
+              <option value="{{ o.id }}">{{ o.nom }}</option>
+            </sc-for>
+          </select>
+        </label>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px">
+          <sc-for list="{{ deviceFields }}" as="f" hint-placeholder-count="4">
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">{{ f.label }}<span aria-hidden="true" style="{{ f.reqStyle }}"> *</span></span>
+              <input type="text" value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" aria-invalid="{{ f.invalid }}" style="{{ f.style }}" />
+              <span style="{{ f.hintStyle }}">{{ f.hint }}</span>
+            </label>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:9px;padding-top:4px">
+          <button type="submit" disabled="{{ deviceInvalid }}" style="{{ deviceSubmitStyle }}">Enregistrer l'appareil</button>
+          <button type="button" onClick="{{ goClients }}" style="padding:12px 15px;border-radius:10px;border:1px solid oklch(0.89 0.008 258);font-size:13px;font-weight:600;color:oklch(0.36 0.02 255)">Annuler</button>
+        </div>
+        <sc-if value="{{ deviceSaved }}" hint-placeholder-val="{{ false }}">
+          <div role="status" style="display:flex;align-items:center;gap:9px;padding:11px 13px;border-radius:10px;background:oklch(0.965 0.03 152);border:1px solid oklch(0.86 0.06 152)">
+            <span aria-hidden="true" style="color:oklch(0.38 0.11 152);font-weight:700">✓</span>
+            <span style="font-size:12.5px;font-weight:600;color:oklch(0.34 0.10 152)">Appareil enregistré et rattaché au client.</span>
+          </div>
+        </sc-if>
+      </form>
+
+      <div style="display:flex;flex-direction:column;gap:13px">
+        <div style="display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:14px;background:oklch(0.975 0.004 258);border:1px solid oklch(0.91 0.008 258)">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:oklch(0.50 0.02 255)">Aperçu de la fiche</span>
+          <div style="display:flex;gap:14px;align-items:center;padding:15px;border-radius:12px;background:#fff;border:1px solid oklch(0.92 0.008 258)">
+            <span aria-hidden="true" style="width:44px;height:58px;border-radius:8px;border:2px solid oklch(0.70 0.02 258);background:oklch(0.93 0.008 258);flex:0 0 auto"></span>
+            <span style="display:flex;flex-direction:column;gap:3px;min-width:0">
+              <span style="font-size:15px;font-weight:700">{{ previewNom }}</span>
+              <span data-tiny="1" style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:oklch(0.48 0.02 255)">IMEI {{ previewImei }}</span>
+              <span data-tiny="1" style="font-size:11.5px;color:oklch(0.48 0.02 255)">Propriétaire : {{ previewClient }}</span>
+            </span>
+          </div>
+          <span data-tiny="1" style="font-size:11px;line-height:1.55;color:oklch(0.50 0.02 255)">L'IMEI est unique et sert de clé de rapprochement avec l'historique des interventions. Il est vérifié par l'algorithme de Luhn côté serveur.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;padding:16px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <span style="font-size:13px;font-weight:700">Modèles fréquents</span>
+          <div style="display:flex;flex-wrap:wrap;gap:7px">
+            <sc-for list="{{ quickModels }}" as="m" hint-placeholder-count="5">
+              <button onClick="{{ m.onClick }}" style="padding:8px 12px;border-radius:9px;border:1px solid oklch(0.90 0.008 258);background:oklch(0.985 0.003 258);font-size:12.5px;font-weight:600;color:oklch(0.34 0.02 255)">{{ m.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:700}}">
+const eur = (n) => (Math.round(n * 100) / 100).toFixed(2).replace(".", ",") + " €";
+const initials = (s) => (s || "").split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+const badge = (m, size) => "display:inline-flex;align-items:center;gap:5px;padding:" + (size === "s" ? "2px 7px" : "4px 9px") + ";border-radius:7px;font-size:" + (size === "s" ? "10.5px" : "11.5px") + ";font-weight:700;white-space:nowrap;background:" + m.bg + ";color:" + m.fg + ";border:1px solid " + m.bd;
+const inputStyle = (bad) => "width:100%;padding:11px 12px;border-radius:10px;font-size:13.5px;background:#fff;border:1.5px solid " + (bad ? "oklch(0.66 0.14 25)" : "oklch(0.88 0.008 258)");
+
+class Component extends DCLogic {
+  state = { q: "", formOpen: false, nc: { nom: "", tel: "", email: "", ville: "" }, touched: false, dev: { client: "c1", marque: "Apple", modele: "", imei: "", couleur: "" }, devTouched: false, saved: false };
+
+  renderVals() {
+    const p = this.props || {};
+    const d = p.data || {};
+    const a = p.actions || {};
+    const st = this.state;
+    const screen = p.screen || "clients";
+    const isDesktop = p.mode !== "mobile";
+    const clients = d.clients || [];
+    const appareils = d.appareils || [];
+    const reps = d.reparations || [];
+    const statuts = d.statuts || [];
+    const sel = a.sel || {};
+    const stt = (k) => statuts.find((s) => s.key === k) || { label: k, hue: "oklch(0.45 0.02 258)", soft: "oklch(0.96 0.005 258)", icon: "●" };
+    const devicesOf = (cid) => appareils.filter((x) => x.client_id === cid);
+
+    const q = st.q.toLowerCase().trim();
+    const filtered = clients.filter((c) => !q || c.nom.toLowerCase().indexOf(q) >= 0 || (c.tel || "").replace(/\s/g, "").indexOf(q.replace(/\s/g, "")) >= 0);
+
+    const c = clients.find((x) => x.id === (sel.client || "c1")) || clients[0] || {};
+    const cDevices = devicesOf(c.id);
+    const cReps = reps.filter((r) => r.client_id === c.id);
+
+    const nc = st.nc;
+    const errNom = st.touched && !nc.nom.trim() ? "Le nom est obligatoire." : "";
+    const errTel = st.touched && !/^0[1-9]([ .-]?[0-9]{2}){4}$/.test(nc.tel.trim()) ? "Format attendu : 06 12 34 56 78." : "";
+    const field = (key, label, ph, req, err) => ({
+      label, ph, value: nc[key], reqStyle: req ? "color:oklch(0.50 0.16 25)" : "display:none",
+      onChange: (e) => this.setState({ nc: Object.assign({}, nc, { [key]: e.target.value }) }),
+      style: inputStyle(!!err), err: err || "",
+      errStyle: err ? "font-size:11.5px;font-weight:600;color:oklch(0.48 0.16 25)" : "display:none",
+    });
+
+    const dev = st.dev;
+    const imeiClean = dev.imei.replace(/\s/g, "");
+    const imeiBad = st.devTouched && !/^[0-9]{15}$/.test(imeiClean);
+    const modeleBad = st.devTouched && !dev.modele.trim();
+    const dField = (key, label, ph, req, bad, hint) => ({
+      label, ph, value: dev[key], reqStyle: req ? "color:oklch(0.50 0.16 25)" : "display:none",
+      onChange: (e) => this.setState({ dev: Object.assign({}, dev, { [key]: e.target.value }), saved: false }),
+      style: inputStyle(bad), invalid: bad ? "true" : "false",
+      hint: bad ? hint.err : hint.ok,
+      hintStyle: "font-size:11.5px;" + (bad ? "font-weight:600;color:oklch(0.48 0.16 25)" : "color:oklch(0.52 0.02 255)"),
+    });
+
+    return {
+      isDesktop, isMobile: !isDesktop,
+      isClients: screen === "clients", isClient: screen === "client", isAppareil: screen === "appareil",
+
+      q: st.q, setQ: (e) => this.setState({ q: e.target.value }),
+      count: String(filtered.length),
+      formOpen: st.formOpen,
+      toggleForm: () => this.setState({ formOpen: !st.formOpen, touched: false }),
+      addBtnLabel: st.formOpen ? "Fermer le formulaire" : "Ajouter un client",
+      addBtnStyle: "display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;font-size:13px;font-weight:700;" + (st.formOpen ? "border:1px solid oklch(0.89 0.008 258);background:#fff;color:oklch(0.34 0.02 255)" : "background:oklch(0.52 0.15 258);color:#fff"),
+      clientFields: [
+        field("nom", "Nom et prénom", "Marion Delcourt", true, errNom),
+        field("tel", "Téléphone", "06 12 34 56 78", true, errTel),
+        field("email", "E-mail", "prenom.nom@email.fr", false, ""),
+        field("ville", "Ville", "Montpellier", false, ""),
+      ],
+      submitClient: (e) => {
+        e.preventDefault();
+        this.setState({ touched: true });
+        if (!nc.nom.trim() || !/^0[1-9]([ .-]?[0-9]{2}){4}$/.test(nc.tel.trim())) return;
+        a.addClient && a.addClient({ nom: nc.nom, tel: nc.tel, email: nc.email, ville: nc.ville || "—" });
+        this.setState({ formOpen: false, touched: false, nc: { nom: "", tel: "", email: "", ville: "" } });
+      },
+      clientCols: [
+        { label: "Client", style: "padding:11px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.46 0.02 255)" },
+        { label: "Téléphone", style: "padding:11px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.46 0.02 255)" },
+        { label: "Ville", style: "padding:11px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.46 0.02 255)" },
+        { label: "Appareils", style: "padding:11px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.46 0.02 255)" },
+        { label: "Réparations", style: "padding:11px 14px;text-align:right;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.46 0.02 255)" },
+        { label: "Total facturé", style: "padding:11px 14px;text-align:right;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.46 0.02 255)" },
+      ],
+      clientRows: filtered.map((x) => ({
+        nom: x.nom, init: initials(x.nom), tel: x.tel, ville: x.ville, depuis: x.depuis,
+        nb: String(x.reparations), total: eur(x.total),
+        devices: devicesOf(x.id).map((y) => y.marque + " " + y.modele),
+        onOpen: () => a.select && a.select("client", x.id, "client"),
+      })),
+
+      c_nom: c.nom, c_init: initials(c.nom), c_depuis: c.depuis, c_ville: c.ville,
+      c_stats: [
+        { label: "Réparations", value: String(cReps.length || c.reparations || 0), color: "oklch(0.24 0.02 255)" },
+        { label: "Total facturé", value: eur(c.total || 0), color: "oklch(0.34 0.10 152)" },
+        { label: "Appareils", value: String(cDevices.length), color: "oklch(0.24 0.02 255)" },
+      ],
+      c_fields: [
+        { label: "Téléphone", value: c.tel, mono: "font-family:'IBM Plex Mono',monospace" },
+        { label: "E-mail", value: c.email, mono: "" },
+        { label: "Ville", value: c.ville, mono: "" },
+        { label: "Identifiant", value: c.id, mono: "font-family:'IBM Plex Mono',monospace" },
+      ],
+      c_devN: cDevices.length + (cDevices.length > 1 ? " appareils" : " appareil"),
+      c_devices: cDevices.map((x) => ({ nom: x.marque + " " + x.modele, imei: x.imei, couleur: x.couleur, depose: x.depose })),
+      c_noDevices: cDevices.length === 0,
+      c_reps: cReps.map((r) => {
+        const ap = appareils.find((y) => y.id === r.appareil_id) || {};
+        const s = stt(r.statut);
+        return {
+          numero: r.numero, appareil: ap.marque + " " + ap.modele,
+          resume: (r.diagnostic || r.symptomes || "").slice(0, 62) + "…",
+          statut: s.label, icon: s.icon, badge: badge({ bg: s.soft, fg: s.hue, bd: s.hue + " / 0.35" }, "s"),
+          prix: r.valide == null ? "à estimer" : eur(r.valide),
+          onOpen: () => a.select && a.select("reparation", r.id, "dossier"),
+        };
+      }),
+      c_noReps: cReps.length === 0,
+      c_goAppareil: () => a.go && a.go("appareil"),
+
+      dClient: dev.client, setDClient: (e) => this.setState({ dev: Object.assign({}, dev, { client: e.target.value }) }),
+      clientOptions: clients.map((x) => ({ id: x.id, nom: x.nom + " — " + x.tel })),
+      deviceFields: [
+        dField("marque", "Marque", "Apple", true, false, { ok: "Apple, Samsung, Xiaomi, Google…", err: "" }),
+        dField("modele", "Modèle", "iPhone 14 Pro", true, modeleBad, { ok: "Tel qu'indiqué par le constructeur.", err: "Le modèle est obligatoire." }),
+        dField("imei", "IMEI", "356938035643809", true, imeiBad, { ok: "15 chiffres — *#06# sur l'appareil.", err: "L'IMEI doit comporter exactement 15 chiffres." }),
+        dField("couleur", "Couleur", "Noir", false, false, { ok: "Facultatif, aide à l'identification.", err: "" }),
+      ],
+      deviceInvalid: false,
+      deviceSubmitStyle: "padding:12px 18px;border-radius:10px;background:oklch(0.52 0.15 258);color:#fff;font-size:13px;font-weight:700",
+      deviceSaved: st.saved,
+      submitDevice: (e) => {
+        e.preventDefault();
+        this.setState({ devTouched: true });
+        if (!/^[0-9]{15}$/.test(imeiClean) || !dev.modele.trim()) return;
+        a.addAppareil && a.addAppareil({ client_id: dev.client, marque: dev.marque, modele: dev.modele, imei: imeiClean, couleur: dev.couleur || "—" });
+        this.setState({ saved: true, devTouched: false, dev: Object.assign({}, dev, { modele: "", imei: "", couleur: "" }) });
+      },
+      previewNom: (dev.marque || "Marque") + " " + (dev.modele || "modèle"),
+      previewImei: imeiClean || "—",
+      previewClient: (clients.find((x) => x.id === dev.client) || {}).nom || "—",
+      quickModels: [
+        { label: "iPhone 13", marque: "Apple", modele: "iPhone 13" },
+        { label: "iPhone 12", marque: "Apple", modele: "iPhone 12" },
+        { label: "Galaxy S22", marque: "Samsung", modele: "Galaxy S22" },
+        { label: "Galaxy S21", marque: "Samsung", modele: "Galaxy S21" },
+        { label: "Redmi Note 11", marque: "Xiaomi", modele: "Redmi Note 11" },
+        { label: "Pixel 7", marque: "Google", modele: "Pixel 7" },
+      ].map((m) => ({ label: m.label, onClick: () => this.setState({ dev: Object.assign({}, dev, { marque: m.marque, modele: m.modele }), saved: false }) })),
+      goClients: () => a.go && a.go("clients"),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

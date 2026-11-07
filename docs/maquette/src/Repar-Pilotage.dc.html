@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div>
+
+  <sc-if value="{{ isRapports }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+        <div style="display:flex;flex-direction:column;gap:7px;flex:1;min-width:230px">
+          <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Période du rapport</span>
+          <div role="radiogroup" aria-label="Période du rapport" style="display:flex;flex-wrap:wrap;gap:6px">
+            <sc-for list="{{ periods }}" as="p" hint-placeholder-count="4">
+              <button role="radio" aria-checked="{{ p.checked }}" onClick="{{ p.onClick }}" style="{{ p.style }}">{{ p.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <label style="display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Du</span>
+          <input type="date" value="2026-07-01" style="padding:10px 12px;border-radius:9px;border:1px solid oklch(0.88 0.008 258);font-size:13px" />
+        </label>
+        <label style="display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Au</span>
+          <input type="date" value="2026-07-26" style="padding:10px 12px;border-radius:9px;border:1px solid oklch(0.88 0.008 258);font-size:13px" />
+        </label>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px">
+        <sc-for list="{{ indicateurs }}" as="i" hint-placeholder-count="6">
+          <div style="display:flex;flex-direction:column;gap:6px;padding:15px;border-radius:13px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:oklch(0.50 0.02 255)">{{ i.label }}</span>
+            <span style="font-size:23px;font-weight:700;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;color:{{ i.color }}">{{ i.value }}</span>
+            <span style="font-size:11.5px;font-weight:600;color:{{ i.deltaColor }}">{{ i.delta }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:13px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <h3 style="margin:0;font-size:14px;font-weight:700">Aperçu — marge par mois</h3>
+          <div style="display:flex;align-items:flex-end;gap:9px;height:150px">
+            <sc-for list="{{ chart }}" as="c" hint-placeholder-count="7">
+              <span style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end">
+                <span data-tiny="1" style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:oklch(0.44 0.02 255)">{{ c.v }}</span>
+                <span style="{{ c.bar }}"></span>
+                <span data-tiny="1" style="font-size:10.5px;color:oklch(0.52 0.02 255)">{{ c.mois }}</span>
+              </span>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <h3 style="margin:0;font-size:14px;font-weight:700">Rentabilité par type de panne</h3>
+          <sc-for list="{{ rentabilite }}" as="r" hint-placeholder-count="5">
+            <div style="display:flex;align-items:center;gap:11px;padding:10px 11px;border-radius:10px;border:1px solid oklch(0.95 0.006 258);background:oklch(0.985 0.003 258)">
+              <span style="flex:1;font-size:12.5px;font-weight:600;color:oklch(0.28 0.02 255)">{{ r.label }}</span>
+              <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">{{ r.vol }}</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:700;color:oklch(0.34 0.10 152)">{{ r.marge }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:17px;border-radius:14px;background:oklch(0.21 0.025 258);color:#fff">
+        <div style="flex:1;min-width:210px;display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:14px;font-weight:700">Exporter le rapport</span>
+          <span style="font-size:12px;color:oklch(0.76 0.02 258)">{{ exportSummary }}</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:9px">
+          <sc-for list="{{ exports }}" as="e" hint-placeholder-count="3">
+            <button onClick="{{ e.onClick }}" style="{{ e.style }}"><span aria-hidden="true">{{ e.icon }}</span><span>{{ e.label }}</span></button>
+          </sc-for>
+        </div>
+      </div>
+      <sc-if value="{{ exported }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="display:flex;align-items:center;gap:9px;padding:12px 14px;border-radius:11px;background:oklch(0.965 0.03 152);border:1px solid oklch(0.86 0.06 152)">
+          <span aria-hidden="true" style="color:oklch(0.38 0.11 152);font-weight:700">✓</span>
+          <span style="font-size:12.5px;font-weight:600;color:oklch(0.34 0.10 152)">{{ exportedLabel }}</span>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isComptes }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+        <span data-muted="1" style="font-size:12.5px;color:oklch(0.46 0.02 255)">{{ userCount }} comptes · {{ activeCount }} actifs</span>
+        <button onClick="{{ toggleForm }}" style="{{ addStyle }}"><span aria-hidden="true">+</span><span>{{ addLabel }}</span></button>
+      </div>
+
+      <sc-if value="{{ formOpen }}" hint-placeholder-val="{{ false }}">
+        <form onSubmit="{{ submitUser }}" style="display:flex;flex-direction:column;gap:13px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.84 0.04 258);border-left:4px solid oklch(0.52 0.15 258)">
+          <span style="font-size:14px;font-weight:700">Créer un compte</span>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px">
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Nom et prénom<span style="color:oklch(0.50 0.16 25)"> *</span></span>
+              <input type="text" value="{{ nuNom }}" onChange="{{ setNuNom }}" placeholder="Camille Perrot" style="{{ nomStyle }}" />
+              <span style="{{ nomErrStyle }}">Le nom est obligatoire.</span>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">E-mail professionnel<span style="color:oklch(0.50 0.16 25)"> *</span></span>
+              <input type="email" value="{{ nuMail }}" onChange="{{ setNuMail }}" placeholder="c.perrot@reparu.fr" style="{{ mailStyle }}" />
+              <span style="{{ mailErrStyle }}">Adresse invalide (domaine @reparu.fr attendu).</span>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Rôle</span>
+              <select value="{{ nuRole }}" onChange="{{ setNuRole }}" style="padding:11px 12px;border-radius:10px;border:1px solid oklch(0.88 0.008 258);font-size:13.5px;background:#fff">
+                <option value="Technicien">Technicien</option>
+                <option value="Administrateur">Administrateur / Responsable d'atelier</option>
+              </select>
+            </label>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px;padding:13px;border-radius:11px;background:oklch(0.975 0.004 258);border:1px solid oklch(0.93 0.008 258)">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:oklch(0.50 0.02 255)">Droits accordés à ce rôle</span>
+            <div style="display:flex;flex-wrap:wrap;gap:7px">
+              <sc-for list="{{ rolePerms }}" as="pm" hint-placeholder-count="4">
+                <span data-badge="1" style="{{ pm.style }}"><span aria-hidden="true">{{ pm.icon }}</span>{{ pm.label }}</span>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;gap:9px">
+            <button type="submit" style="padding:11px 17px;border-radius:10px;background:oklch(0.52 0.15 258);color:#fff;font-size:13px;font-weight:700">Créer le compte</button>
+            <button type="button" onClick="{{ toggleForm }}" style="padding:11px 15px;border-radius:10px;border:1px solid oklch(0.89 0.008 258);font-size:13px;font-weight:600;color:oklch(0.36 0.02 255)">Annuler</button>
+          </div>
+          <span data-tiny="1" style="font-size:11px;line-height:1.5;color:oklch(0.52 0.02 255)">Un mot de passe provisoire est envoyé par e-mail ; il doit être changé à la première connexion (hachage Argon2, jamais stocké en clair).</span>
+        </form>
+      </sc-if>
+
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <div data-table="1" style="border-radius:14px;overflow:hidden;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <table style="width:100%;font-size:13px">
+            <thead>
+              <tr style="background:oklch(0.965 0.005 258);border-bottom:1px solid oklch(0.91 0.008 258)">
+                <sc-for list="{{ cols }}" as="c" hint-placeholder-count="5">
+                  <th scope="col" style="{{ c.style }}">{{ c.label }}</th>
+                </sc-for>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{ rows }}" as="u" hint-placeholder-count="5">
+                <tr style="border-bottom:1px solid oklch(0.955 0.006 258)">
+                  <td style="padding:12px 14px">
+                    <span style="display:flex;align-items:center;gap:10px">
+                      <span aria-hidden="true" style="width:30px;height:30px;border-radius:50%;background:oklch(0.95 0.02 258);color:oklch(0.40 0.10 258);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ u.init }}</span>
+                      <span style="display:flex;flex-direction:column;line-height:1.3">
+                        <span style="font-size:13px;font-weight:700">{{ u.nom }}</span>
+                        <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">{{ u.specialite }}</span>
+                      </span>
+                    </span>
+                  </td>
+                  <td style="padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:oklch(0.38 0.02 255)">{{ u.email }}</td>
+                  <td style="padding:12px 14px"><span data-badge="1" style="{{ u.roleBadge }}">{{ u.role }}</span></td>
+                  <td style="padding:12px 14px"><span data-badge="1" style="{{ u.statutBadge }}"><span aria-hidden="true">{{ u.statutIcon }}</span>{{ u.statut }}</span></td>
+                  <td style="padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:oklch(0.46 0.02 255)">{{ u.dernier }}</td>
+                  <td style="padding:10px 14px;text-align:right">
+                    <button onClick="{{ u.onToggle }}" style="{{ u.actionStyle }}">{{ u.action }}</button>
+                  </td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <sc-for list="{{ rows }}" as="u" hint-placeholder-count="5">
+            <div style="display:flex;flex-direction:column;gap:10px;padding:13px;border-radius:12px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+              <span style="display:flex;align-items:center;gap:10px">
+                <span aria-hidden="true" style="width:36px;height:36px;border-radius:50%;background:oklch(0.95 0.02 258);color:oklch(0.40 0.10 258);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 auto">{{ u.init }}</span>
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3">
+                  <span style="font-size:14px;font-weight:700">{{ u.nom }}</span>
+                  <span data-tiny="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:oklch(0.48 0.02 255)">{{ u.email }}</span>
+                </span>
+              </span>
+              <span style="display:flex;flex-wrap:wrap;gap:7px;align-items:center">
+                <span data-badge="1" style="{{ u.roleBadge }}">{{ u.role }}</span>
+                <span data-badge="1" style="{{ u.statutBadge }}"><span aria-hidden="true">{{ u.statutIcon }}</span>{{ u.statut }}</span>
+                <span style="flex:1"></span>
+                <button onClick="{{ u.onToggle }}" style="{{ u.actionStyle }}">{{ u.action }}</button>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <div style="display:flex;flex-direction:column;gap:9px;padding:16px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+        <h3 style="margin:0;font-size:13.5px;font-weight:700">Journal des accès sensibles</h3>
+        <sc-for list="{{ journal }}" as="j" hint-placeholder-count="4">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:9px 11px;border-radius:10px;border:1px solid oklch(0.955 0.006 258);background:oklch(0.985 0.003 258)">
+            <span style="{{ j.dot }}"></span>
+            <span style="flex:1;min-width:150px;font-size:12.5px;color:oklch(0.30 0.02 255)">{{ j.texte }}</span>
+            <span data-tiny="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:oklch(0.50 0.02 255)">{{ j.le }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:720}}">
+const eur = (n) => Math.round(n).toLocaleString("fr-FR") + " €";
+const initials = (s) => (s || "").split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+const badge = (m, size) => "display:inline-flex;align-items:center;gap:5px;padding:" + (size === "s" ? "2px 7px" : "4px 9px") + ";border-radius:7px;font-size:" + (size === "s" ? "10.5px" : "11.5px") + ";font-weight:700;white-space:nowrap;background:" + m.bg + ";color:" + m.fg + ";border:1px solid " + m.bd;
+const GREEN = { bg: "oklch(0.965 0.03 152)", fg: "oklch(0.36 0.10 152)", bd: "oklch(0.84 0.06 152)" };
+const NEUTRAL = { bg: "oklch(0.96 0.005 258)", fg: "oklch(0.44 0.02 255)", bd: "oklch(0.90 0.008 258)" };
+const BLUE = { bg: "oklch(0.96 0.02 258)", fg: "oklch(0.40 0.10 258)", bd: "oklch(0.90 0.03 258)" };
+const VIOLET = { bg: "oklch(0.965 0.025 292)", fg: "oklch(0.40 0.11 292)", bd: "oklch(0.90 0.04 292)" };
+const TEAL = { bg: "oklch(0.965 0.025 195)", fg: "oklch(0.36 0.08 195)", bd: "oklch(0.88 0.04 195)" };
+const th = (align) => "padding:11px 14px;text-align:" + align + ";font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.46 0.02 255)";
+const inputStyle = (bad) => "width:100%;padding:11px 12px;border-radius:10px;font-size:13.5px;background:#fff;border:1.5px solid " + (bad ? "oklch(0.66 0.14 25)" : "oklch(0.88 0.008 258)");
+
+const PERMS = {
+  Technicien: [{ i: "🛠", l: "Ses dossiers de réparation" }, { i: "🧠", l: "Diagnostic assisté" }, { i: "👁", l: "Stock en lecture seule" }],
+  Administrateur: [{ i: "🛠", l: "Tous les dossiers" }, { i: "📦", l: "Stocks & fournisseurs" }, { i: "◧", l: "Tableau de bord & rapports" }, { i: "🛡", l: "Gestion des comptes" }, { i: "▤", l: "Journal d'audit" }],
+};
+
+class Component extends DCLogic {
+  state = { period: "mois", exported: "", formOpen: false, nu: { nom: "", mail: "", role: "Technicien" }, touched: false };
+
+  renderVals() {
+    const p = this.props || {};
+    const d = p.data || {};
+    const a = p.actions || {};
+    const st = this.state;
+    const screen = p.screen || "rapports";
+    const isDesktop = p.mode !== "mobile";
+    const k = d.kpis || {};
+    const serie = d.serie || [];
+    const users = d.users || [];
+    const maxM = Math.max.apply(null, serie.map((x) => x.marge).concat([1]));
+    const nu = st.nu;
+    const nomBad = st.touched && !nu.nom.trim();
+    const mailBad = st.touched && !/^[^@\s]+@reparu\.fr$/.test(nu.mail.trim());
+    const periodLabel = { semaine: "7 derniers jours", mois: "juillet 2026", trim: "3e trimestre 2026", an: "12 derniers mois" }[st.period];
+
+    return {
+      isDesktop, isMobile: !isDesktop,
+      isRapports: screen === "rapports", isComptes: screen === "comptes",
+
+      periods: [{ k: "semaine", l: "7 jours" }, { k: "mois", l: "Mois en cours" }, { k: "trim", l: "Trimestre" }, { k: "an", l: "12 mois" }].map((x) => ({
+        label: x.l, checked: st.period === x.k ? "true" : "false", onClick: () => this.setState({ period: x.k, exported: "" }),
+        style: "padding:9px 14px;border-radius:9px;font-size:12.5px;font-weight:" + (st.period === x.k ? "700" : "500") + ";border:1.5px solid " + (st.period === x.k ? "oklch(0.82 0.06 258)" : "oklch(0.91 0.008 258)") + ";background:" + (st.period === x.k ? "oklch(0.96 0.025 258)" : "#fff") + ";color:" + (st.period === x.k ? "oklch(0.36 0.12 258)" : "oklch(0.40 0.02 255)"),
+      })),
+      indicateurs: [
+        { label: "Chiffre d'affaires", value: eur(k.ca || 0), delta: k.ca_delta + " vs période précédente", color: "oklch(0.24 0.02 255)", deltaColor: "oklch(0.38 0.10 152)" },
+        { label: "Marge brute", value: eur(k.marge || 0), delta: k.marge_delta + " vs période précédente", color: "oklch(0.34 0.10 152)", deltaColor: "oklch(0.38 0.10 152)" },
+        { label: "Réparations", value: String(k.reparations_mois || 0), delta: k.reparations_delta + " vs période précédente", color: "oklch(0.24 0.02 255)", deltaColor: "oklch(0.38 0.10 152)" },
+        { label: "Délai moyen", value: k.delai_moyen || "—", delta: k.delai_delta + " · objectif 2 j", color: "oklch(0.24 0.02 255)", deltaColor: "oklch(0.38 0.10 152)" },
+        { label: "Taux de retour", value: k.taux_retour || "—", delta: "sous le seuil de 5 %", color: "oklch(0.24 0.02 255)", deltaColor: "oklch(0.46 0.02 255)" },
+        { label: "Panier moyen", value: eur((k.ca || 0) / Math.max(k.reparations_mois || 1, 1)), delta: "par dossier clôturé", color: "oklch(0.24 0.02 255)", deltaColor: "oklch(0.46 0.02 255)" },
+      ],
+      chart: serie.map((x, i) => ({
+        mois: x.mois, v: Math.round(x.marge / 100) / 10 + "k",
+        bar: "display:block;width:100%;max-width:38px;border-radius:6px 6px 3px 3px;height:" + Math.round((x.marge / maxM) * 100) + "%;background:" + (i === serie.length - 1 ? "oklch(0.46 0.12 152)" : "oklch(0.84 0.06 152)"),
+      })),
+      rentabilite: [
+        { label: "Écran cassé", vol: "48 dossiers", marge: "+ 2 640 €" },
+        { label: "Batterie", vol: "31 dossiers", marge: "+ 1 420 €" },
+        { label: "Connecteur de charge", vol: "18 dossiers", marge: "+ 820 €" },
+        { label: "Carte mère / logique", vol: "13 dossiers", marge: "+ 960 €" },
+        { label: "Autres (caméra, HP…)", vol: "18 dossiers", marge: "+ 400 €" },
+      ],
+      exportSummary: "Période : " + periodLabel + " · 6 indicateurs · graphiques inclus",
+      exports: [
+        { label: "PDF", icon: "⤓", key: "PDF" }, { label: "CSV", icon: "▤", key: "CSV" }, { label: "Programmer l'envoi", icon: "✉", key: "envoi" },
+      ].map((e, i) => ({
+        label: e.label, icon: e.icon, onClick: () => this.setState({ exported: e.key }),
+        style: "display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;font-size:13px;font-weight:700;" + (i === 0 ? "background:#fff;color:oklch(0.24 0.02 255)" : "background:oklch(0.28 0.03 258);color:#fff;border:1px solid oklch(0.36 0.03 258)"),
+      })),
+      exported: !!st.exported,
+      exportedLabel: st.exported === "envoi" ? "Envoi mensuel programmé le 1er de chaque mois à 08:00." : "Rapport " + st.exported + " généré — rapport-atelier-" + periodLabel.replace(/ /g, "-").toLowerCase() + "." + String(st.exported).toLowerCase(),
+
+      userCount: String(users.length), activeCount: String(users.filter((u) => u.statut === "Actif").length),
+      formOpen: st.formOpen,
+      toggleForm: () => this.setState({ formOpen: !st.formOpen, touched: false }),
+      addLabel: st.formOpen ? "Fermer" : "Créer un compte",
+      addStyle: "display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;font-size:13px;font-weight:700;" + (st.formOpen ? "border:1px solid oklch(0.89 0.008 258);background:#fff;color:oklch(0.34 0.02 255)" : "background:oklch(0.52 0.15 258);color:#fff"),
+      nuNom: nu.nom, nuMail: nu.mail, nuRole: nu.role,
+      setNuNom: (e) => this.setState({ nu: Object.assign({}, nu, { nom: e.target.value }) }),
+      setNuMail: (e) => this.setState({ nu: Object.assign({}, nu, { mail: e.target.value }) }),
+      setNuRole: (e) => this.setState({ nu: Object.assign({}, nu, { role: e.target.value }) }),
+      nomStyle: inputStyle(nomBad), mailStyle: inputStyle(mailBad),
+      nomErrStyle: nomBad ? "font-size:11.5px;font-weight:600;color:oklch(0.48 0.16 25)" : "display:none",
+      mailErrStyle: mailBad ? "font-size:11.5px;font-weight:600;color:oklch(0.48 0.16 25)" : "display:none",
+      rolePerms: (PERMS[nu.role] || []).map((x) => ({ label: x.l, icon: x.i, style: badge(BLUE, "s") })),
+      submitUser: (e) => {
+        e.preventDefault();
+        this.setState({ touched: true });
+        if (!nu.nom.trim() || !/^[^@\s]+@reparu\.fr$/.test(nu.mail.trim())) return;
+        a.addUser && a.addUser({ nom: nu.nom, email: nu.mail, role: nu.role, specialite: "—" });
+        this.setState({ formOpen: false, touched: false, nu: { nom: "", mail: "", role: "Technicien" } });
+      },
+      cols: [
+        { label: "Utilisateur", style: th("left") }, { label: "E-mail", style: th("left") }, { label: "Rôle", style: th("left") },
+        { label: "Statut", style: th("left") }, { label: "Dernière connexion", style: th("left") }, { label: "", style: th("right") },
+      ],
+      rows: users.map((u) => {
+        const actif = u.statut === "Actif";
+        return {
+          nom: u.nom, init: initials(u.nom), email: u.email, specialite: u.specialite, role: u.role, dernier: u.dernier,
+          roleBadge: badge(u.role === "Administrateur" ? TEAL : BLUE, "s"),
+          statut: u.statut, statutIcon: actif ? "●" : "○", statutBadge: badge(actif ? GREEN : NEUTRAL, "s"),
+          action: actif ? "Désactiver" : "Réactiver",
+          actionStyle: "padding:7px 13px;border-radius:8px;font-size:12px;font-weight:700;border:1px solid " + (actif ? "oklch(0.88 0.06 25)" : "oklch(0.84 0.06 152)") + ";background:" + (actif ? "oklch(0.98 0.015 25)" : "oklch(0.98 0.015 152)") + ";color:" + (actif ? "oklch(0.46 0.15 25)" : "oklch(0.36 0.10 152)"),
+          onToggle: () => a.toggleUser && a.toggleUser(u.id),
+        };
+      }),
+      journal: [
+        { texte: "Connexion réussie — c.vasseur@reparu.fr (Administrateur)", le: "26/07 09:58", ok: true },
+        { texte: "Tentative d'accès refusée au dashboard — l.marchand@reparu.fr (Technicien)", le: "26/07 09:12", ok: false },
+        { texte: "Correction de stock après anomalie capteur — f.haddad@reparu.fr", le: "22/07 10:05", ok: true },
+        { texte: "Compte désactivé — t.aubry@reparu.fr", le: "02/04 15:12", ok: false },
+      ].map((j) => ({
+        texte: j.texte, le: j.le,
+        dot: "display:block;width:8px;height:8px;border-radius:50%;flex:0 0 auto;background:" + (j.ok ? "oklch(0.55 0.13 152)" : "oklch(0.62 0.14 62)"),
+      })),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

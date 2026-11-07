@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="display:flex;flex-direction:column;gap:16px" aria-live="polite">
+
+  <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:center;gap:10px;padding:9px 13px;border-radius:10px;background:oklch(0.96 0.025 258);border:1px solid oklch(0.88 0.04 258);align-self:flex-start">
+        <span aria-hidden="true" style="display:inline-block;width:13px;height:13px;border-radius:50%;border:2px solid oklch(0.80 0.06 258);border-top-color:oklch(0.50 0.15 258);animation:spin .8s linear infinite"></span>
+        <span style="font-size:12.5px;font-weight:600;color:oklch(0.38 0.12 258)">Chargement de {{ what }}…</span>
+      </div>
+      <sc-if value="{{ skelKpi }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px">
+          <sc-for list="{{ four }}" as="i" hint-placeholder-count="4">
+            <div style="height:112px;border-radius:14px;background:linear-gradient(100deg,oklch(0.94 0.006 258) 8%,oklch(0.975 0.004 258) 18%,oklch(0.94 0.006 258) 33%);background-size:460px 100%;animation:shimmer 1.3s linear infinite;border:1px solid oklch(0.91 0.008 258)"></div>
+          </sc-for>
+        </div>
+        <div style="height:250px;border-radius:14px;background:linear-gradient(100deg,oklch(0.94 0.006 258) 8%,oklch(0.975 0.004 258) 18%,oklch(0.94 0.006 258) 33%);background-size:460px 100%;animation:shimmer 1.3s linear infinite;border:1px solid oklch(0.91 0.008 258)"></div>
+      </sc-if>
+      <sc-if value="{{ skelKanban }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;align-items:start">
+          <sc-for list="{{ five }}" as="i" hint-placeholder-count="5">
+            <div style="display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:12px;background:oklch(0.965 0.005 258);border:1px solid oklch(0.91 0.008 258)">
+              <div style="height:14px;width:64%;border-radius:5px;background:linear-gradient(100deg,oklch(0.91 0.008 258) 8%,oklch(0.96 0.005 258) 18%,oklch(0.91 0.008 258) 33%);background-size:460px 100%;animation:shimmer 1.3s linear infinite"></div>
+              <div style="height:74px;border-radius:10px;background:linear-gradient(100deg,oklch(0.93 0.006 258) 8%,#fff 18%,oklch(0.93 0.006 258) 33%);background-size:460px 100%;animation:shimmer 1.3s linear infinite"></div>
+              <div style="height:74px;border-radius:10px;background:linear-gradient(100deg,oklch(0.93 0.006 258) 8%,#fff 18%,oklch(0.93 0.006 258) 33%);background-size:460px 100%;animation:shimmer 1.4s linear infinite"></div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ skelTable }}" hint-placeholder-val="{{ false }}">
+        <div style="border-radius:14px;overflow:hidden;border:1px solid oklch(0.91 0.008 258);background:#fff">
+          <div style="height:44px;background:oklch(0.965 0.005 258);border-bottom:1px solid oklch(0.92 0.008 258)"></div>
+          <sc-for list="{{ eight }}" as="i" hint-placeholder-count="8">
+            <div style="display:flex;gap:18px;align-items:center;padding:14px 16px;border-bottom:1px solid oklch(0.95 0.006 258)">
+              <div style="height:12px;flex:2;border-radius:5px;background:linear-gradient(100deg,oklch(0.93 0.006 258) 8%,oklch(0.975 0.004 258) 18%,oklch(0.93 0.006 258) 33%);background-size:460px 100%;animation:shimmer 1.3s linear infinite"></div>
+              <div style="height:12px;flex:1;border-radius:5px;background:oklch(0.945 0.006 258)"></div>
+              <div style="height:12px;flex:1;border-radius:5px;background:oklch(0.945 0.006 258)"></div>
+              <div style="height:22px;width:84px;border-radius:7px;background:oklch(0.94 0.006 258)"></div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ skelDetail }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px">
+          <sc-for list="{{ four }}" as="i" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+              <div style="height:11px;width:38%;border-radius:5px;background:oklch(0.93 0.006 258)"></div>
+              <div style="height:16px;width:78%;border-radius:5px;background:linear-gradient(100deg,oklch(0.92 0.006 258) 8%,oklch(0.975 0.004 258) 18%,oklch(0.92 0.006 258) 33%);background-size:460px 100%;animation:shimmer 1.3s linear infinite"></div>
+              <div style="height:11px;width:56%;border-radius:5px;background:oklch(0.945 0.006 258)"></div>
+              <div style="height:56px;border-radius:10px;background:oklch(0.965 0.005 258)"></div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <span data-tiny="1" style="font-size:11.5px;color:oklch(0.52 0.02 255)">Squelette de contenu — jamais de spinner plein écran sur une liste ou un tableau.</span>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:56px 28px;border-radius:16px;background:#fff;border:1px dashed oklch(0.84 0.01 258)">
+      <span aria-hidden="true" style="width:56px;height:56px;border-radius:16px;background:oklch(0.96 0.02 258);display:flex;align-items:center;justify-content:center;font-size:24px;color:oklch(0.48 0.12 258)">{{ emptyIcon }}</span>
+      <div style="display:flex;flex-direction:column;gap:7px;max-width:440px">
+        <h3 style="margin:0;font-size:18px;font-weight:700;letter-spacing:-0.01em">{{ emptyTitle }}</h3>
+        <p data-muted="1" style="margin:0;font-size:13.5px;line-height:1.6;color:oklch(0.48 0.02 255);text-wrap:pretty">{{ emptyBody }}</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+        <button onClick="{{ backToNominal }}" style="display:flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;background:oklch(0.52 0.15 258);color:#fff;font-size:13px;font-weight:700">
+          <span aria-hidden="true">+</span><span>{{ emptyCta }}</span>
+        </button>
+        <button onClick="{{ backToNominal }}" style="padding:11px 16px;border-radius:10px;border:1px solid oklch(0.88 0.008 258);font-size:13px;font-weight:600;color:oklch(0.36 0.02 255)">Importer un fichier CSV</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:18px;padding:34px 28px;border-radius:16px;background:#fff;border:1px solid oklch(0.86 0.07 25)">
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <span aria-hidden="true" style="flex:0 0 auto;width:42px;height:42px;border-radius:12px;background:oklch(0.96 0.04 25);color:oklch(0.48 0.17 25);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700">!</span>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <h3 style="margin:0;font-size:17px;font-weight:700;color:oklch(0.40 0.14 25)">Impossible de charger {{ what }}</h3>
+          <p data-muted="1" style="margin:0;font-size:13.5px;line-height:1.6;color:oklch(0.44 0.02 255);max-width:520px;text-wrap:pretty">Le serveur n'a pas répondu dans le délai imparti. Vos données ne sont pas perdues : rien n'a été modifié. Réessayez, ou contactez l'administrateur si le problème persiste.</p>
+          <code data-tiny="1" style="align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:11.5px;padding:5px 9px;border-radius:6px;background:oklch(0.96 0.006 258);color:oklch(0.44 0.02 255)">HTTP 504 · GET /api{{ route }} · trace 8f21c4</code>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <button onClick="{{ backToNominal }}" style="display:flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;background:oklch(0.52 0.15 258);color:#fff;font-size:13px;font-weight:700">
+          <span aria-hidden="true">↺</span><span>Réessayer</span>
+        </button>
+        <button style="padding:11px 16px;border-radius:10px;border:1px solid oklch(0.88 0.008 258);font-size:13px;font-weight:600;color:oklch(0.36 0.02 255)">Signaler l'incident</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isLocked }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:20px;padding:34px 28px;border-radius:16px;background:#fff;border:1px solid oklch(0.88 0.008 258)">
+      <div style="display:flex;gap:14px;align-items:flex-start">
+        <span aria-hidden="true" style="flex:0 0 auto;width:42px;height:42px;border-radius:12px;background:oklch(0.95 0.02 258);color:oklch(0.42 0.10 258);display:flex;align-items:center;justify-content:center;font-size:19px">🔒</span>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <h3 style="margin:0;font-size:17px;font-weight:700">Accès non autorisé pour le rôle « {{ role }} »</h3>
+          <p data-muted="1" style="margin:0;font-size:13.5px;line-height:1.6;color:oklch(0.44 0.02 255);max-width:560px;text-wrap:pretty">L'écran <strong>{{ label }}</strong> est réservé aux rôles suivants : {{ rolesList }}. Le contrôle est appliqué côté serveur (RBAC + JWT) : la ressource n'est pas seulement masquée, elle est refusée.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-radius:12px;background:oklch(0.97 0.005 258);border:1px solid oklch(0.92 0.008 258)">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:oklch(0.50 0.02 255)">Ce que vous pouvez faire</span>
+        <sc-for list="{{ alternatives }}" as="a" hint-placeholder-count="2">
+          <button onClick="{{ a.onClick }}" style="display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:9px;background:#fff;border:1px solid oklch(0.90 0.008 258);font-size:13px;font-weight:600;color:oklch(0.30 0.02 255);text-align:left">
+            <span aria-hidden="true">{{ a.icon }}</span><span style="flex:1">{{ a.label }}</span><span aria-hidden="true" style="color:oklch(0.55 0.02 255)">→</span>
+          </button>
+        </sc-for>
+      </div>
+      <span data-tiny="1" style="font-size:11.5px;color:oklch(0.52 0.02 255)">Journalisé : tentative d'accès refusée · {{ role }} · 26/07/2026 10:15 · trace RBAC-0219</span>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:620},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;loading&quot;,&quot;empty&quot;,&quot;error&quot;,&quot;locked&quot;],&quot;default&quot;:&quot;loading&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aperçu isolé&quot;},&quot;kind&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dashboard&quot;,&quot;kanban&quot;,&quot;table&quot;,&quot;detail&quot;,&quot;form&quot;],&quot;default&quot;:&quot;table&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aperçu isolé&quot;},&quot;role&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Technicien&quot;,&quot;Administrateur&quot;],&quot;default&quot;:&quot;Technicien&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aperçu isolé&quot;},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;desktop&quot;,&quot;mobile&quot;],&quot;default&quot;:&quot;desktop&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Aperçu isolé&quot;},&quot;screen&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;object&quot;},&quot;actions&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;object&quot;}}">
+const EMPTY = {
+  dashboard: { icon: "◧", title: "Aucune donnée sur la période", body: "Aucune réparation clôturée entre le 1er et le 26 juillet 2026. Élargissez la période, ou créez un premier dossier pour alimenter les indicateurs.", cta: "Créer un dossier", what: "les indicateurs" },
+  kanban: { icon: "🛠", title: "Aucun dossier de réparation", body: "Le tableau est vide : aucun appareil n'est actuellement en atelier. Le premier dossier créé apparaîtra dans la colonne « Reçu ».", cta: "Ouvrir un dossier", what: "les dossiers de réparation" },
+  table: { icon: "▤", title: "Aucun élément à afficher", body: "Cette liste est vide, ou aucun élément ne correspond à vos filtres. Réinitialisez la recherche pour voir l'ensemble des enregistrements.", cta: "Ajouter un élément", what: "la liste" },
+  detail: { icon: "◍", title: "Fiche introuvable", body: "Cet enregistrement a peut-être été supprimé ou fusionné. Revenez à la liste pour retrouver la bonne fiche.", cta: "Revenir à la liste", what: "la fiche" },
+  form: { icon: "＋", title: "Formulaire vierge", body: "Aucun brouillon en cours. Remplissez les champs obligatoires pour créer l'enregistrement.", cta: "Commencer la saisie", what: "le formulaire" },
+};
+
+const ALT = {
+  Technicien: [
+    { key: "kanban", icon: "🛠", label: "Voir mes dossiers de réparation" },
+    { key: "inventaire", icon: "📦", label: "Consulter le stock (lecture seule)" },
+  ],
+  Administrateur: [
+    { key: "dashboard", icon: "◧", label: "Tableau de bord de l'atelier" },
+    { key: "comptes", icon: "🛡", label: "Gestion des comptes utilisateurs" },
+  ],
+};
+
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props || {};
+    const st = p.state || "loading";
+    const kind = p.kind || "table";
+    const meta = p.screen || { label: "Inventaire des pièces", route: "/stocks", roles: ["Administrateur"] };
+    const e = EMPTY[kind] || EMPTY.table;
+    const a = p.actions || {};
+    const role = p.role || "Technicien";
+    const roles = (meta.roles || []).filter((r) => r !== "*");
+    return {
+      isLoading: st === "loading", isEmpty: st === "empty", isError: st === "error", isLocked: st === "locked",
+      skelKpi: kind === "dashboard", skelKanban: kind === "kanban", skelTable: kind === "table", skelDetail: kind === "detail" || kind === "form",
+      four: [0, 1, 2, 3], five: [0, 1, 2, 3, 4], eight: [0, 1, 2, 3, 4, 5, 6, 7],
+      what: e.what, emptyIcon: e.icon, emptyTitle: e.title, emptyBody: e.body, emptyCta: e.cta,
+      route: meta.route || "/", label: meta.label || "", role,
+      rolesList: roles.length ? roles.join(", ") : "aucun",
+      backToNominal: () => a.setState && a.setState("nominal"),
+      alternatives: (ALT[role] || ALT.Technicien).map((x) => ({ icon: x.icon, label: x.label, onClick: () => a.go && a.go(x.key) })),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

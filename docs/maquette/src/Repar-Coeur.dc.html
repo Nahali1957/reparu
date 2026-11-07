@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div>
+
+  <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-wrap:wrap;min-height:100%;height:100%">
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1 1 340px;background:oklch(0.21 0.025 258);color:#fff;padding:44px 40px;display:flex;flex-direction:column;gap:34px">
+          <div style="display:flex;align-items:center;gap:11px">
+            <span style="width:34px;height:34px;border-radius:10px;background:oklch(0.55 0.16 258);display:flex;align-items:center;justify-content:center;font-weight:700">Ʀ</span>
+            <span style="font-size:15px;font-weight:700">Repar U</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px;margin-top:auto">
+            <p style="margin:0;font-size:25px;font-weight:300;line-height:1.4;letter-spacing:-0.01em;text-wrap:pretty">« Donner à l'atelier la précision d'un diagnostic assisté et la rigueur d'un pilotage data-driven. »</p>
+            <div style="display:flex;flex-wrap:wrap;gap:22px;padding-top:18px;border-top:1px solid oklch(0.32 0.02 258)">
+              <sc-for list="{{ loginStats }}" as="s" hint-placeholder-count="3">
+                <span style="display:flex;flex-direction:column;gap:2px">
+                  <span style="font-size:21px;font-weight:700;font-family:'IBM Plex Mono',monospace;color:oklch(0.80 0.10 258)">{{ s.v }}</span>
+                  <span style="font-size:11px;color:oklch(0.74 0.02 258)">{{ s.l }}</span>
+                </span>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <div style="flex:1 1 420px;display:flex;align-items:center;justify-content:center;padding:36px 28px;background:oklch(0.98 0.004 258)">
+        <form onSubmit="{{ submit }}" style="width:100%;max-width:376px;display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.02em">Connexion à l'atelier</h2>
+            <p data-muted="1" style="margin:0;font-size:13.5px;color:oklch(0.48 0.02 255)">Accès réservé au personnel — authentification JWT, session de 8 h.</p>
+          </div>
+          <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+            <div role="alert" style="display:flex;gap:10px;align-items:flex-start;padding:12px 13px;border-radius:10px;background:oklch(0.96 0.04 25);border:1px solid oklch(0.84 0.09 25)">
+              <span aria-hidden="true" style="font-weight:700;color:oklch(0.48 0.17 25)">!</span>
+              <span style="font-size:13px;line-height:1.5;color:oklch(0.38 0.13 25)"><strong>Identifiants invalides.</strong> Vérifiez votre adresse e-mail et votre mot de passe. 3 tentatives restantes avant blocage temporaire du compte.</span>
+            </div>
+          </sc-if>
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:12.5px;font-weight:600;color:oklch(0.34 0.02 255)">Adresse e-mail</span>
+            <input type="email" value="{{ email }}" onChange="{{ setEmail }}" autoComplete="username" style="{{ emailStyle }}" />
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;font-weight:600;color:oklch(0.34 0.02 255)">
+              <span>Mot de passe</span>
+              <a href="#mdp" style="font-size:12px;font-weight:500">Mot de passe oublié ?</a>
+            </span>
+            <input type="password" value="{{ pwd }}" onChange="{{ setPwd }}" autoComplete="current-password" style="{{ pwdStyle }}" />
+          </label>
+          <label style="display:flex;align-items:center;gap:9px;font-size:13px;color:oklch(0.36 0.02 255)">
+            <input type="checkbox" style="width:17px;height:17px;accent-color:oklch(0.52 0.15 258)" />
+            <span>Se souvenir de ce poste (30 jours)</span>
+          </label>
+          <button type="submit" style="{{ submitStyle }}">
+            <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}">
+              <span aria-hidden="true" style="display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid oklch(0.75 0.06 258);border-top-color:#fff;animation:spin .8s linear infinite"></span>
+            </sc-if>
+            <span>{{ submitLabel }}</span>
+          </button>
+          <div style="display:flex;flex-direction:column;gap:8px;padding:13px;border-radius:11px;background:#fff;border:1px solid oklch(0.90 0.008 258)">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:oklch(0.50 0.02 255)">Comptes de démonstration</span>
+            <sc-for list="{{ demoAccounts }}" as="d" hint-placeholder-count="3">
+              <button type="button" onClick="{{ d.onClick }}" style="display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:8px;border:1px solid oklch(0.92 0.008 258);font-size:12.5px;text-align:left;background:oklch(0.985 0.003 258)">
+                <span aria-hidden="true">{{ d.icon }}</span>
+                <span style="flex:1;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:oklch(0.40 0.02 255)">{{ d.email }}</span>
+                <span data-badge="1" style="{{ d.badge }}">{{ d.role }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </form>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isDash }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+        <div role="radiogroup" aria-label="Période" style="display:flex;gap:5px;padding:4px;background:oklch(0.94 0.006 258);border-radius:10px">
+          <sc-for list="{{ periods }}" as="p" hint-placeholder-count="4">
+            <button onClick="{{ p.onClick }}" role="radio" aria-checked="{{ p.checked }}" style="{{ p.style }}">{{ p.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:9px">
+          <button style="display:flex;align-items:center;gap:7px;padding:9px 14px;border-radius:9px;border:1px solid oklch(0.89 0.008 258);background:#fff;font-size:12.5px;font-weight:600"><span aria-hidden="true">⤓</span><span>Exporter</span></button>
+          <button onClick="{{ goRapports }}" style="display:flex;align-items:center;gap:7px;padding:9px 14px;border-radius:9px;background:oklch(0.52 0.15 258);color:#fff;font-size:12.5px;font-weight:700"><span aria-hidden="true">📊</span><span>Rapport détaillé</span></button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:13px">
+        <sc-for list="{{ kpiCards }}" as="k" hint-placeholder-count="4">
+          <div style="{{ k.style }}">
+            <span style="display:flex;align-items:center;gap:7px;font-size:11px;font-family:'IBM Plex Mono',monospace;letter-spacing:.09em;text-transform:uppercase;color:{{ k.labelColor }}">
+              <span aria-hidden="true">{{ k.icon }}</span><span>{{ k.label }}</span>
+            </span>
+            <span style="font-size:31px;font-weight:700;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;color:{{ k.valueColor }}">{{ k.value }}</span>
+            <span style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:{{ k.deltaColor }}">
+              <span aria-hidden="true">{{ k.arrow }}</span><span>{{ k.delta }}</span>
+              <span data-muted="1" style="font-weight:400;color:{{ k.subColor }}">{{ k.sub }}</span>
+            </span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:11px;align-items:center;padding:13px 15px;border-radius:13px;background:oklch(0.98 0.02 25);border:1px solid oklch(0.88 0.06 25)">
+        <span aria-hidden="true" style="width:30px;height:30px;border-radius:9px;background:oklch(0.96 0.04 25);color:oklch(0.46 0.16 25);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700">◷</span>
+        <span style="flex:1;min-width:200px;display:flex;flex-direction:column;line-height:1.4">
+          <span style="font-size:13.5px;font-weight:700;color:oklch(0.34 0.02 255)">{{ slaCount }} l'engagement de 48 h</span>
+          <span data-muted="1" style="font-size:12px;color:oklch(0.46 0.02 255)">Le délai court depuis la réception ; les dossiers clôturés et ceux en attente d'une pièce en rupture sont exclus du calcul.</span>
+        </span>
+        <span style="display:flex;flex-wrap:wrap;gap:7px">
+          <sc-for list="{{ slaCards }}" as="s" hint-placeholder-count="2">
+            <button onClick="{{ s.onClick }}" style="display:flex;align-items:center;gap:8px;padding:8px 11px;border-radius:9px;background:#fff;border:1px solid oklch(0.90 0.04 25);font-size:12px;font-weight:600;color:oklch(0.30 0.02 255)">
+              <span data-underline="1" style="font-family:'IBM Plex Mono',monospace;font-weight:700;color:oklch(0.44 0.14 25)">{{ s.numero }}</span>
+              <span>{{ s.appareil }}</span>
+              <span data-tiny="1" style="font-size:11px;color:oklch(0.48 0.02 255)">{{ s.retard }}</span>
+            </button>
+          </sc-for>
+        </span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:16px;padding:18px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+            <h3 style="margin:0;font-size:14.5px;font-weight:700">Évolution des réparations</h3>
+            <span data-muted="1" style="font-size:11.5px;color:oklch(0.50 0.02 255)">nombre de dossiers clôturés / mois</span>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:10px;height:196px;padding-top:8px">
+            <sc-for list="{{ chart }}" as="c" hint-placeholder-count="7">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end">
+                <span style="font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums;color:oklch(0.34 0.02 255)">{{ c.n }}</span>
+                <div style="{{ c.barStyle }}"></div>
+                <span data-tiny="1" style="font-size:11px;color:oklch(0.52 0.02 255)">{{ c.mois }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:14px;padding-top:12px;border-top:1px solid oklch(0.94 0.006 258)">
+            <sc-for list="{{ chartLegend }}" as="l" hint-placeholder-count="2">
+              <span style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:oklch(0.42 0.02 255)">
+                <span aria-hidden="true" style="{{ l.dot }}"></span><span>{{ l.label }}</span>
+              </span>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <h3 style="margin:0;font-size:14.5px;font-weight:700">Alertes de rupture</h3>
+            <span data-badge="1" style="display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:8px;font-size:11.5px;font-weight:700;background:oklch(0.96 0.04 25);color:oklch(0.42 0.15 25);border:1px solid oklch(0.86 0.08 25)">
+              <span aria-hidden="true">■</span><span>{{ alertN }} à traiter</span>
+            </span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <sc-for list="{{ alerts }}" as="a" hint-placeholder-count="3">
+              <button onClick="{{ a.onClick }}" style="display:flex;flex-direction:column;gap:8px;padding:12px;border-radius:11px;border:1px solid {{ a.border }};background:{{ a.bg }};text-align:left">
+                <span style="display:flex;align-items:center;gap:9px;width:100%">
+                  <span style="flex:1;font-size:13px;font-weight:700;color:oklch(0.26 0.02 255)">{{ a.nom }}</span>
+                  <span data-badge="1" style="{{ a.badge }}"><span aria-hidden="true">{{ a.icon }}</span>{{ a.statut }}</span>
+                </span>
+                <span data-muted="1" style="font-size:11.5px;color:oklch(0.46 0.02 255)">{{ a.compat }} · seuil {{ a.seuil }} · couverture {{ a.couv }}</span>
+                <span style="display:flex;align-items:center;gap:9px;width:100%">
+                  <span style="flex:1;height:7px;border-radius:99px;background:oklch(0.92 0.008 258);overflow:hidden">
+                    <span style="{{ a.fill }}"></span>
+                  </span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;color:{{ a.color }}">{{ a.stock }}/{{ a.seuil }}</span>
+                </span>
+              </button>
+            </sc-for>
+          </div>
+          <button onClick="{{ goStocks }}" style="margin-top:2px;padding:10px;border-radius:9px;border:1px solid oklch(0.89 0.008 258);font-size:12.5px;font-weight:600;color:oklch(0.34 0.02 255)">Voir tout l'inventaire →</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:13px;padding:18px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <h3 style="margin:0;font-size:14.5px;font-weight:700">Répartition des interventions</h3>
+          <sc-for list="{{ pannes }}" as="p" hint-placeholder-count="5">
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <span style="display:flex;justify-content:space-between;font-size:12.5px">
+                <span style="color:oklch(0.30 0.02 255)">{{ p.label }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-weight:600;color:oklch(0.40 0.02 255)">{{ p.pct }} %</span>
+              </span>
+              <span style="height:8px;border-radius:99px;background:oklch(0.94 0.006 258);overflow:hidden;display:block">
+                <span style="{{ p.fill }}"></span>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:11px;padding:18px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <h3 style="margin:0;font-size:14.5px;font-weight:700">Derniers dossiers clôturés</h3>
+          <sc-for list="{{ recent }}" as="r" hint-placeholder-count="4">
+            <button onClick="{{ r.onClick }}" style="display:flex;align-items:center;gap:11px;padding:10px;border-radius:10px;border:1px solid oklch(0.94 0.006 258);background:oklch(0.985 0.003 258);text-align:left">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;color:oklch(0.44 0.13 258)">{{ r.numero }}</span>
+              <span style="flex:1;min-width:0;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:oklch(0.30 0.02 255)">{{ r.appareil }}</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:oklch(0.36 0.10 152)">+{{ r.marge }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+            <h3 style="margin:0;font-size:14.5px;font-weight:700">Charge par technicien</h3>
+            <span data-muted="1" style="font-size:11.5px;color:oklch(0.50 0.02 255)">dossiers ouverts</span>
+          </div>
+          <sc-for list="{{ charge }}" as="c" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <span style="display:flex;align-items:center;gap:9px">
+                <span aria-hidden="true" style="width:24px;height:24px;border-radius:50%;background:oklch(0.95 0.02 258);color:oklch(0.40 0.10 258);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ c.init }}</span>
+                <span style="flex:1;font-size:12.5px;font-weight:600;color:oklch(0.28 0.02 255)">{{ c.nom }}</span>
+                <span data-badge="1" style="{{ c.badge }}">{{ c.label }}</span>
+              </span>
+              <span style="height:8px;border-radius:99px;background:oklch(0.94 0.006 258);overflow:hidden;display:block">
+                <span style="{{ c.fill }}"></span>
+              </span>
+              <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">{{ c.detail }}</span>
+            </div>
+          </sc-for>
+          <button onClick="{{ goPlanning }}" style="margin-top:2px;padding:10px;border-radius:9px;border:1px solid oklch(0.89 0.008 258);font-size:12.5px;font-weight:600;color:oklch(0.34 0.02 255)">Rééquilibrer les affectations →</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isKanbanDesktop }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+          <sc-for list="{{ filters }}" as="f" hint-placeholder-count="3">
+            <button onClick="{{ f.onClick }}" aria-pressed="{{ f.checked }}" style="{{ f.style }}">{{ f.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:9px;align-items:center">
+          <span data-muted="1" style="font-size:12px;color:oklch(0.48 0.02 255)">{{ total }} dossiers ouverts</span>
+          <button onClick="{{ n_toggle }}" aria-expanded="{{ n_open }}" style="{{ n_btnStyle }}"><span aria-hidden="true">{{ n_btnIcon }}</span><span>{{ n_btnLabel }}</span></button>
+        </div>
+      </div>
+
+      <sc-if value="{{ n_created }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="display:flex;flex-wrap:wrap;align-items:center;gap:11px;padding:12px 14px;border-radius:11px;background:oklch(0.965 0.03 152);border:1px solid oklch(0.86 0.06 152)">
+          <span aria-hidden="true" style="width:24px;height:24px;border-radius:7px;background:oklch(0.46 0.11 152);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center">✓</span>
+          <span style="flex:1;min-width:180px;font-size:13px;color:oklch(0.30 0.08 152)"><strong>{{ n_createdNum }}</strong> créé dans la colonne « Reçu » — le diagnostic assisté a déjà proposé {{ n_createdIA }}.</span>
+          <button onClick="{{ n_openCreated }}" style="padding:8px 13px;border-radius:9px;background:oklch(0.44 0.11 152);color:#fff;font-size:12.5px;font-weight:700">Ouvrir le dossier →</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ n_isOpen }}" hint-placeholder-val="{{ false }}">
+        <form onSubmit="{{ n_submit }}" style="display:flex;flex-direction:column;gap:13px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.84 0.04 258);border-left:4px solid oklch(0.52 0.15 258)">
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:15px;font-weight:700">Ouvrir un dossier de réparation</span>
+            <span data-muted="1" style="font-size:12.5px;color:oklch(0.48 0.02 255)">Le dossier est créé au statut « Reçu ». Le diagnostic assisté s'exécute dès la saisie des symptômes.</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:11px">
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Appareil déposé<span style="color:oklch(0.50 0.16 25)"> *</span></span>
+              <select value="{{ n_appareil }}" onChange="{{ n_setAppareil }}" style="{{ n_appareilStyle }}">
+                <option value="">— Choisir un appareil —</option>
+                <sc-for list="{{ n_appareilOptions }}" as="o" hint-placeholder-count="6">
+                  <option value="{{ o.id }}">{{ o.label }}</option>
+                </sc-for>
+              </select>
+              <span style="{{ n_appareilErrStyle }}">Sélectionnez l'appareil concerné.</span>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Priorité</span>
+              <div role="radiogroup" aria-label="Priorité" style="display:flex;gap:6px">
+                <sc-for list="{{ n_prios }}" as="p" hint-placeholder-count="3">
+                  <button type="button" role="radio" aria-checked="{{ p.checked }}" onClick="{{ p.onClick }}" style="{{ p.style }}">{{ p.label }}</button>
+                </sc-for>
+              </div>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Technicien affecté</span>
+              <select value="{{ n_tech }}" onChange="{{ n_setTech }}" style="width:100%;padding:11px 12px;border-radius:10px;border:1.5px solid oklch(0.88 0.008 258);font-size:13.5px;background:#fff">
+                <option value="">Non affecté (pool)</option>
+                <sc-for list="{{ n_techOptions }}" as="o" hint-placeholder-count="2">
+                  <option value="{{ o.id }}">{{ o.label }}</option>
+                </sc-for>
+              </select>
+            </label>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+              <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Symptômes constatés à l'accueil<span style="color:oklch(0.50 0.16 25)"> *</span></span>
+              <span data-tiny="1" style="font-size:11px;color:oklch(0.52 0.02 255)">{{ n_count }}</span>
+            </span>
+            <textarea rows="3" value="{{ n_symptomes }}" onChange="{{ n_setSymptomes }}" placeholder="Décrivez ce que le client constate : « ne charge plus, le câble ne tient pas dans le port »…" style="{{ n_symptomesStyle }}"></textarea>
+            <span style="{{ n_symptomesErrStyle }}">Décrivez le symptôme en 15 caractères minimum — c'est ce texte que le modèle analyse.</span>
+          </label>
+          <sc-if value="{{ n_hasPreview }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 13px;border-radius:11px;background:oklch(0.975 0.008 195);border:1px dashed oklch(0.82 0.04 195)">
+              <span aria-hidden="true" style="width:24px;height:24px;border-radius:7px;background:oklch(0.55 0.10 195);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center">🧠</span>
+              <span style="flex:1;min-width:180px;font-size:12.5px;line-height:1.5;color:oklch(0.32 0.06 195)"><strong>Pré-diagnostic :</strong> {{ n_previewLabel }}</span>
+              <span data-badge="1" style="{{ n_previewBadge }}">Confiance {{ n_previewPct }}</span>
+            </div>
+          </sc-if>
+          <div style="display:flex;flex-wrap:wrap;gap:9px">
+            <button type="submit" style="padding:11px 17px;border-radius:10px;background:oklch(0.52 0.15 258);color:#fff;font-size:13px;font-weight:700">Créer le dossier</button>
+            <button type="button" onClick="{{ n_toggle }}" style="padding:11px 15px;border-radius:10px;border:1px solid oklch(0.89 0.008 258);font-size:13px;font-weight:600;color:oklch(0.36 0.02 255)">Annuler</button>
+            <span style="flex:1"></span>
+            <button type="button" onClick="{{ n_goAppareil }}" style="padding:11px 15px;border-radius:10px;border:1px solid oklch(0.89 0.008 258);font-size:13px;font-weight:600;color:oklch(0.36 0.02 255)">L'appareil n'est pas dans la liste →</button>
+          </div>
+        </form>
+      </sc-if>
+      <div style="display:flex;gap:11px;align-items:flex-start;overflow-x:auto;padding-bottom:6px">
+        <sc-for list="{{ columns }}" as="col" hint-placeholder-count="5">
+          <div onDragOver="{{ col.onDragOver }}" onDrop="{{ col.onDrop }}" onDragLeave="{{ col.onDragLeave }}" style="{{ col.style }}">
+            <div style="display:flex;align-items:center;gap:8px;padding:0 2px 2px">
+              <span aria-hidden="true" style="color:{{ col.hue }};font-size:12px">{{ col.icon }}</span>
+              <span style="flex:1;font-size:12.5px;font-weight:700;color:{{ col.hue }}">{{ col.label }}</span>
+              <span style="min-width:22px;padding:2px 7px;border-radius:7px;background:{{ col.hue }};color:#fff;font-size:11px;font-weight:700;text-align:center;font-variant-numeric:tabular-nums">{{ col.count }}</span>
+            </div>
+            <span style="{{ col.rule }}"></span>
+            <sc-for list="{{ col.cards }}" as="c" hint-placeholder-count="2">
+              <div draggable="true" onDragStart="{{ c.onDragStart }}" onDragEnd="{{ c.onDragEnd }}" style="{{ c.style }}">
+                <button onClick="{{ c.onOpen }}" style="display:flex;flex-direction:column;gap:7px;width:100%;text-align:left">
+                  <span style="display:flex;align-items:center;gap:7px;width:100%">
+                    <span data-underline="1" style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;color:oklch(0.42 0.13 258)">{{ c.numero }}</span>
+                    <span style="{{ c.prioStyle }}">{{ c.priorite }}</span>
+                  </span>
+                  <span style="font-size:13px;font-weight:700;color:oklch(0.24 0.02 255)">{{ c.appareil }}</span>
+                  <span data-muted="1" style="font-size:11.5px;line-height:1.45;color:oklch(0.46 0.02 255);display:block">{{ c.resume }}</span>
+                  <span style="display:flex;align-items:center;gap:7px;width:100%;padding-top:3px">
+                    <span aria-hidden="true" style="width:20px;height:20px;border-radius:50%;background:oklch(0.94 0.02 258);color:oklch(0.40 0.10 258);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ c.techInit }}</span>
+                    <span data-tiny="1" style="flex:1;font-size:11px;color:oklch(0.48 0.02 255)">{{ c.tech }}</span>
+                    <span style="{{ c.iaStyle }}" title="Score de confiance du diagnostic assisté">{{ c.iaLabel }}</span>
+                  </span>
+                </button>
+                <div style="display:flex;gap:5px;padding-top:8px;margin-top:6px;border-top:1px solid oklch(0.94 0.006 258)">
+                  <button onClick="{{ c.onPrev }}" disabled="{{ c.noPrev }}" aria-label="{{ c.prevLabel }}" style="{{ c.prevStyle }}"><span aria-hidden="true">◀</span></button>
+                  <button onClick="{{ c.onNext }}" disabled="{{ c.noNext }}" aria-label="{{ c.nextLabel }}" style="{{ c.nextStyle }}"><span aria-hidden="true">▶</span></button>
+                  <span data-tiny="1" style="flex:1;text-align:right;font-size:10.5px;color:oklch(0.56 0.02 255);align-self:center">{{ c.age }}</span>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ col.isEmpty }}" hint-placeholder-val="{{ false }}">
+              <span data-tiny="1" style="display:block;padding:16px 10px;text-align:center;font-size:11.5px;color:oklch(0.58 0.02 255);border:1px dashed oklch(0.88 0.008 258);border-radius:10px">Aucun dossier</span>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:11px 14px;border-radius:11px;background:oklch(0.96 0.02 258);border:1px solid oklch(0.90 0.03 258)">
+        <span aria-hidden="true" style="color:oklch(0.42 0.12 258)">⌨</span>
+        <span style="font-size:12.5px;color:oklch(0.34 0.06 258)">Glisser-déposer pour changer de statut — ou les boutons <strong>◀ ▶</strong> de chaque carte, accessibles au clavier (Tab puis Entrée). Chaque changement est journalisé dans l'historique du dossier.</span>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isKanbanMobile }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div role="tablist" aria-label="Statut des dossiers" style="display:flex;gap:6px;overflow-x:auto;padding-bottom:4px">
+        <sc-for list="{{ mobileTabs }}" as="t" hint-placeholder-count="5">
+          <button role="tab" aria-selected="{{ t.selected }}" onClick="{{ t.onClick }}" style="{{ t.style }}">
+            <span aria-hidden="true">{{ t.icon }}</span><span>{{ t.label }}</span>
+            <span style="{{ t.countStyle }}">{{ t.count }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ mobileCards }}" as="c" hint-placeholder-count="3">
+          <div style="{{ c.mStyle }}">
+            <button onClick="{{ c.onOpen }}" style="display:flex;flex-direction:column;gap:7px;width:100%;text-align:left">
+              <span style="display:flex;align-items:center;gap:8px;width:100%">
+                <span data-underline="1" style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:oklch(0.42 0.13 258)">{{ c.numero }}</span>
+                <span style="{{ c.prioStyle }}">{{ c.priorite }}</span>
+                <span style="{{ c.iaStyle }}">{{ c.iaLabel }}</span>
+              </span>
+              <span style="font-size:14.5px;font-weight:700;color:oklch(0.24 0.02 255)">{{ c.appareil }}</span>
+              <span data-muted="1" style="font-size:12px;line-height:1.45;color:oklch(0.46 0.02 255);display:block">{{ c.resume }}</span>
+              <span data-tiny="1" style="font-size:11px;color:oklch(0.48 0.02 255)">{{ c.tech }} · {{ c.age }}</span>
+            </button>
+            <div style="display:flex;flex-direction:column;gap:7px;padding-top:9px;margin-top:8px;border-top:1px solid oklch(0.94 0.006 258)">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:oklch(0.52 0.02 255)">Changer le statut</span>
+              <div style="display:flex;gap:6px">
+                <sc-for list="{{ c.steps }}" as="s" hint-placeholder-count="5">
+                  <button onClick="{{ s.onClick }}" aria-label="{{ s.aria }}" aria-current="{{ s.current }}" style="{{ s.style }}"><span aria-hidden="true">{{ s.icon }}</span></button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+        <sc-if value="{{ mobileEmpty }}" hint-placeholder-val="{{ false }}">
+          <span style="display:block;padding:28px 12px;text-align:center;font-size:13px;color:oklch(0.55 0.02 255);border:1px dashed oklch(0.88 0.008 258);border-radius:12px">Aucun dossier dans cette colonne</span>
+        </sc-if>
+      </div>
+      <sc-if value="{{ n_created }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="display:flex;flex-direction:column;gap:9px;padding:13px;border-radius:12px;background:oklch(0.965 0.03 152);border:1px solid oklch(0.86 0.06 152)">
+          <span style="font-size:13px;line-height:1.5;color:oklch(0.30 0.08 152)"><strong>{{ n_createdNum }}</strong> créé dans « Reçu » — pré-diagnostic : {{ n_createdIA }}.</span>
+          <button onClick="{{ n_openCreated }}" style="padding:11px;border-radius:10px;background:oklch(0.44 0.11 152);color:#fff;font-size:13px;font-weight:700">Ouvrir le dossier →</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ n_isOpen }}" hint-placeholder-val="{{ false }}">
+        <form onSubmit="{{ n_submit }}" style="display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:12px;background:#fff;border:1px solid oklch(0.84 0.04 258);border-left:4px solid oklch(0.52 0.15 258)">
+          <span style="font-size:14.5px;font-weight:700">Ouvrir un dossier</span>
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Appareil déposé<span style="color:oklch(0.50 0.16 25)"> *</span></span>
+            <select value="{{ n_appareil }}" onChange="{{ n_setAppareil }}" style="{{ n_appareilStyle }}">
+              <option value="">— Choisir un appareil —</option>
+              <sc-for list="{{ n_appareilOptions }}" as="o" hint-placeholder-count="6">
+                <option value="{{ o.id }}">{{ o.label }}</option>
+              </sc-for>
+            </select>
+            <span style="{{ n_appareilErrStyle }}">Sélectionnez l'appareil concerné.</span>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Priorité</span>
+            <div role="radiogroup" aria-label="Priorité" style="display:flex;gap:6px">
+              <sc-for list="{{ n_prios }}" as="p" hint-placeholder-count="3">
+                <button type="button" role="radio" aria-checked="{{ p.checked }}" onClick="{{ p.onClick }}" style="{{ p.style }}">{{ p.label }}</button>
+              </sc-for>
+            </div>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:12px;font-weight:600;color:oklch(0.34 0.02 255)">Symptômes constatés<span style="color:oklch(0.50 0.16 25)"> *</span></span>
+            <textarea rows="3" value="{{ n_symptomes }}" onChange="{{ n_setSymptomes }}" placeholder="« Ne charge plus, le câble ne tient pas »…" style="{{ n_symptomesStyle }}"></textarea>
+            <span style="{{ n_symptomesErrStyle }}">15 caractères minimum — c'est ce texte que le modèle analyse.</span>
+          </label>
+          <sc-if value="{{ n_hasPreview }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:7px;padding:11px;border-radius:10px;background:oklch(0.975 0.008 195);border:1px dashed oklch(0.82 0.04 195)">
+              <span style="font-size:12.5px;line-height:1.5;color:oklch(0.32 0.06 195)"><strong>Pré-diagnostic :</strong> {{ n_previewLabel }}</span>
+              <span data-badge="1" style="{{ n_previewBadge }}">Confiance {{ n_previewPct }}</span>
+            </div>
+          </sc-if>
+          <button type="submit" style="padding:13px;border-radius:11px;background:oklch(0.52 0.15 258);color:#fff;font-size:14px;font-weight:700">Créer le dossier</button>
+        </form>
+      </sc-if>
+      <button onClick="{{ n_toggle }}" aria-expanded="{{ n_open }}" style="{{ n_mobileBtnStyle }}"><span aria-hidden="true">{{ n_btnIcon }}</span><span>{{ n_btnLabel }}</span></button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isDossier }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:15px">
+      <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+        <div style="display:flex;flex-direction:column;gap:6px;min-width:200px;flex:1">
+          <span style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;letter-spacing:-0.01em">{{ d_numero }}</span>
+            <span data-badge="1" style="{{ d_statutBadge }}"><span aria-hidden="true">{{ d_statutIcon }}</span>{{ d_statutLabel }}</span>
+            <span style="{{ d_prioStyle }}">{{ d_priorite }}</span>
+          </span>
+          <span style="font-size:19px;font-weight:700;letter-spacing:-0.015em">{{ d_appareil }}</span>
+          <span data-muted="1" style="font-size:12.5px;color:oklch(0.46 0.02 255)">IMEI {{ d_imei }} · reçu le {{ d_recu }} · technicien {{ d_tech }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px;min-width:190px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:oklch(0.50 0.02 255)">Client</span>
+          <button onClick="{{ d_goClient }}" style="display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:10px;border:1px solid oklch(0.92 0.008 258);background:oklch(0.985 0.003 258);text-align:left">
+            <span aria-hidden="true" style="width:28px;height:28px;border-radius:50%;background:oklch(0.94 0.02 258);color:oklch(0.40 0.10 258);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ d_clientInit }}</span>
+            <span style="display:flex;flex-direction:column;line-height:1.3">
+              <span style="font-size:13px;font-weight:700">{{ d_client }}</span>
+              <span data-tiny="1" style="font-size:11px;color:oklch(0.48 0.02 255)">{{ d_tel }}</span>
+            </span>
+          </button>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button onClick="{{ d_onPrev }}" disabled="{{ d_noPrev }}" style="{{ d_prevStyle }}"><span aria-hidden="true">◀</span><span>{{ d_prevLabel }}</span></button>
+          <button onClick="{{ d_onNext }}" disabled="{{ d_noNext }}" style="{{ d_nextStyle }}"><span>{{ d_nextLabel }}</span><span aria-hidden="true">▶</span></button>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:9px;align-items:center">
+        <sc-for list="{{ d_quick }}" as="q" hint-placeholder-count="4">
+          <button onClick="{{ q.onClick }}" style="{{ q.style }}"><span aria-hidden="true">{{ q.icon }}</span><span>{{ q.label }}</span></button>
+        </sc-for>
+        <span style="flex:1"></span>
+        <span style="display:flex;align-items:center;gap:9px;padding:8px 13px;border-radius:10px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+          <span aria-hidden="true" style="color:oklch(0.50 0.02 255)">◷</span>
+          <span data-tiny="1" style="font-size:11px;font-family:'IBM Plex Mono',monospace;letter-spacing:.07em;text-transform:uppercase;color:oklch(0.50 0.02 255)">Temps passé</span>
+          <span style="font-size:14px;font-weight:700;font-variant-numeric:tabular-nums">{{ d_temps }}</span>
+          <button onClick="{{ d_toggleTimer }}" aria-pressed="{{ d_timerOn }}" style="{{ d_timerStyle }}">{{ d_timerLabel }}</button>
+        </span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;flex-direction:column;gap:11px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+            <label style="display:flex;flex-direction:column;gap:7px">
+              <span style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                <span style="font-size:13px;font-weight:700">Symptômes constatés</span>
+                <span data-tiny="1" style="font-size:11px;color:oklch(0.52 0.02 255)">saisi à l'accueil · modifiable</span>
+              </span>
+              <textarea rows="4" value="{{ d_symptomes }}" onChange="{{ d_setSymptomes }}" style="width:100%;padding:11px 12px;border-radius:10px;border:1px solid oklch(0.88 0.008 258);font-size:13px;line-height:1.55;resize:vertical;background:oklch(0.99 0.002 258)"></textarea>
+            </label>
+            <button onClick="{{ d_runDiag }}" style="{{ d_diagBtnStyle }}">
+              <sc-if value="{{ d_diagRunning }}" hint-placeholder-val="{{ false }}">
+                <span aria-hidden="true" style="display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid oklch(0.78 0.05 195);border-top-color:#fff;animation:spin .8s linear infinite"></span>
+              </sc-if>
+              <span aria-hidden="true" style="{{ d_diagIconStyle }}">🧠</span>
+              <span>{{ d_diagBtnLabel }}</span>
+            </button>
+            <span data-tiny="1" style="font-size:11px;line-height:1.5;color:oklch(0.52 0.02 255)">Le modèle compare les symptômes aux {{ d_histCount }} interventions historisées. Il propose, il ne décide pas.</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:12px;padding:17px;border-radius:14px;background:oklch(0.975 0.008 195);border:1px solid oklch(0.86 0.04 195);border-left:4px solid oklch(0.55 0.10 195)">
+            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+              <span style="display:flex;align-items:center;gap:8px;flex:1;min-width:150px">
+                <span aria-hidden="true" style="width:26px;height:26px;border-radius:8px;background:oklch(0.55 0.10 195);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px">🧠</span>
+                <span style="display:flex;flex-direction:column;line-height:1.25">
+                  <span style="font-size:13px;font-weight:700;color:oklch(0.32 0.06 195)">Suggestion IA</span>
+                  <span data-tiny="1" style="font-size:10.5px;font-family:'IBM Plex Mono',monospace;color:oklch(0.45 0.04 195)">lecture seule · modèle v1.4</span>
+                </span>
+              </span>
+              <span data-badge="1" style="{{ d_confStyle }}" title="Probabilité estimée par le modèle">
+                <span aria-hidden="true">{{ d_confIcon }}</span><span>Confiance {{ d_confLabel }} · {{ d_confPct }}</span>
+              </span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ d_pannes }}" as="p" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:6px;padding:11px;border-radius:10px;background:#fff;border:1px solid oklch(0.91 0.012 195)">
+                  <span style="display:flex;align-items:center;gap:9px">
+                    <span style="{{ p.rankStyle }}">{{ p.rank }}</span>
+                    <span style="flex:1;font-size:12.5px;font-weight:600;color:oklch(0.28 0.02 255)">{{ p.label }}</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:{{ p.color }}">{{ p.pct }}</span>
+                  </span>
+                  <span style="height:6px;border-radius:99px;background:oklch(0.94 0.006 258);overflow:hidden;display:block">
+                    <span style="{{ p.fill }}"></span>
+                  </span>
+                  <span data-tiny="1" style="font-size:11px;color:oklch(0.48 0.02 255)">{{ p.pieces }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <button onClick="{{ d_applyDiag }}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;border-radius:9px;background:#fff;border:1px solid oklch(0.62 0.08 195);font-size:12.5px;font-weight:700;color:oklch(0.36 0.08 195)">
+              <span aria-hidden="true">↓</span><span>Reprendre cette hypothèse dans le diagnostic final</span>
+            </button>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:11px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <h3 style="margin:0;font-size:13px;font-weight:700">Constat photo</h3>
+              <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">horodaté · valeur probante</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(102px,1fr));gap:9px">
+              <sc-for list="{{ d_photos }}" as="ph" hint-placeholder-count="3">
+                <span style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;aspect-ratio:4/5;border-radius:11px;background:{{ ph.bg }};border:1px {{ ph.borderStyle }} {{ ph.border }};text-align:center;padding:8px">
+                  <span aria-hidden="true" style="font-size:17px;color:{{ ph.iconColor }}">{{ ph.icon }}</span>
+                  <span data-tiny="1" style="font-size:10.5px;line-height:1.35;font-weight:600;color:{{ ph.labelColor }}">{{ ph.label }}</span>
+                  <span data-tiny="1" style="font-size:9.5px;font-family:'IBM Plex Mono',monospace;color:oklch(0.54 0.02 255)">{{ ph.ts }}</span>
+                </span>
+              </sc-for>
+            </div>
+            <span data-tiny="1" style="font-size:11px;line-height:1.5;color:oklch(0.52 0.02 255)">Deux clichés minimum sont exigés à l'accueil (état général + zone endommagée). Ils protègent l'atelier en cas de litige sur un dommage préexistant.</span>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;flex-direction:column;gap:11px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.84 0.04 258);border-left:4px solid oklch(0.52 0.15 258)">
+            <span style="display:flex;align-items:center;gap:8px">
+              <span aria-hidden="true" style="width:26px;height:26px;border-radius:8px;background:oklch(0.52 0.15 258);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px">✎</span>
+              <span style="display:flex;flex-direction:column;line-height:1.25">
+                <span style="font-size:13px;font-weight:700">Valeur retenue par le technicien</span>
+                <span data-tiny="1" style="font-size:10.5px;font-family:'IBM Plex Mono',monospace;color:oklch(0.48 0.02 255)">éditable · fait foi pour le devis</span>
+              </span>
+            </span>
+            <label style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:12.5px;font-weight:600;color:oklch(0.34 0.02 255)">Diagnostic final</span>
+              <textarea rows="4" value="{{ d_diagnostic }}" onChange="{{ d_setDiagnostic }}" placeholder="Décrivez la panne confirmée et l'intervention prévue…" style="width:100%;padding:11px 12px;border-radius:10px;border:1px solid oklch(0.86 0.02 258);font-size:13px;line-height:1.55;resize:vertical"></textarea>
+            </label>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">
+              <sc-for list="{{ d_estim }}" as="e" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <span style="font-size:11.5px;font-weight:600;color:oklch(0.38 0.02 255)">{{ e.label }}</span>
+                  <div style="display:flex;flex-direction:column;gap:5px;padding:9px 10px;border-radius:9px;background:oklch(0.975 0.008 195);border:1px dashed oklch(0.80 0.04 195)">
+                    <span data-tiny="1" style="font-size:10px;font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.45 0.05 195)">Suggestion IA</span>
+                    <span style="font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;color:oklch(0.34 0.06 195)">{{ e.ia }}</span>
+                  </div>
+                  <sc-if value="{{ e.editable }}" hint-placeholder-val="{{ true }}">
+                    <label style="display:flex;flex-direction:column;gap:4px">
+                      <span data-tiny="1" style="font-size:10px;font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.44 0.10 258)">Valeur retenue</span>
+                      <input type="text" value="{{ e.val }}" onChange="{{ e.onChange }}" style="width:100%;padding:9px 10px;border-radius:9px;border:1.5px solid oklch(0.72 0.08 258);font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;background:#fff" />
+                    </label>
+                  </sc-if>
+                  <sc-if value="{{ e.computed }}" hint-placeholder-val="{{ false }}">
+                    <span style="display:flex;flex-direction:column;gap:4px;padding:9px 10px;border-radius:9px;background:{{ e.bg }};border:1px solid {{ e.border }}">
+                      <span data-tiny="1" style="font-size:10px;font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:{{ e.labelColor }}">{{ e.tag }}</span>
+                      <span style="font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ e.color }}">{{ e.val }}</span>
+                    </span>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:9px;padding-top:4px">
+              <button style="flex:1;min-width:130px;padding:11px;border-radius:10px;background:oklch(0.52 0.15 258);color:#fff;font-size:13px;font-weight:700">Enregistrer le dossier</button>
+              <button style="padding:11px 14px;border-radius:10px;border:1px solid oklch(0.89 0.008 258);font-size:13px;font-weight:600;color:oklch(0.34 0.02 255)">Éditer le devis</button>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <h3 style="margin:0;font-size:13px;font-weight:700">Pièces engagées</h3>
+              <button style="padding:6px 11px;border-radius:8px;border:1px solid oklch(0.89 0.008 258);font-size:12px;font-weight:600;color:oklch(0.36 0.02 255)">+ Ajouter</button>
+            </div>
+            <sc-for list="{{ d_pieces }}" as="p" hint-placeholder-count="1">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;border:1px solid oklch(0.94 0.006 258);background:oklch(0.985 0.003 258)">
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.35">
+                  <span style="font-size:12.5px;font-weight:700;color:oklch(0.26 0.02 255)">{{ p.designation }}</span>
+                  <span data-tiny="1" style="font-size:11px;color:oklch(0.48 0.02 255)">{{ p.compat }} · réf. {{ p.ref }}</span>
+                </span>
+                <span data-badge="1" style="{{ p.badge }}"><span aria-hidden="true">{{ p.icon }}</span>{{ p.statut }}</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;color:oklch(0.32 0.02 255)">{{ p.prix }}</span>
+              </div>
+            </sc-for>
+            <sc-if value="{{ d_noPieces }}" hint-placeholder-val="{{ false }}">
+              <span data-tiny="1" style="display:block;padding:14px;text-align:center;font-size:12px;color:oklch(0.55 0.02 255);border:1px dashed oklch(0.89 0.008 258);border-radius:10px">Aucune pièce engagée — les pièces suggérées par l'IA apparaîtront ici après validation.</span>
+            </sc-if>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:11px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <h3 style="margin:0;font-size:13px;font-weight:700">Checklist d'intervention</h3>
+              <span data-badge="1" style="{{ d_checkBadge }}">{{ d_checkDone }}</span>
+            </div>
+            <span style="height:7px;border-radius:99px;background:oklch(0.94 0.006 258);overflow:hidden;display:block">
+              <span style="{{ d_checkFill }}"></span>
+            </span>
+            <sc-for list="{{ d_checklist }}" as="ck" hint-placeholder-count="5">
+              <button onClick="{{ ck.onClick }}" aria-pressed="{{ ck.done }}" style="{{ ck.style }}">
+                <span aria-hidden="true" style="{{ ck.boxStyle }}">{{ ck.mark }}</span>
+                <span style="flex:1;text-align:left;font-size:12.5px;font-weight:{{ ck.weight }};color:{{ ck.color }};{{ ck.strike }}">{{ ck.label }}</span>
+                <span data-tiny="1" style="font-size:10.5px;font-family:'IBM Plex Mono',monospace;color:oklch(0.54 0.02 255)">{{ ck.min }}</span>
+              </button>
+            </sc-for>
+            <span data-tiny="1" style="font-size:11px;line-height:1.5;color:oklch(0.52 0.02 255)">Le passage au statut « Prêt à facturer » exige que le test de sortie soit coché.</span>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:12px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <h3 style="margin:0;font-size:13px;font-weight:700">Devis client</h3>
+              <span data-badge="1" style="{{ d_devisBadge }}"><span aria-hidden="true">{{ d_devisIcon }}</span>{{ d_devisStatut }}</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:7px">
+              <sc-for list="{{ d_devisLines }}" as="l" hint-placeholder-count="4">
+                <span style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;{{ l.sep }}">
+                  <span style="font-size:12.5px;font-weight:{{ l.weight }};color:{{ l.color }}">{{ l.k }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:{{ l.size }};font-weight:{{ l.weight }};font-variant-numeric:tabular-nums;color:{{ l.color }}">{{ l.v }}</span>
+                </span>
+              </sc-for>
+            </div>
+            <button onClick="{{ d_goFacture }}" style="padding:11px;border-radius:10px;border:1px solid oklch(0.84 0.05 258);background:oklch(0.96 0.025 258);font-size:12.5px;font-weight:700;color:oklch(0.36 0.12 258)">Ouvrir le devis / la facture →</button>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:12px;padding:17px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)">
+            <h3 style="margin:0;font-size:13px;font-weight:700">Historique des statuts</h3>
+            <div style="display:flex;flex-direction:column;gap:0">
+              <sc-for list="{{ d_hist }}" as="h" hint-placeholder-count="3">
+                <div style="display:flex;gap:11px;align-items:flex-start">
+                  <span style="display:flex;flex-direction:column;align-items:center;flex:0 0 auto;align-self:stretch">
+                    <span aria-hidden="true" style="{{ h.dot }}"></span>
+                    <span aria-hidden="true" style="{{ h.line }}"></span>
+                  </span>
+                  <span style="display:flex;flex-direction:column;gap:2px;padding-bottom:14px">
+                    <span style="font-size:12.5px;font-weight:700;color:{{ h.color }}">{{ h.label }}</span>
+                    <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">{{ h.le }} · {{ h.par }}</span>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:760}}">
+const eur = (n) => (Math.round(n * 100) / 100).toFixed(2).replace(".", ",").replace("-", "−") + " €";
+const initials = (s) => (s || "").split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+
+const confMeta = (score) => {
+  if (score >= 0.8) return { label: "haute", icon: "●", bg: "oklch(0.965 0.03 152)", fg: "oklch(0.36 0.10 152)", bd: "oklch(0.84 0.06 152)" };
+  if (score >= 0.5) return { label: "moyenne", icon: "◐", bg: "oklch(0.965 0.05 70)", fg: "oklch(0.42 0.11 62)", bd: "oklch(0.86 0.09 70)" };
+  return { label: "indéterminée", icon: "○", bg: "oklch(0.955 0.005 258)", fg: "oklch(0.40 0.02 255)", bd: "oklch(0.88 0.008 258)" };
+};
+
+const stockMeta = (p) => {
+  if (!p) return { label: "—", icon: "○", bg: "oklch(0.955 0.005 258)", fg: "oklch(0.42 0.02 255)", bd: "oklch(0.88 0.008 258)" };
+  if (p.stock === 0) return { label: "Rupture", icon: "■", bg: "oklch(0.96 0.04 25)", fg: "oklch(0.42 0.15 25)", bd: "oklch(0.86 0.08 25)" };
+  if (p.stock <= p.seuil) return { label: "Seuil bas", icon: "▲", bg: "oklch(0.965 0.05 70)", fg: "oklch(0.42 0.11 62)", bd: "oklch(0.86 0.09 70)" };
+  return { label: "En stock", icon: "●", bg: "oklch(0.965 0.03 152)", fg: "oklch(0.36 0.10 152)", bd: "oklch(0.84 0.06 152)" };
+};
+
+const badge = (m, size) => "display:inline-flex;align-items:center;gap:5px;padding:" + (size === "s" ? "2px 7px" : "4px 9px") + ";border-radius:7px;font-size:" + (size === "s" ? "10.5px" : "11.5px") + ";font-weight:700;white-space:nowrap;background:" + m.bg + ";color:" + m.fg + ";border:1px solid " + m.bd;
+
+const prio = (p) => {
+  const m = p === "Haute" ? { bg: "oklch(0.96 0.04 25)", fg: "oklch(0.44 0.15 25)", bd: "oklch(0.88 0.07 25)" } : p === "Basse" ? { bg: "oklch(0.96 0.005 258)", fg: "oklch(0.46 0.02 255)", bd: "oklch(0.90 0.008 258)" } : { bg: "oklch(0.965 0.02 258)", fg: "oklch(0.42 0.08 258)", bd: "oklch(0.89 0.03 258)" };
+  return "display:inline-flex;align-items:center;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;background:" + m.bg + ";color:" + m.fg + ";border:1px solid " + m.bd;
+};
+
+class Component extends DCLogic {
+  state = { email: "f.haddad@reparu.fr", pwd: "••••••••", tab: "recu", dragId: null, over: null, filter: "tous", period: "mois", running: false, checks: { c1: true, c2: true }, timer: false, minutes: 32, nOpen: false, nTouched: false, nCreated: null, nr: { appareil_id: "", symptomes: "", priorite: "Normale", tech_id: "" } };
+
+  nPatch(p) { this.setState({ nr: Object.assign({}, this.state.nr, p), nCreated: null }); }
+
+  componentWillUnmount() { if (this._t) clearInterval(this._t); }
+
+  toggleTimer() {
+    if (this._t) { clearInterval(this._t); this._t = null; this.setState({ timer: false }); return; }
+    this._t = setInterval(() => this.setState((s) => ({ minutes: s.minutes + 1 })), 1000);
+    this.setState({ timer: true });
+  }
+
+  runDiag() {
+    this.setState({ running: true });
+    setTimeout(() => this.setState({ running: false }), 1100);
+  }
+
+  renderVals() {
+    const p = this.props || {};
+    const d = p.data || {};
+    const a = p.actions || {};
+    const st = this.state;
+    const screen = p.screen || "dossier";
+    const mode = p.mode || "desktop";
+    const isDesktop = mode === "desktop";
+    const statuts = d.statuts || [];
+    const reps = d.reparations || [];
+    const appareils = d.appareils || [];
+    const clients = d.clients || [];
+    const users = d.users || [];
+    const pieces = d.pieces || [];
+    const sel = a.sel || {};
+    const app = (id) => appareils.find((x) => x.id === id) || {};
+    const cli = (id) => clients.find((x) => x.id === id) || {};
+    const usr = (id) => users.find((x) => x.id === id);
+    const stt = (k) => statuts.find((s) => s.key === k) || { label: k, hue: "oklch(0.45 0.02 258)", soft: "oklch(0.96 0.005 258)", icon: "●" };
+    const label = (r) => { const ap = app(r.appareil_id); return ap.marque + " " + ap.modele; };
+
+    // ---------- Kanban ----------
+    const visible = reps.filter((r) => {
+      if (p.role === "Technicien" && st.filter === "mes") return r.tech_id === "u1";
+      if (st.filter === "haute") return r.priorite === "Haute";
+      return true;
+    });
+    const cardOf = (r, isMobile) => {
+      const idx = statuts.findIndex((s) => s.key === r.statut);
+      const cm = confMeta(r.ia ? r.ia.confiance : 0);
+      const tech = usr(r.tech_id);
+      const prev = statuts[idx - 1], next = statuts[idx + 1];
+      const stepBtn = (base) => "flex:1;display:flex;align-items:center;justify-content:center;padding:7px;border-radius:8px;font-size:11px;border:1px solid " + base;
+      return {
+        id: r.id, numero: r.numero, appareil: label(r), resume: (r.symptomes || "").slice(0, 78) + ((r.symptomes || "").length > 78 ? "…" : ""),
+        priorite: r.priorite, prioStyle: prio(r.priorite),
+        tech: tech ? tech.nom : "Non affecté", techInit: tech ? initials(tech.nom) : "?",
+        iaLabel: r.ia ? "IA " + Math.round(r.ia.confiance * 100) + " %" : "IA —",
+        iaStyle: badge(cm, "s"),
+        age: r.recu_le.slice(0, 5),
+        onOpen: () => a.select && a.select("reparation", r.id, "dossier"),
+        onDragStart: () => this.setState({ dragId: r.id }),
+        onDragEnd: () => this.setState({ dragId: null, over: null }),
+        style: "display:flex;flex-direction:column;padding:11px;border-radius:11px;background:#fff;border:1px solid " + (st.dragId === r.id ? "oklch(0.60 0.13 258)" : "oklch(0.91 0.008 258)") + ";box-shadow:0 1px 2px oklch(0.22 0.02 255 / 0.06);cursor:grab;opacity:" + (st.dragId === r.id ? "0.55" : "1"),
+        mStyle: "display:flex;flex-direction:column;padding:13px;border-radius:12px;background:#fff;border:1px solid oklch(0.91 0.008 258);box-shadow:0 1px 2px oklch(0.22 0.02 255 / 0.06)",
+        noPrev: !prev, noNext: !next,
+        prevLabel: prev ? "Déplacer " + r.numero + " vers " + prev.label : "Première colonne",
+        nextLabel: next ? "Déplacer " + r.numero + " vers " + next.label : "Dernière colonne",
+        prevStyle: stepBtn(prev ? "oklch(0.89 0.008 258)" : "oklch(0.94 0.006 258)") + ";color:" + (prev ? "oklch(0.36 0.02 255)" : "oklch(0.78 0.008 258)") + ";background:" + (prev ? "#fff" : "oklch(0.98 0.003 258)"),
+        nextStyle: stepBtn(next ? "oklch(0.84 0.05 258)" : "oklch(0.94 0.006 258)") + ";color:" + (next ? "oklch(0.38 0.12 258)" : "oklch(0.78 0.008 258)") + ";background:" + (next ? "oklch(0.97 0.02 258)" : "oklch(0.98 0.003 258)"),
+        onPrev: () => prev && a.moveRep && a.moveRep(r.id, prev.key),
+        onNext: () => next && a.moveRep && a.moveRep(r.id, next.key),
+        steps: statuts.map((s) => ({
+          icon: s.icon, aria: "Passer " + r.numero + " au statut " + s.label, current: s.key === r.statut ? "true" : "false",
+          onClick: () => a.moveRep && a.moveRep(r.id, s.key),
+          style: "flex:1;display:flex;align-items:center;justify-content:center;padding:10px 0;border-radius:9px;font-size:13px;background:" + (s.key === r.statut ? s.hue : s.soft) + ";color:" + (s.key === r.statut ? "#fff" : s.hue) + ";border:1px solid " + (s.key === r.statut ? s.hue : "oklch(0.91 0.008 258)"),
+        })),
+      };
+    };
+    const columns = statuts.map((s) => {
+      const cards = visible.filter((r) => r.statut === s.key);
+      const isOver = st.over === s.key;
+      return {
+        key: s.key, label: s.label, icon: s.icon, hue: s.hue, count: String(cards.length), isEmpty: cards.length === 0,
+        rule: "display:block;height:3px;border-radius:99px;background:" + s.hue + ";opacity:.9;margin-bottom:4px",
+        style: "flex:1 0 208px;min-width:208px;display:flex;flex-direction:column;gap:9px;padding:11px;border-radius:13px;background:" + (isOver ? s.soft : "oklch(0.965 0.005 258)") + ";border:1.5px " + (isOver ? "solid " + s.hue : "solid oklch(0.92 0.008 258)"),
+        onDragOver: (e) => { e.preventDefault(); if (st.over !== s.key) this.setState({ over: s.key }); },
+        onDragLeave: () => { if (st.over === s.key) this.setState({ over: null }); },
+        onDrop: (e) => { e.preventDefault(); if (st.dragId) a.moveRep && a.moveRep(st.dragId, s.key); this.setState({ dragId: null, over: null }); },
+        cards: cards.map((r) => cardOf(r)),
+      };
+    });
+    const mobileList = visible.filter((r) => r.statut === st.tab);
+
+    // --- création d'un dossier ---
+    const nr = st.nr;
+    const nAppBad = st.nTouched && !nr.appareil_id;
+    const nSymBad = st.nTouched && nr.symptomes.trim().length < 15;
+    const nPreview = nr.symptomes.trim().length >= 15 && a.guessIA ? a.guessIA(nr.symptomes, nr.appareil_id) : null;
+
+    // ---------- Dashboard ----------
+    const k = d.kpis || {};
+    const serie = d.serie || [];
+    const maxN = Math.max.apply(null, serie.map((x) => x.n).concat([1]));
+    const alertPieces = pieces.filter((x) => x.stock <= x.seuil).slice(0, 3);
+    // SLA : ancienneté réelle depuis la réception, dossiers clôturés et en attente de pièce exclus
+    const NOW = new Date(2026, 6, 26, 10, 15);
+    const toDate = (s) => { const m = /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/.exec(s || ""); return m ? new Date(+m[3], +m[2] - 1, +m[1], +m[4], +m[5]) : NOW; };
+    const heures = (x) => Math.round((NOW - toDate(x.recu_le)) / 36e5);
+    const enAttentePiece = (x) => (x.pieces || []).some((y) => { const pc = pieces.find((z) => z.id === y.piece_id); return pc && pc.stock === 0; });
+    const sla = reps.filter((x) => x.statut !== "livre" && x.statut !== "pret" && !enAttentePiece(x) && heures(x) > 48);
+    const prev = d.previsions || [];
+    const kpiCard = (o) => o;
+
+    // ---------- Dossier ----------
+    const EMPTY_REP = { id: "", numero: "—", statut: "recu", priorite: "Normale", recu_le: "—", symptomes: "", diagnostic: "", cout: 0, valide: null, ia: {}, historique: [], pieces: [] };
+    const r = reps.find((x) => x.id === (sel.reparation || "r1")) || reps[0] || EMPTY_REP;
+    const ia = r.ia || {};
+    const ridx = statuts.findIndex((s) => s.key === r.statut);
+    const rPrev = statuts[ridx - 1], rNext = statuts[ridx + 1];
+    const cm = confMeta(ia.confiance || 0);
+    const ap = app(r.appareil_id), cl = cli(r.client_id), tech = usr(r.tech_id);
+    const navBtn = (on, accent) => "display:flex;align-items:center;gap:7px;padding:10px 13px;border-radius:9px;font-size:12.5px;font-weight:700;border:1px solid " + (on ? (accent ? "oklch(0.80 0.06 258)" : "oklch(0.89 0.008 258)") : "oklch(0.94 0.006 258)") + ";background:" + (on ? (accent ? "oklch(0.52 0.15 258)" : "#fff") : "oklch(0.98 0.003 258)") + ";color:" + (on ? (accent ? "#fff" : "oklch(0.34 0.02 255)") : "oklch(0.78 0.008 258)");
+    const marge = (r.valide || 0) - (r.cout || 0);
+
+    return {
+      isDesktop,
+      isLogin: screen === "login", isDash: screen === "dashboard",
+      isKanbanDesktop: screen === "kanban" && isDesktop, isKanbanMobile: screen === "kanban" && !isDesktop,
+      isDossier: screen === "dossier",
+
+      // login
+      isError: p.state === "error", isLoading: p.state === "loading",
+      email: st.email, pwd: st.pwd,
+      setEmail: (e) => this.setState({ email: e.target.value }),
+      setPwd: (e) => this.setState({ pwd: e.target.value }),
+      submit: (e) => { e.preventDefault(); a.go && a.go(p.role === "Technicien" ? "kanban" : "dashboard"); },
+      submitLabel: p.state === "loading" ? "Connexion en cours…" : "Se connecter",
+      submitStyle: "display:flex;align-items:center;justify-content:center;gap:9px;padding:13px;border-radius:10px;background:oklch(0.52 0.15 258);color:#fff;font-size:14px;font-weight:700;box-shadow:0 2px 8px oklch(0.52 0.15 258 / 0.28)",
+      emailStyle: "width:100%;padding:12px 13px;border-radius:10px;font-size:14px;background:#fff;border:1.5px solid " + (p.state === "error" ? "oklch(0.66 0.14 25)" : "oklch(0.88 0.008 258)"),
+      pwdStyle: "width:100%;padding:12px 13px;border-radius:10px;font-size:14px;background:#fff;border:1.5px solid " + (p.state === "error" ? "oklch(0.66 0.14 25)" : "oklch(0.88 0.008 258)"),
+      loginStats: [{ v: "−50 %", l: "temps de diagnostic" }, { v: "+20 %", l: "marge maîtrisée" }, { v: "−30 %", l: "ruptures de stock" }],
+      demoAccounts: [
+        { email: "l.marchand@reparu.fr", role: "Technicien", icon: "🔧", onClick: () => this.setState({ email: "l.marchand@reparu.fr" }), badge: badge({ bg: "oklch(0.96 0.02 258)", fg: "oklch(0.40 0.09 258)", bd: "oklch(0.90 0.03 258)" }, "s") },
+        { email: "c.vasseur@reparu.fr", role: "Administrateur", icon: "📊", onClick: () => this.setState({ email: "c.vasseur@reparu.fr" }), badge: badge({ bg: "oklch(0.965 0.025 195)", fg: "oklch(0.36 0.08 195)", bd: "oklch(0.88 0.04 195)" }, "s") },
+      ],
+
+      // dashboard
+      periods: [{ k: "semaine", l: "7 jours" }, { k: "mois", l: "Ce mois" }, { k: "trim", l: "Trimestre" }, { k: "an", l: "12 mois" }].map((x) => ({
+        label: x.l, checked: st.period === x.k ? "true" : "false", onClick: () => this.setState({ period: x.k }),
+        style: "padding:7px 13px;border-radius:8px;font-size:12.5px;font-weight:" + (st.period === x.k ? "700" : "500") + ";background:" + (st.period === x.k ? "#fff" : "transparent") + ";color:" + (st.period === x.k ? "oklch(0.26 0.02 255)" : "oklch(0.46 0.02 255)") + ";box-shadow:" + (st.period === x.k ? "0 1px 3px oklch(0.22 0.02 255 / 0.16)" : "none"),
+      })),
+      kpiCards: [
+        kpiCard({ label: "Réparations / mois", icon: "🛠", value: String(k.reparations_mois || "—"), delta: k.reparations_delta || "", arrow: "↗", sub: "vs juin", style: "display:flex;flex-direction:column;gap:7px;padding:16px;border-radius:14px;background:oklch(0.21 0.025 258);border:1px solid oklch(0.28 0.03 258)", labelColor: "oklch(0.74 0.03 258)", valueColor: "#fff", deltaColor: "oklch(0.78 0.11 152)", subColor: "oklch(0.66 0.02 258)" }),
+        kpiCard({ label: "Marge générée", icon: "💶", value: (k.marge || 0).toLocaleString("fr-FR") + " €", delta: k.marge_delta || "", arrow: "↗", sub: "vs juin", style: "display:flex;flex-direction:column;gap:7px;padding:16px;border-radius:14px;background:oklch(0.21 0.025 258);border:1px solid oklch(0.28 0.03 258)", labelColor: "oklch(0.74 0.03 258)", valueColor: "#fff", deltaColor: "oklch(0.78 0.11 152)", subColor: "oklch(0.66 0.02 258)" }),
+        kpiCard({ label: "Ruptures imminentes", icon: "⚠", value: String(alertPieces.length), delta: "action requise", arrow: "■", sub: "", style: "display:flex;flex-direction:column;gap:7px;padding:16px;border-radius:14px;background:oklch(0.98 0.02 25);border:1px solid oklch(0.86 0.07 25)", labelColor: "oklch(0.46 0.12 25)", valueColor: "oklch(0.44 0.17 25)", deltaColor: "oklch(0.46 0.14 25)", subColor: "oklch(0.50 0.02 255)" }),
+        kpiCard({ label: "Délai moyen", icon: "◷", value: k.delai_moyen || "—", delta: k.delai_delta || "", arrow: "↘", sub: "objectif 2 j", style: "display:flex;flex-direction:column;gap:7px;padding:16px;border-radius:14px;background:#fff;border:1px solid oklch(0.91 0.008 258)", labelColor: "oklch(0.50 0.02 255)", valueColor: "oklch(0.24 0.02 255)", deltaColor: "oklch(0.38 0.10 152)", subColor: "oklch(0.52 0.02 255)" }),
+      ],
+      chart: serie.map((x, i) => ({
+        mois: x.mois, n: String(x.n),
+        barStyle: "width:100%;max-width:44px;border-radius:7px 7px 3px 3px;height:" + Math.round((x.n / maxN) * 100) + "%;background:" + (i === serie.length - 1 ? "linear-gradient(180deg,oklch(0.58 0.15 258),oklch(0.48 0.15 258))" : "oklch(0.86 0.05 258)"),
+      })),
+      chartLegend: [
+        { label: "Mois en cours", dot: "width:11px;height:11px;border-radius:3px;background:oklch(0.52 0.15 258);display:inline-block" },
+        { label: "Mois précédents", dot: "width:11px;height:11px;border-radius:3px;background:oklch(0.86 0.05 258);display:inline-block" },
+      ],
+      alertN: String(alertPieces.length),
+      alerts: alertPieces.map((x) => {
+        const m = stockMeta(x);
+        const pv = prev.find((y) => y.piece_id === x.id);
+        return {
+          nom: x.designation, compat: x.compat, seuil: String(x.seuil), stock: String(x.stock),
+          couv: pv ? pv.couverture : "—", statut: m.label, icon: m.icon, badge: badge(m, "s"), color: m.fg,
+          border: x.stock === 0 ? "oklch(0.88 0.06 25)" : "oklch(0.90 0.06 70)",
+          bg: x.stock === 0 ? "oklch(0.985 0.012 25)" : "oklch(0.99 0.012 70)",
+          fill: "display:block;height:100%;border-radius:99px;width:" + Math.max(3, Math.round((x.stock / Math.max(x.seuil, 1)) * 100)) + "%;background:" + m.fg,
+          onClick: () => a.select && a.select("piece", x.id, "inventaire"),
+        };
+      }),
+      pannes: (d.pannes || []).map((x, i) => ({
+        label: x.label, pct: String(x.pct),
+        fill: "display:block;height:100%;border-radius:99px;width:" + x.pct + "%;background:oklch(" + (0.46 + i * 0.06).toFixed(2) + " 0.12 " + (258 - i * 22) + ")",
+      })),
+      recent: reps.filter((x) => x.statut === "livre" || x.statut === "pret").map((x) => ({
+        numero: x.numero, appareil: label(x), marge: eur((x.valide || 0) - (x.cout || 0)),
+        onClick: () => a.select && a.select("reparation", x.id, "dossier"),
+      })),
+      goRapports: () => a.go && a.go("rapports"),
+      goStocks: () => a.go && a.go("inventaire"),
+      goPlanning: () => a.go && a.go("affectation"),
+      slaCount: sla.length + (sla.length > 1 ? " dossiers dépassent" : " dossier dépasse"),
+      slaCards: sla.slice(0, 3).map((x) => ({
+        numero: x.numero, appareil: label(x), retard: heures(x) + " h",
+        onClick: () => a.select && a.select("reparation", x.id, "dossier"),
+      })).concat(sla.length > 3 ? [{ numero: "+" + (sla.length - 3), appareil: sla.length - 3 > 1 ? "autres dossiers" : "autre dossier", retard: "voir le Kanban", onClick: () => a.go && a.go("kanban") }] : []),
+      charge: users.filter((u) => u.role === "Technicien" && u.statut === "Actif").map((u) => {
+        const mine = reps.filter((x) => x.tech_id === u.id && x.statut !== "livre");
+        const n = mine.length;
+        const m = n >= 4 ? { bg: "oklch(0.96 0.04 25)", fg: "oklch(0.42 0.15 25)", bd: "oklch(0.86 0.08 25)", l: "Surchargé" } : n >= 2 ? { bg: "oklch(0.965 0.05 70)", fg: "oklch(0.42 0.11 62)", bd: "oklch(0.86 0.09 70)", l: "Chargé" } : { bg: "oklch(0.965 0.03 152)", fg: "oklch(0.36 0.10 152)", bd: "oklch(0.84 0.06 152)", l: "Disponible" };
+        return {
+          nom: u.nom, init: initials(u.nom), label: m.l, badge: badge(m, "s"),
+          fill: "display:block;height:100%;border-radius:99px;width:" + Math.min(100, n * 25) + "%;background:" + m.fg,
+          detail: n + (n > 1 ? " dossiers en cours" : " dossier en cours") + " · " + u.specialite,
+        };
+      }),
+
+      // création d'un dossier
+      n_isOpen: st.nOpen, n_open: st.nOpen ? "true" : "false",
+      n_btnLabel: st.nOpen ? "Fermer le formulaire" : "Nouveau dossier",
+      n_btnIcon: st.nOpen ? "×" : "+",
+      n_btnStyle: "display:flex;align-items:center;gap:7px;padding:9px 14px;border-radius:9px;font-size:12.5px;font-weight:700;" + (st.nOpen ? "border:1px solid oklch(0.89 0.008 258);background:#fff;color:oklch(0.34 0.02 255)" : "background:oklch(0.52 0.15 258);color:#fff"),
+      n_mobileBtnStyle: "position:sticky;bottom:0;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:12px;font-size:14px;font-weight:700;" + (st.nOpen ? "border:1px solid oklch(0.89 0.008 258);background:#fff;color:oklch(0.34 0.02 255)" : "background:oklch(0.52 0.15 258);color:#fff;box-shadow:0 6px 18px oklch(0.52 0.15 258 / 0.35)"),
+      n_toggle: () => this.setState({ nOpen: !st.nOpen, nTouched: false, nCreated: null }),
+      n_appareil: nr.appareil_id, n_setAppareil: (e) => this.nPatch({ appareil_id: e.target.value }),
+      n_appareilOptions: appareils.map((x) => ({ id: x.id, label: x.marque + " " + x.modele + " — " + (cli(x.client_id).nom || "?") })),
+      n_appareilStyle: "width:100%;padding:11px 12px;border-radius:10px;font-size:13.5px;background:#fff;border:1.5px solid " + (nAppBad ? "oklch(0.66 0.14 25)" : "oklch(0.88 0.008 258)"),
+      n_appareilErrStyle: nAppBad ? "font-size:11.5px;font-weight:600;color:oklch(0.48 0.16 25)" : "display:none",
+      n_symptomes: nr.symptomes, n_setSymptomes: (e) => this.nPatch({ symptomes: e.target.value }),
+      n_symptomesStyle: "width:100%;padding:11px 12px;border-radius:10px;font-size:13px;line-height:1.55;resize:vertical;background:#fff;border:1.5px solid " + (nSymBad ? "oklch(0.66 0.14 25)" : "oklch(0.88 0.008 258)"),
+      n_symptomesErrStyle: nSymBad ? "font-size:11.5px;font-weight:600;color:oklch(0.48 0.16 25)" : "display:none",
+      n_count: nr.symptomes.length + " caractères",
+      n_prios: ["Basse", "Normale", "Haute"].map((x) => ({
+        label: x, checked: nr.priorite === x ? "true" : "false", onClick: () => this.nPatch({ priorite: x }),
+        style: "flex:1;padding:10px 8px;border-radius:9px;font-size:12.5px;font-weight:" + (nr.priorite === x ? "700" : "500") + ";border:1.5px solid " + (nr.priorite === x ? "oklch(0.82 0.06 258)" : "oklch(0.91 0.008 258)") + ";background:" + (nr.priorite === x ? "oklch(0.96 0.025 258)" : "#fff") + ";color:" + (nr.priorite === x ? "oklch(0.36 0.12 258)" : "oklch(0.42 0.02 255)"),
+      })),
+      n_tech: nr.tech_id, n_setTech: (e) => this.nPatch({ tech_id: e.target.value }),
+      n_techOptions: users.filter((u) => u.role === "Technicien" && u.statut === "Actif").map((u) => ({ id: u.id, label: u.nom + " — " + u.specialite })),
+      n_hasPreview: !!nPreview,
+      n_previewLabel: nPreview ? nPreview.pannes[0].label : "",
+      n_previewPct: nPreview ? Math.round(nPreview.confiance * 100) + " %" : "",
+      n_previewBadge: nPreview ? badge(confMeta(nPreview.confiance), "s") : "display:none",
+      n_submit: (e) => {
+        e.preventDefault();
+        this.setState({ nTouched: true });
+        if (!nr.appareil_id || nr.symptomes.trim().length < 15) return;
+        const created = a.addRep && a.addRep(nr);
+        if (created) this.setState({ nOpen: false, nTouched: false, nCreated: created, nr: { appareil_id: "", symptomes: "", priorite: "Normale", tech_id: "" }, tab: "recu" });
+      },
+      n_created: !!st.nCreated,
+      n_createdNum: st.nCreated ? st.nCreated.numero : "",
+      n_createdIA: st.nCreated ? "« " + st.nCreated.ia.pannes[0].label + " » à " + Math.round(st.nCreated.ia.confiance * 100) + " %" : "",
+      n_openCreated: () => st.nCreated && a.select && a.select("reparation", st.nCreated.id, "dossier"),
+      n_goAppareil: () => a.go && a.go("appareil"),
+
+      // kanban
+      columns, total: String(visible.length),
+      filters: [{ k: "tous", l: "Tous les dossiers" }, { k: "mes", l: "Mes dossiers" }, { k: "haute", l: "Priorité haute" }].map((x) => ({
+        label: x.l, checked: st.filter === x.k ? "true" : "false", onClick: () => this.setState({ filter: x.k }),
+        style: "padding:8px 13px;border-radius:9px;font-size:12.5px;font-weight:" + (st.filter === x.k ? "700" : "500") + ";border:1px solid " + (st.filter === x.k ? "oklch(0.82 0.06 258)" : "oklch(0.90 0.008 258)") + ";background:" + (st.filter === x.k ? "oklch(0.96 0.025 258)" : "#fff") + ";color:" + (st.filter === x.k ? "oklch(0.36 0.12 258)" : "oklch(0.40 0.02 255)"),
+      })),
+      mobileTabs: statuts.map((s) => {
+        const n = visible.filter((r) => r.statut === s.key).length;
+        const on = st.tab === s.key;
+        return {
+          label: s.label, icon: s.icon, count: String(n), selected: on ? "true" : "false", onClick: () => this.setState({ tab: s.key }),
+          style: "display:flex;align-items:center;gap:6px;padding:9px 12px;border-radius:10px;white-space:nowrap;font-size:12.5px;font-weight:" + (on ? "700" : "500") + ";background:" + (on ? s.hue : "#fff") + ";color:" + (on ? "#fff" : s.hue) + ";border:1px solid " + (on ? s.hue : "oklch(0.91 0.008 258)"),
+          countStyle: "min-width:19px;padding:1px 5px;border-radius:6px;font-size:10.5px;font-weight:700;text-align:center;background:" + (on ? "oklch(1 0 0 / 0.22)" : s.soft) + ";color:" + (on ? "#fff" : s.hue),
+        };
+      }),
+      mobileCards: mobileList.map((x) => cardOf(x, true)),
+      mobileEmpty: mobileList.length === 0,
+
+      // dossier
+      d_numero: r.numero, d_appareil: ap.marque + " " + ap.modele, d_imei: ap.imei || "—",
+      d_recu: r.recu_le, d_tech: tech ? tech.nom : "non affecté",
+      d_statutLabel: stt(r.statut).label, d_statutIcon: stt(r.statut).icon,
+      d_statutBadge: badge({ bg: stt(r.statut).soft, fg: stt(r.statut).hue, bd: stt(r.statut).hue + " / 0.35" }),
+      d_priorite: r.priorite, d_prioStyle: prio(r.priorite),
+      d_client: cl.nom, d_clientInit: initials(cl.nom), d_tel: cl.tel,
+      d_goClient: () => a.select && a.select("client", r.client_id, "client"),
+      d_symptomes: r.symptomes, d_setSymptomes: (e) => a.patchRep && a.patchRep(r.id, { symptomes: e.target.value }),
+      d_diagnostic: r.diagnostic, d_setDiagnostic: (e) => a.patchRep && a.patchRep(r.id, { diagnostic: e.target.value }),
+      d_diagRunning: st.running,
+      d_diagBtnLabel: st.running ? "Analyse des symptômes en cours…" : "Lancer le diagnostic assisté",
+      d_diagIconStyle: st.running ? "display:none" : "font-size:14px",
+      d_diagBtnStyle: "display:flex;align-items:center;justify-content:center;gap:9px;padding:12px;border-radius:10px;font-size:13.5px;font-weight:700;color:#fff;background:" + (st.running ? "oklch(0.62 0.08 195)" : "oklch(0.52 0.10 195)"),
+      d_runDiag: () => this.runDiag(),
+      d_histCount: "1 284",
+      d_confPct: Math.round((ia.confiance || 0) * 100) + " %", d_confLabel: cm.label, d_confIcon: cm.icon, d_confStyle: badge(cm),
+      d_pannes: (ia.pannes || []).map((x, i) => {
+        const c = confMeta(x.score);
+        return {
+          rank: String(i + 1), label: x.label, pct: Math.round(x.score * 100) + " %", color: c.fg,
+          pieces: (x.pieces || []).length ? "Pièces suggérées : " + x.pieces.join(", ")
+            : x.manque ? "Aucune « " + x.manque.toLowerCase() + " » compatible référencée pour ce modèle — à commander"
+            : "Aucune pièce associée",
+          rankStyle: "width:19px;height:19px;border-radius:6px;background:oklch(0.94 0.02 195);color:oklch(0.36 0.06 195);font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace",
+          fill: "display:block;height:100%;border-radius:99px;width:" + Math.round(x.score * 100) + "%;background:" + c.fg,
+        };
+      }),
+      d_applyDiag: () => {
+        const top = (ia.pannes || [])[0];
+        if (top && a.patchRep) a.patchRep(r.id, { diagnostic: top.label + " — hypothèse IA reprise puis confirmée par le technicien. Pièces : " + ((top.pieces || []).join(", ") || "aucune") + "." });
+      },
+      d_estim: [
+        { label: "Coût des pièces", ia: eur(ia.cout || 0), val: eur(r.cout || 0), editable: true, computed: false, onChange: (e) => { const v = parseFloat(String(e.target.value).replace(",", ".").replace(/[^0-9.]/g, "")); if (!isNaN(v)) a.patchRep && a.patchRep(r.id, { cout: v }); } },
+        { label: "Prix client", ia: eur(ia.prix || 0), val: r.valide == null ? "" : eur(r.valide), editable: true, computed: false, onChange: (e) => { const v = parseFloat(String(e.target.value).replace(",", ".").replace(/[^0-9.]/g, "")); if (!isNaN(v)) a.patchRep && a.patchRep(r.id, { valide: v }); } },
+        (function () {
+          const attente = r.valide == null, perte = marge < 0;
+          const tone = attente ? { bg: "oklch(0.96 0.005 258)", bd: "oklch(0.90 0.008 258)", fg: "oklch(0.42 0.02 255)", lb: "oklch(0.46 0.02 255)", t: "En attente" }
+            : perte ? { bg: "oklch(0.96 0.04 25)", bd: "oklch(0.86 0.08 25)", fg: "oklch(0.40 0.15 25)", lb: "oklch(0.44 0.14 25)", t: "Perte calculée" }
+            : { bg: "oklch(0.965 0.03 152)", bd: "oklch(0.86 0.06 152)", fg: "oklch(0.34 0.10 152)", lb: "oklch(0.38 0.08 152)", t: "Marge calculée" };
+          return { label: "Marge brute", ia: eur(ia.marge || 0), val: attente ? "à valider" : eur(marge), editable: false, computed: true, bg: tone.bg, border: tone.bd, color: tone.fg, labelColor: tone.lb, tag: tone.t };
+        })(),
+      ],
+      d_pieces: (r.pieces || []).map((x) => {
+        const pc = pieces.find((y) => y.id === x.piece_id) || {};
+        const m = stockMeta(pc);
+        return { designation: pc.designation || "—", compat: pc.compat || "", ref: pc.ref || "", prix: eur((pc.prix_achat || 0) * (x.qte || 1)), statut: m.label, icon: m.icon, badge: badge(m, "s") };
+      }),
+      d_noPieces: (r.pieces || []).length === 0,
+      d_hist: (r.historique || []).map((h, i, arr) => {
+        const s = stt(h.statut);
+        return {
+          label: s.label, le: h.le, par: h.par, color: s.hue,
+          dot: "width:11px;height:11px;border-radius:50%;background:" + s.hue + ";flex:0 0 auto;margin-top:3px",
+          line: i === arr.length - 1 ? "display:none" : "flex:1;width:2px;background:oklch(0.91 0.008 258);margin:3px 0",
+        };
+      }),
+      d_quick: [
+        { icon: "🏷", label: "Imprimer l'étiquette", accent: false },
+        { icon: "✉", label: "Notifier le client (SMS)", accent: false },
+        { icon: "📷", label: "Ajouter une photo", accent: false },
+        { icon: "👤", label: tech ? "Réaffecter" : "Affecter un technicien", accent: !tech },
+      ].map((q) => ({
+        icon: q.icon, label: q.label,
+        onClick: () => { if (q.accent) a.go && a.go("affectation"); },
+        style: "display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;font-size:12.5px;font-weight:" + (q.accent ? "700" : "600") + ";border:1px solid " + (q.accent ? "oklch(0.80 0.06 258)" : "oklch(0.90 0.008 258)") + ";background:" + (q.accent ? "oklch(0.96 0.025 258)" : "#fff") + ";color:" + (q.accent ? "oklch(0.36 0.12 258)" : "oklch(0.34 0.02 255)"),
+      })),
+      d_temps: Math.floor(st.minutes / 60) + " h " + String(st.minutes % 60).padStart(2, "0"),
+      d_timerOn: st.timer ? "true" : "false",
+      d_timerLabel: st.timer ? "Pause" : "Démarrer",
+      d_timerStyle: "padding:6px 11px;border-radius:8px;font-size:11.5px;font-weight:700;border:1px solid " + (st.timer ? "oklch(0.86 0.08 25)" : "oklch(0.84 0.05 258)") + ";background:" + (st.timer ? "oklch(0.97 0.025 25)" : "oklch(0.96 0.025 258)") + ";color:" + (st.timer ? "oklch(0.44 0.15 25)" : "oklch(0.38 0.12 258)"),
+      d_toggleTimer: () => this.toggleTimer(),
+      d_photos: [
+        { label: "État général", ts: r.recu_le.slice(0, 5), filled: true },
+        { label: "Zone endommagée", ts: r.recu_le.slice(0, 5), filled: true },
+        { label: "Après intervention", ts: "à prendre", filled: false },
+      ].map((ph) => ({
+        label: ph.label, ts: ph.ts, icon: ph.filled ? "▣" : "＋",
+        bg: ph.filled ? "oklch(0.955 0.008 258)" : "oklch(0.985 0.003 258)",
+        border: ph.filled ? "oklch(0.90 0.008 258)" : "oklch(0.86 0.01 258)",
+        borderStyle: ph.filled ? "solid" : "dashed",
+        iconColor: ph.filled ? "oklch(0.58 0.02 255)" : "oklch(0.52 0.12 258)",
+        labelColor: ph.filled ? "oklch(0.38 0.02 255)" : "oklch(0.42 0.10 258)",
+      })),
+      d_checklist: [
+        { id: "c1", label: "Réception et constat photo", min: "5 min" },
+        { id: "c2", label: "Diagnostic et devis validé client", min: "15 min" },
+        { id: "c3", label: "Démontage et remplacement pièce", min: "30 min" },
+        { id: "c4", label: "Remontage et nettoyage", min: "10 min" },
+        { id: "c5", label: "Test de sortie complet", min: "10 min" },
+      ].map((ck) => {
+        const done = !!st.checks[ck.id];
+        return {
+          label: ck.label, min: ck.min, done: done ? "true" : "false", mark: done ? "✓" : "",
+          weight: done ? "600" : "500", color: done ? "oklch(0.42 0.02 255)" : "oklch(0.26 0.02 255)",
+          strike: done ? "text-decoration:line-through;text-decoration-color:oklch(0.72 0.02 258)" : "",
+          boxStyle: "width:19px;height:19px;border-radius:6px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;background:" + (done ? "oklch(0.46 0.11 152)" : "transparent") + ";border:1.5px solid " + (done ? "oklch(0.46 0.11 152)" : "oklch(0.82 0.01 258)"),
+          style: "display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px;border-radius:10px;border:1px solid " + (done ? "oklch(0.94 0.02 152)" : "oklch(0.95 0.006 258)") + ";background:" + (done ? "oklch(0.985 0.012 152)" : "oklch(0.985 0.003 258)"),
+          onClick: () => this.setState({ checks: Object.assign({}, st.checks, { [ck.id]: !done }) }),
+        };
+      }),
+      d_checkDone: Object.keys(st.checks).filter((x) => st.checks[x]).length + " / 5 étapes",
+      d_checkBadge: badge(Object.keys(st.checks).filter((x) => st.checks[x]).length === 5 ? confMeta(0.9) : confMeta(0.6), "s"),
+      d_checkFill: "display:block;height:100%;border-radius:99px;width:" + Object.keys(st.checks).filter((x) => st.checks[x]).length * 20 + "%;background:oklch(0.50 0.12 152)",
+      d_devisStatut: r.valide == null ? "En attente client" : "Accepté",
+      d_devisIcon: r.valide == null ? "◷" : "✓",
+      d_devisBadge: badge(r.valide == null ? { bg: "oklch(0.965 0.05 70)", fg: "oklch(0.42 0.11 62)", bd: "oklch(0.86 0.09 70)" } : { bg: "oklch(0.965 0.03 152)", fg: "oklch(0.36 0.10 152)", bd: "oklch(0.84 0.06 152)" }, "s"),
+      d_devisLines: [
+        { k: "Pièces", v: eur(r.cout || 0), weight: "500", color: "oklch(0.36 0.02 255)", size: "12.5px", sep: "" },
+        { k: "Main-d'œuvre (0,5 h × 45 €)", v: eur(22.5), weight: "500", color: "oklch(0.36 0.02 255)", size: "12.5px", sep: "" },
+        { k: "Total TTC", v: r.valide == null ? "à valider" : eur(r.valide), weight: "700", color: "oklch(0.22 0.02 255)", size: "16px", sep: "padding-top:8px;border-top:1px solid oklch(0.93 0.008 258)" },
+        { k: "Marge nette", v: r.valide == null ? "à valider" : eur(marge - 22.5), weight: "700", size: "13px", sep: "", color: r.valide == null ? "oklch(0.46 0.02 255)" : marge - 22.5 < 0 ? "oklch(0.44 0.15 25)" : "oklch(0.34 0.10 152)" },
+      ],
+      d_goFacture: () => a.select && a.select("reparation", r.id, "facturation"),
+      d_noPrev: !rPrev, d_noNext: !rNext,
+      d_prevLabel: rPrev ? rPrev.label : "Début",
+      d_nextLabel: rNext ? rNext.label : "Clôturé",
+      d_prevStyle: navBtn(!!rPrev, false), d_nextStyle: navBtn(!!rNext, true),
+      d_onPrev: () => rPrev && a.moveRep && a.moveRep(r.id, rPrev.key),
+      d_onNext: () => rNext && a.moveRep && a.moveRep(r.id, rNext.key),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

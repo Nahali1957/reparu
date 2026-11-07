@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="ba69d559-3513-458f-b973-584866c82080"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
+<style>/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("abc9a888-073e-47ff-887b-f9501cb56d71") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("ceff23b6-fe8b-4c2e-b63a-ab9a18e20a58") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("96085453-d780-455b-83ea-970ca7ce3b79") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("51b7d21f-954b-4ef2-b21c-e3e504bc4a97") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("2fdc17df-1202-4f23-aa58-1e3488ce4db6") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("68a9738a-b56a-4dc5-a9cd-4553643f90e8") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("d440d4e5-a508-410f-9c0d-f0c23472d8b9") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("caa92e64-415a-42c2-ae59-1628c4580410") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("e9774ab6-4601-4fce-9930-ffa52ae9010d") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("125c8bc8-8913-4b6f-b165-b5431c52dda8") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("510702ca-513c-499e-adaa-f0d8e4272386") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("68fbd768-35a7-4a0b-b396-d918e2ef7f96") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("715850f9-b759-4132-8904-b6b8b8777c8f") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("4abb41ae-7fc8-4f5b-a7ef-5b34dd3a9db0") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("97a0e312-b956-4e57-b24a-a40ff021db3d") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("27081e2d-0f98-4650-be9f-c3c7e61da49e") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("9f63bf13-5cc4-423c-a3bb-5e0a6e449466") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("7721a392-431b-4c22-92e7-94631f41ed9e") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url("3117d09d-4e6d-423f-a12c-58602e08327a") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url("d920fdac-da20-4804-9847-ea6b05b22343") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url("0061349e-115d-4c0c-801d-fca1e080b8a2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:oklch(0.93 0.006 258);color:oklch(0.22 0.02 255);font-family:'Public Sans','Helvetica Neue',Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:oklch(0.52 0.15 258);text-decoration:none}
+a:hover{color:oklch(0.42 0.15 258);text-decoration:underline}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,select,textarea{font:inherit;color:inherit}
+table{border-collapse:collapse}
+:focus-visible{outline:3px solid oklch(0.55 0.16 258);outline-offset:2px}
+[data-a11y-only]{display:none!important}
+@keyframes shimmer{0%{background-position:-460px 0}100%{background-position:460px 0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.35}}
+[data-a11y="1"] [data-muted]{color:oklch(0.36 0.02 255)!important}
+[data-a11y="1"] [data-tiny]{font-size:13px!important}
+[data-a11y="1"] [data-badge]{border-width:2px!important;font-weight:700!important}
+[data-a11y="1"] [data-a11y-only]{display:flex!important}
+[data-a11y="1"] [data-hide-a11y]{display:none!important}
+[data-a11y="1"] button{min-height:40px}
+[data-a11y="1"] :focus-visible{outline:4px solid oklch(0.50 0.20 25);outline-offset:3px}
+[data-a11y="1"] [data-table] tbody tr:nth-child(even){background:oklch(0.965 0.006 258)!important}
+[data-a11y="1"] [data-underline]{text-decoration:underline!important}
+</style>
+</helmet>
+
+<div data-a11y="{{ a11yFlag }}" style="min-height:100vh;padding:0 0 64px">
+
+  <header style="padding:28px 32px 20px;display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between;border-bottom:1px solid oklch(0.86 0.008 258)">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:oklch(0.50 0.02 255)">
+        <span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:oklch(0.52 0.15 258)"></span>
+        <span>Repar U · maquettes responsives</span>
+      </div>
+      <h1 style="margin:0;font-size:30px;font-weight:700;letter-spacing:-0.02em">Plateforme d'aide à la décision — atelier réparation</h1>
+      <p style="margin:0;max-width:760px;font-size:14px;line-height:1.55;color:oklch(0.46 0.02 255);text-wrap:pretty">14 écrans maquettés en haute fidélité, web et mobile côte à côte. Choisissez un rôle, un écran et un état d'affichage ; les données sont modifiables et conservées d'une session à l'autre.</p>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button sc-camel-on-click="{{ toggleA11y }}" aria-pressed="{{ a11yPressed }}" style="{{ a11yBtnStyle }}">
+        <span aria-hidden="true">◑</span><span>{{ a11yLabel }}</span>
+      </button>
+      <button sc-camel-on-click="{{ resetAll }}" style="display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;border:1px solid oklch(0.86 0.008 258);background:#fff;font-size:13px;font-weight:600;color:oklch(0.34 0.02 255)">
+        <span aria-hidden="true">↺</span><span>Réinitialiser les données</span>
+      </button>
+    </div>
+  </header>
+
+  <div style="position:sticky;top:0;z-index:40;background:oklch(0.96 0.005 258);border-bottom:1px solid oklch(0.86 0.008 258);padding:14px 32px;display:flex;flex-wrap:wrap;gap:28px;align-items:center;box-shadow:0 1px 12px oklch(0.22 0.02 255 / 0.05)">
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:oklch(0.50 0.02 255)">Rôle connecté</span>
+      <div role="radiogroup" aria-label="Rôle connecté" style="display:flex;gap:6px;padding:4px;background:oklch(0.90 0.008 258);border-radius:12px">
+        <sc-for list="{{ roleBtns }}" as="b" hint-placeholder-count="3">
+          <button sc-camel-on-click="{{ b.onClick }}" role="radio" aria-checked="{{ b.checked }}" style="{{ b.style }}">
+            <span aria-hidden="true">{{ b.icon }}</span><span>{{ b.label }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:oklch(0.50 0.02 255)">État de l'écran</span>
+      <div role="radiogroup" aria-label="État de l'écran" style="display:flex;gap:6px;padding:4px;background:oklch(0.90 0.008 258);border-radius:12px">
+        <sc-for list="{{ stateBtns }}" as="b" hint-placeholder-count="5">
+          <button sc-camel-on-click="{{ b.onClick }}" role="radio" aria-checked="{{ b.checked }}" style="{{ b.style }}">{{ b.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:7px;margin-left:auto">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:oklch(0.50 0.02 255)">Écran affiché</span>
+      <div style="display:flex;align-items:baseline;gap:10px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:oklch(0.52 0.15 258)">§{{ screenNum }}</span>
+        <span style="font-size:17px;font-weight:700;letter-spacing:-0.01em">{{ screenTitle }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:24px;align-items:flex-start;padding:24px 32px">
+
+    <nav aria-label="Écrans maquettés" style="flex:0 0 258px;position:sticky;top:104px;background:#fff;border:1px solid oklch(0.88 0.008 258);border-radius:16px;padding:16px 14px;display:flex;flex-direction:column;gap:18px;box-shadow:0 1px 3px oklch(0.22 0.02 255 / 0.06)">
+      <sc-for list="{{ navGroups }}" as="g" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="padding:0 8px 6px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:oklch(0.55 0.02 255)">{{ g.title }}</div>
+          <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="4">
+            <button sc-camel-on-click="{{ it.onClick }}" aria-current="{{ it.current }}" style="{{ it.style }}">
+              <span style="{{ it.numStyle }}">{{ it.num }}</span>
+              <span style="flex:1;text-align:left">{{ it.label }}</span>
+              <span aria-hidden="true" style="{{ it.lockStyle }}">{{ it.lock }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-for>
+      <div style="border-top:1px solid oklch(0.91 0.008 258);padding:12px 8px 2px;display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:11px;font-weight:700;color:oklch(0.34 0.02 255)">Légende</span>
+        <span data-tiny="1" style="font-size:11px;line-height:1.5;color:oklch(0.50 0.02 255)"><span aria-hidden="true">🔒</span> écran non autorisé pour le rôle sélectionné — l'accès affiche un refus explicite, jamais un masquage silencieux.</span>
+      </div>
+    </nav>
+
+    <div style="flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+
+      <section aria-label="Maquette web (desktop)" style="flex:1 1 900px;min-width:720px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:9px">
+            <span style="font-size:13px;font-weight:700;letter-spacing:.02em">Web — 1440 × 900</span>
+            <span data-muted="1" style="font-size:12px;color:oklch(0.50 0.02 255)">navigateur, poste de l'atelier</span>
+          </div>
+          <span data-muted="1" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:oklch(0.52 0.02 255)">{{ routeLabel }}</span>
+        </div>
+        <div style="border-radius:14px;overflow:hidden;border:1px solid oklch(0.84 0.01 258);box-shadow:0 18px 44px oklch(0.22 0.02 255 / 0.13)">
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:oklch(0.90 0.008 258);border-bottom:1px solid oklch(0.84 0.01 258)">
+            <div style="display:flex;gap:6px">
+              <span style="width:10px;height:10px;border-radius:50%;background:oklch(0.72 0.14 25)"></span>
+              <span style="width:10px;height:10px;border-radius:50%;background:oklch(0.80 0.12 85)"></span>
+              <span style="width:10px;height:10px;border-radius:50%;background:oklch(0.75 0.13 150)"></span>
+            </div>
+            <div style="flex:1;max-width:420px;padding:5px 12px;border-radius:7px;background:#fff;border:1px solid oklch(0.88 0.008 258);font-family:'IBM Plex Mono',monospace;font-size:11px;color:oklch(0.46 0.02 255)">reparu.fr{{ routeLabel }}</div>
+          </div>
+          <div style="display:flex;height:824px;background:oklch(0.975 0.004 258)">
+            <sc-if value="{{ hasChrome }}" hint-placeholder-val="{{ true }}">
+              <aside style="flex:0 0 226px;background:oklch(0.21 0.025 258);color:oklch(0.96 0.005 258);display:flex;flex-direction:column;padding:18px 12px;gap:22px">
+                <div style="display:flex;align-items:center;gap:10px;padding:0 8px">
+                  <span style="width:30px;height:30px;border-radius:9px;background:oklch(0.55 0.16 258);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">Ʀ</span>
+                  <span style="display:flex;flex-direction:column;line-height:1.2">
+                    <span style="font-size:13px;font-weight:700">Repar U</span>
+                    <span style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:oklch(0.70 0.02 258)">Atelier Montpellier</span>
+                  </span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <sc-for list="{{ appNav }}" as="it" hint-placeholder-count="7">
+                    <button sc-camel-on-click="{{ it.onClick }}" aria-current="{{ it.current }}" style="{{ it.appStyle }}">
+                      <span aria-hidden="true" style="width:18px;text-align:center;font-size:13px">{{ it.icon }}</span>
+                      <span style="flex:1;text-align:left">{{ it.label }}</span>
+                      <span style="{{ it.badgeStyle }}">{{ it.badge }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+                <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;align-items:center;gap:9px;padding:10px;border-radius:10px;background:oklch(0.27 0.025 258)">
+                    <span style="width:30px;height:30px;border-radius:50%;background:oklch(0.45 0.10 258);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">{{ userInitials }}</span>
+                    <span style="display:flex;flex-direction:column;line-height:1.25;min-width:0">
+                      <span style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ userName }}</span>
+                      <span style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:oklch(0.72 0.03 258)">{{ role }}</span>
+                    </span>
+                  </div>
+                  <button style="display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;font-size:12px;color:oklch(0.78 0.02 258)">
+                    <span aria-hidden="true">⏻</span><span>Se déconnecter</span>
+                  </button>
+                </div>
+              </aside>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+                <div style="display:flex;align-items:center;gap:16px;padding:14px 24px;background:#fff;border-bottom:1px solid oklch(0.90 0.008 258)">
+                  <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                    <span data-muted="1" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:oklch(0.54 0.02 255)">{{ breadcrumb }}</span>
+                    <span style="font-size:19px;font-weight:700;letter-spacing:-0.015em">{{ screenTitle }}</span>
+                  </div>
+                  <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+                    <label style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:9px;border:1px solid oklch(0.89 0.008 258);background:oklch(0.985 0.003 258);min-width:230px">
+                      <span aria-hidden="true" style="color:oklch(0.55 0.02 255);font-size:13px">⌕</span>
+                      <input type="search" placeholder="Rechercher un dossier, un client…" style="border:0;background:none;outline:none;width:100%;font-size:13px">
+                    </label>
+                    <button aria-label="Alertes de stock" style="position:relative;padding:9px 11px;border-radius:9px;border:1px solid oklch(0.89 0.008 258);background:#fff">
+                      <span aria-hidden="true" style="font-size:14px">⚠</span>
+                      <span style="position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:oklch(0.53 0.18 25);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ alertCount }}</span>
+                    </button>
+                  </div>
+                </div>
+                <div style="flex:1;min-height:0;overflow:auto;padding:22px 24px">
+                  <sc-if value="{{ showEtat }}" hint-placeholder-val="{{ false }}">
+                    <dc-import name="Repar-Etats" mode="desktop" state="{{ state }}" kind="{{ screenKind }}" screen="{{ screenMeta }}" role="{{ role }}" actions="{{ actions }}" hint-size="100%,520px"></dc-import>
+                  </sc-if>
+                  <sc-if value="{{ showCoeur }}" hint-placeholder-val="{{ true }}">
+                    <dc-import name="Repar-Coeur" mode="desktop" screen="{{ screen }}" data="{{ db }}" role="{{ role }}" actions="{{ actions }}" hint-size="100%,640px"></dc-import>
+                  </sc-if>
+                  <sc-if value="{{ showGestion }}" hint-placeholder-val="{{ false }}">
+                    <dc-import name="Repar-Gestion" mode="desktop" screen="{{ screen }}" data="{{ db }}" role="{{ role }}" actions="{{ actions }}" hint-size="100%,640px"></dc-import>
+                  </sc-if>
+                  <sc-if value="{{ showStocks }}" hint-placeholder-val="{{ false }}">
+                    <dc-import name="Repar-Stocks" mode="desktop" screen="{{ screen }}" data="{{ db }}" role="{{ role }}" actions="{{ actions }}" hint-size="100%,640px"></dc-import>
+                  </sc-if>
+                  <sc-if value="{{ showPilotage }}" hint-placeholder-val="{{ false }}">
+                    <dc-import name="Repar-Pilotage" mode="desktop" screen="{{ screen }}" data="{{ db }}" role="{{ role }}" actions="{{ actions }}" hint-size="100%,640px"></dc-import>
+                  </sc-if>
+                  <sc-if value="{{ showExtra }}" hint-placeholder-val="{{ false }}">
+                    <dc-import name="Repar-Extra" mode="desktop" screen="{{ screen }}" data="{{ db }}" role="{{ role }}" actions="{{ actions }}" hint-size="100%,640px"></dc-import>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ noChrome }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:1;min-width:0;overflow:auto">
+                <dc-import name="Repar-Coeur" mode="desktop" screen="{{ screen }}" data="{{ db }}" role="{{ role }}" actions="{{ actions }}" state="{{ state }}" hint-size="100%,824px"></dc-import>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </section>
+
+      <section aria-label="Maquette mobile" style="flex:0 0 428px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:baseline;gap:9px">
+          <span style="font-size:13px;font-weight:700;letter-spacing:.02em">Mobile — 390 × 844</span>
+          <span data-muted="1" style="font-size:12px;color:oklch(0.50 0.02 255)">technicien en atelier</span>
+        </div>
+        <div style="width:428px;padding:14px;border-radius:52px;background:oklch(0.30 0.02 258);box-shadow:0 20px 50px oklch(0.22 0.02 255 / 0.22),inset 0 0 0 2px oklch(0.42 0.02 258)">
+          <div style="position:relative;width:400px;height:844px;border-radius:40px;overflow:hidden;background:oklch(0.975 0.004 258);display:flex;flex-direction:column">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 26px 6px;background:{{ mobileBarBg }};color:{{ mobileBarFg }};font-size:12px;font-weight:600;flex:0 0 auto">
+              <span style="font-family:'IBM Plex Mono',monospace">9:41</span>
+              <span style="display:flex;gap:5px;align-items:center" aria-hidden="true"><span>▮▮▮</span><span>◔</span><span>▰</span></span>
+            </div>
+            <sc-if value="{{ hasChrome }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;align-items:center;gap:10px;padding:8px 16px 12px;background:oklch(0.21 0.025 258);color:#fff">
+                <button aria-label="Retour" sc-camel-on-click="{{ goBack }}" style="width:32px;height:32px;border-radius:9px;background:oklch(0.28 0.025 258);display:flex;align-items:center;justify-content:center;font-size:14px">‹</button>
+                <span style="display:flex;flex-direction:column;line-height:1.2;min-width:0;flex:1">
+                  <span style="font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ screenTitle }}</span>
+                  <span style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:oklch(0.74 0.03 258)">{{ userName }} · {{ role }}</span>
+                </span>
+                <button aria-label="Alertes de stock" style="position:relative;width:32px;height:32px;border-radius:9px;background:oklch(0.28 0.025 258);display:flex;align-items:center;justify-content:center;font-size:13px">
+                  <span aria-hidden="true">⚠</span>
+                  <span style="position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:8px;background:oklch(0.58 0.18 25);font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center">{{ alertCount }}</span>
+                </button>
+              </div>
+              <div style="flex:1;min-height:0;overflow:auto;padding:14px 14px 18px">
+                <sc-if value="{{ showEtat }}" hint-placeholder-val="{{ false }}">
+                  <dc-import name="Repar-Etats" mode="mobile" state="{{ state }}" kind="{{ screenKind }}" screen="{{ screenMeta }}" role="{{ role }}" actions="{{ actions }}" hint-size="100%,420px"></dc-import>
+                </sc-if>
+                <sc-if value="{{ showCoeur }}" hint-placeholder-val="{{ true }}">
+                  <dc-import name="Repar-Coeur" mode="mobile" screen="{{ screen }}" data="{{ db }}" role="{{ role }}" actions="{{ actions }}" hint-size="100%,600px"></dc-import>
+                </sc-if>
+                <sc-if value="{{ showGestion }}" hint-placeholder-val="{{ false }}">
+                  <dc-import name="Repar-Gestion" mode="mobile" screen="{{ screen }}" data="{{ db }}" role="{{ role }}" actions="{{ actions }}" hint-size="100%,600px"></dc-import>
+                </sc-if>
+                <sc-if value="{{ showStocks }}" hint-placeholder-val="{{ false }}">
+                  <dc-import name="Repar-Stocks" mode="mobile" screen="{{ screen }}" data="{{ db }}" role="{{ role }}" actions="{{ actions }}" hint-size="100%,600px"></dc-import>
+                </sc-if>
+                <sc-if value="{{ showPilotage }}" hint-placeholder-val="{{ false }}">
+                  <dc-import name="Repar-Pilotage" mode="mobile" screen="{{ screen }}" data="{{ db }}" role="{{ role }}" actions="{{ actions }}" hint-size="100%,600px"></dc-import>
+                </sc-if>
+                <sc-if value="{{ showExtra }}" hint-placeholder-val="{{ false }}">
+                  <dc-import name="Repar-Extra" mode="mobile" screen="{{ screen }}" data="{{ db }}" role="{{ role }}" actions="{{ actions }}" hint-size="100%,600px"></dc-import>
+                </sc-if>
+              </div>
+              <div role="navigation" aria-label="Navigation principale" style="flex:0 0 auto;display:flex;background:#fff;border-top:1px solid oklch(0.90 0.008 258);padding:8px 6px 18px">
+                <sc-for list="{{ mobileNav }}" as="it" hint-placeholder-count="5">
+                  <button sc-camel-on-click="{{ it.onClick }}" aria-current="{{ it.current }}" style="{{ it.tabStyle }}">
+                    <span aria-hidden="true" style="font-size:17px;line-height:1">{{ it.icon }}</span>
+                    <span style="font-size:10px;font-weight:600;letter-spacing:.01em">{{ it.short }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ noChrome }}" hint-placeholder-val="{{ false }}">
+              <div style="flex:1;min-height:0;overflow:auto">
+                <dc-import name="Repar-Coeur" mode="mobile" screen="{{ screen }}" data="{{ db }}" role="{{ role }}" actions="{{ actions }}" state="{{ state }}" hint-size="100%,780px"></dc-import>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <footer style="margin:8px 32px 0;padding:18px 22px;border-radius:14px;background:#fff;border:1px solid oklch(0.88 0.008 258);display:flex;flex-wrap:wrap;gap:28px">
+    <div style="flex:1 1 300px;display:flex;flex-direction:column;gap:6px">
+      <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:oklch(0.40 0.02 255)">Couleurs sémantiques</span>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ legendStock }}" as="l" hint-placeholder-count="3">
+          <span data-badge="1" style="{{ l.style }}"><span aria-hidden="true">{{ l.icon }}</span>{{ l.label }}</span>
+        </sc-for>
+      </div>
+    </div>
+    <div style="flex:1 1 380px;display:flex;flex-direction:column;gap:6px">
+      <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:oklch(0.40 0.02 255)">Statuts Kanban</span>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ legendStatuts }}" as="l" hint-placeholder-count="5">
+          <span data-badge="1" style="{{ l.style }}"><span aria-hidden="true">{{ l.icon }}</span>{{ l.label }}</span>
+        </sc-for>
+      </div>
+    </div>
+    <div style="flex:1 1 260px;display:flex;flex-direction:column;gap:6px">
+      <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:oklch(0.40 0.02 255)">Score de confiance IA</span>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ legendIA }}" as="l" hint-placeholder-count="3">
+          <span data-badge="1" style="{{ l.style }}">{{ l.label }}</span>
+        </sc-for>
+      </div>
+      <span data-tiny="1" style="font-size:11px;color:oklch(0.50 0.02 255)">Jamais de rouge : une confiance faible est une incertitude à trancher, pas une erreur.</span>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1920,&quot;height&quot;:1200}}">
+const SCREENS = [
+  { key: "login", num: "5.1", label: "Connexion", short: "Login", icon: "⏻", group: "Priorité 1 — Cœur métier", grp: "coeur", kind: "form", chrome: false, roles: ["*"], route: "/connexion", crumb: "Authentification" },
+  { key: "dashboard", num: "5.2", label: "Tableau de bord", short: "Pilotage", icon: "◧", group: "Priorité 1 — Cœur métier", grp: "coeur", kind: "dashboard", roles: ["Administrateur"], route: "/tableau-de-bord", crumb: "Pilotage" },
+  { key: "kanban", num: "5.3", label: "Kanban des réparations", short: "Dossiers", icon: "🛠", group: "Priorité 1 — Cœur métier", grp: "coeur", kind: "kanban", roles: ["Technicien", "Administrateur"], route: "/reparations", crumb: "Réparations" },
+  { key: "dossier", num: "5.4", label: "Dossier de réparation", short: "Dossier", icon: "◍", group: "Priorité 1 — Cœur métier", grp: "coeur", kind: "detail", roles: ["Technicien", "Administrateur"], route: "/reparations/REP-0451", crumb: "Réparations · dossier" },
+  { key: "affectation", num: "5.13", label: "Affectation & planning", short: "Planning", icon: "⧉", group: "Priorité 1 — Cœur métier", grp: "extra", kind: "kanban", roles: ["Administrateur"], route: "/planning", crumb: "Réparations · planning" },
+  { key: "facturation", num: "5.14", label: "Devis & facturation", short: "Facture", icon: "€", group: "Priorité 2 — Gestion courante", grp: "extra", kind: "detail", roles: ["Technicien", "Administrateur"], route: "/reparations/REP-0451/facture", crumb: "Réparations · facturation" },
+  { key: "clients", num: "5.6", label: "Liste des clients", short: "Clients", icon: "👤", group: "Priorité 2 — Gestion courante", grp: "gestion", kind: "table", roles: ["Technicien", "Administrateur"], route: "/clients", crumb: "Clients" },
+  { key: "client", num: "5.5", label: "Fiche client", short: "Client", icon: "▣", group: "Priorité 2 — Gestion courante", grp: "gestion", kind: "detail", roles: ["Technicien", "Administrateur"], route: "/clients/c1", crumb: "Clients · fiche" },
+  { key: "appareil", num: "5.7", label: "Ajout / édition appareil", short: "Appareil", icon: "📱", group: "Priorité 2 — Gestion courante", grp: "gestion", kind: "form", roles: ["Technicien", "Administrateur"], route: "/appareils/nouveau", crumb: "Clients · appareil" },
+  { key: "inventaire", num: "5.8", label: "Inventaire des pièces", short: "Stock", icon: "📦", group: "Priorité 3 — Stocks & fournisseurs", grp: "stocks", kind: "table", roles: ["Technicien", "Administrateur"], route: "/stocks", crumb: "Stocks" },
+  { key: "fournisseurs", num: "5.9", label: "Fournisseurs & comparaison", short: "Fourn.", icon: "🤝", group: "Priorité 3 — Stocks & fournisseurs", grp: "stocks", kind: "table", roles: ["Administrateur"], route: "/fournisseurs", crumb: "Stocks · fournisseurs" },
+  { key: "iot", num: "5.10", label: "Alertes capteurs IoT", short: "Capteurs", icon: "◉", group: "Priorité 3 — Stocks & fournisseurs", grp: "stocks", kind: "table", roles: ["Administrateur"], route: "/stocks/capteurs", crumb: "Stocks · capteurs" },
+  { key: "rapports", num: "5.11", label: "Rapports & exports", short: "Rapports", icon: "📊", group: "Priorité 4 — Pilotage & administration", grp: "pilotage", kind: "dashboard", roles: ["Administrateur"], route: "/rapports", crumb: "Pilotage · rapports" },
+  { key: "comptes", num: "5.12", label: "Gestion des comptes", short: "Comptes", icon: "🛡", group: "Priorité 4 — Pilotage & administration", grp: "pilotage", kind: "table", roles: ["Administrateur"], route: "/administration/comptes", crumb: "Administration" },
+];
+
+const ROLES = [
+  { key: "Technicien", label: "Technicien", icon: "🔧", user: "Lucas Marchand", init: "LM" },
+  { key: "Administrateur", label: "Administrateur", icon: "📊", user: "Claire Vasseur", init: "CV" },
+];
+
+const STATES = [
+  { key: "nominal", label: "Nominal" },
+  { key: "loading", label: "Loading" },
+  { key: "empty", label: "Empty" },
+  { key: "error", label: "Error" },
+  { key: "locked", label: "Verrouillé" },
+];
+
+const STORE = "reparu-maquettes-v3";
+
+// Diagnostic assisté simulé : mots-clés du symptôme → hypothèses classées
+const IA_RULES = [
+  { kw: ["écran", "ecran", "vitre", "fissur", "dalle", "tactile", "affichage"], label: "Écran / vitre tactile HS", score: 0.91, piece: "Écran" },
+  { kw: ["batterie", "autonomie", "décharge", "decharge", "gonfl", "tient plus"], label: "Batterie en fin de vie", score: 0.86, piece: "Batterie" },
+  { kw: ["charge", "chargeur", "connecteur", "port", "câble", "cable"], label: "Connecteur de charge HS", score: 0.83, piece: "Connecteur de charge" },
+  { kw: ["photo", "caméra", "camera", "flou", "objectif"], label: "Module caméra HS", score: 0.75, piece: "Module caméra" },
+  { kw: ["son", "haut-parleur", "grésill", "gresill", "micro", "appel"], label: "Haut-parleur interne HS", score: 0.79, piece: "Haut-parleur" },
+  { kw: ["allume", "démarre", "demarre", "éteint", "eteint", "mort", "aucune réaction"], label: "Circuit de charge (PMIC) défaillant", score: 0.56, piece: "Carte mère" },
+  { kw: ["chauff", "surchauff", "lent", "redémarr", "redemarr"], label: "Dissipation thermique / pad HS", score: 0.47, piece: "" },
+  { kw: ["eau", "humid", "oxyd", "liquide", "piscine"], label: "Oxydation après contact liquide", score: 0.62, piece: "" },
+];
+
+// Une pièce n'est proposée que si sa compatibilité couvre réellement le modèle.
+// « Galaxy S21 / S22 » ⊃ Galaxy S22 ; « iPhone 12 / 12 Pro » ⊃ iPhone 12 Pro.
+function compatible(compat, modele) {
+  if (!compat || !modele) return false;
+  const cible = modele.toLowerCase().trim();
+  let famille = "";
+  return compat.split("/").some((tok) => {
+    const t = tok.trim();
+    if (!t) return false;
+    const lead = t.split(" ").filter((w) => !/\d/.test(w)).join(" ");
+    let norme;
+    if (lead && t.indexOf(lead) === 0) { famille = lead; norme = t; }
+    else norme = (famille ? famille + " " : "") + t;
+    return norme.toLowerCase() === cible;
+  });
+}
+
+function guessIA(symptomes, pieces, appareil) {
+  const s = (symptomes || "").toLowerCase();
+  const modele = appareil ? appareil.modele : null;
+  let found = IA_RULES.filter((r) => r.kw.some((k) => s.indexOf(k) >= 0)).sort((a, b) => b.score - a.score).slice(0, 3);
+  if (!found.length) found = [{ label: "Panne à caractériser — diagnostic manuel requis", score: 0.34, piece: "" }];
+  const match = (r) => pieces.filter((p) => r.piece && p.designation.indexOf(r.piece) === 0 && compatible(p.compat, modele));
+  const first = match(found[0])[0];
+  const cout = first ? first.prix_achat : 35;
+  const prix = Math.round((cout * 1.9 + 22.5) / 0.5) * 0.5;
+  return {
+    confiance: found[0].score,
+    pannes: found.map((r) => {
+      const ok = match(r);
+      return {
+        label: r.label, score: r.score,
+        pieces: ok.map((p) => p.designation + " " + p.compat).slice(0, 2),
+        manque: !ok.length && r.piece ? r.piece : null,
+      };
+    }),
+    cout, prix, marge: Math.round((prix - cout) * 100) / 100, duree: "45 min",
+    estime: !first,
+  };
+}
+const PRIMARY = "oklch(0.52 0.15 258)";
+
+class Component extends DCLogic {
+  state = { role: "Administrateur", screen: "dashboard", uiState: "nominal", a11y: false, db: null, sel: {} };
+
+  componentDidMount() {
+    import("./data.js").then((m) => {
+      const base = {
+        users: m.users, clients: m.clients, appareils: m.appareils, statuts: m.statuts,
+        reparations: m.reparations, pieces: m.pieces, fournisseurs: m.fournisseurs, offres: m.offres,
+        mouvements: m.mouvements, capteurs: m.capteurs, lectures: m.lectures, kpis: m.kpis,
+        serie: m.serie_reparations, pannes: m.repartition_pannes, previsions: m.previsions,
+      };
+      let saved = null;
+      try { saved = JSON.parse(localStorage.getItem(STORE) || "null"); } catch (e) { saved = null; }
+      let db = saved && saved.db ? Object.assign({}, base, saved.db) : base;
+      // Migration : le rôle « Responsable » a été fusionné dans « Administrateur ».
+      if (db.users) db = Object.assign({}, db, { users: db.users.map((u) => (u.role === "Responsable" ? Object.assign({}, u, { role: "Administrateur" }) : u)) });
+      const savedRole = saved && saved.role;
+      this.setState({
+        db,
+        role: ROLES.some((r) => r.key === savedRole) ? savedRole : "Administrateur",
+        screen: (saved && saved.screen) || this.state.screen,
+        a11y: saved ? !!saved.a11y : false,
+        sel: (saved && saved.sel) || { reparation: "r1", client: "c1", piece: "p1", capteur: "iot-cap-002" },
+      });
+    });
+  }
+
+  persist(patch) {
+    const next = Object.assign({}, this.state, patch);
+    try {
+      localStorage.setItem(STORE, JSON.stringify({
+        role: next.role, screen: next.screen, a11y: next.a11y, sel: next.sel,
+        db: { clients: next.db && next.db.clients, appareils: next.db && next.db.appareils, reparations: next.db && next.db.reparations, pieces: next.db && next.db.pieces, mouvements: next.db && next.db.mouvements, users: next.db && next.db.users },
+      }));
+    } catch (e) { /* quota */ }
+  }
+
+  set(patch) { this.setState(patch); this.persist(patch); }
+
+  meta(key) { return SCREENS.find((s) => s.key === (key || this.state.screen)) || SCREENS[0]; }
+  allowed(m) { return m.roles[0] === "*" || m.roles.indexOf(this.state.role) >= 0; }
+
+  go(key) {
+    const m = this.meta(key);
+    this.set({ screen: key, uiState: this.allowed(m) ? "nominal" : "locked" });
+  }
+
+  // --- mutations ---
+  patchRep(id, patch) {
+    const reparations = this.state.db.reparations.map((r) => (r.id === id ? Object.assign({}, r, patch) : r));
+    this.set({ db: Object.assign({}, this.state.db, { reparations }) });
+  }
+  moveRep(id, statut) {
+    const r = this.state.db.reparations.find((x) => x.id === id);
+    if (!r || r.statut === statut) return;
+    const who = ROLES.find((x) => x.key === this.state.role).user;
+    const historique = (r.historique || []).concat([{ statut, le: "26/07/2026 10:15", par: who }]);
+    this.patchRep(id, { statut, historique });
+  }
+  addRep(payload) {
+    const db = this.state.db;
+    const app = db.appareils.find((a) => a.id === payload.appareil_id);
+    if (!app) return null;
+    const max = db.reparations.reduce((m, r) => Math.max(m, parseInt(String(r.numero).replace("REP-", ""), 10) || 0), 0);
+    const who = ROLES.find((x) => x.key === this.state.role).user;
+    const id = "r" + (max + 1);
+    const rep = {
+      id, numero: "REP-" + String(max + 1).padStart(4, "0"),
+      appareil_id: app.id, client_id: app.client_id, tech_id: payload.tech_id || null,
+      statut: "recu", symptomes: payload.symptomes, diagnostic: "",
+      priorite: payload.priorite || "Normale", recu_le: "26/07/2026 10:15",
+      cout: 0, prix: 0, valide: null, pieces: [],
+      ia: guessIA(payload.symptomes, db.pieces, app),
+      historique: [{ statut: "recu", le: "26/07/2026 10:15", par: who }],
+    };
+    const sel = Object.assign({}, this.state.sel, { reparation: id });
+    this.set({ db: Object.assign({}, db, { reparations: [rep].concat(db.reparations) }), sel });
+    return rep;
+  }
+  addClient(c) {
+    const clients = [Object.assign({ id: "c" + (this.state.db.clients.length + 1), reparations: 0, total: 0, depuis: "07/2026" }, c)].concat(this.state.db.clients);
+    this.set({ db: Object.assign({}, this.state.db, { clients }) });
+  }
+  addAppareil(a) {
+    const appareils = this.state.db.appareils.concat([Object.assign({ id: "a" + (this.state.db.appareils.length + 1), depose: "26/07/2026" }, a)]);
+    this.set({ db: Object.assign({}, this.state.db, { appareils }) });
+  }
+  adjustStock(pieceId, delta, motif) {
+    const pieces = this.state.db.pieces.map((p) => (p.id === pieceId ? Object.assign({}, p, { stock: Math.max(0, p.stock + delta) }) : p));
+    const mv = { id: "m" + (this.state.db.mouvements.length + 1), piece_id: pieceId, type: delta > 0 ? "Entrée" : "Sortie", qte: delta, le: "26/07/2026 10:15", source: "manuelle", ref: motif || "Ajustement manuel", par: ROLES.find((x) => x.key === this.state.role).user };
+    this.set({ db: Object.assign({}, this.state.db, { pieces, mouvements: [mv].concat(this.state.db.mouvements) }) });
+  }
+  toggleUser(id) {
+    const users = this.state.db.users.map((u) => (u.id === id ? Object.assign({}, u, { statut: u.statut === "Actif" ? "Désactivé" : "Actif" }) : u));
+    this.set({ db: Object.assign({}, this.state.db, { users }) });
+  }
+  addUser(u) {
+    const users = this.state.db.users.concat([Object.assign({ id: "u" + (this.state.db.users.length + 1), statut: "Actif", dernier: "—" }, u)]);
+    this.set({ db: Object.assign({}, this.state.db, { users }) });
+  }
+  select(kind, id, screen) {
+    const sel = Object.assign({}, this.state.sel, { [kind]: id });
+    this.setState({ sel });
+    if (screen) { const m = this.meta(screen); this.set({ sel, screen, uiState: this.allowed(m) ? "nominal" : "locked" }); } else this.persist({ sel });
+  }
+
+  navItemStyle(active, locked) {
+    return "display:flex;align-items:center;gap:9px;width:100%;padding:8px 9px;border-radius:9px;font-size:13px;font-weight:" + (active ? "700" : "500") +
+      ";background:" + (active ? "oklch(0.95 0.03 258)" : "transparent") +
+      ";color:" + (active ? "oklch(0.36 0.13 258)" : locked ? "oklch(0.60 0.02 255)" : "oklch(0.30 0.02 255)") +
+      ";box-shadow:" + (active ? "inset 0 0 0 1px oklch(0.84 0.06 258)" : "none");
+  }
+
+  renderVals() {
+    const st = this.state;
+    const m = this.meta();
+    const allowed = this.allowed(m);
+    const effState = allowed ? st.uiState : "locked";
+    const roleInfo = ROLES.find((r) => r.key === st.role) || ROLES[ROLES.length - 1];
+    const db = st.db || {};
+    const pieces = db.pieces || [];
+    const alertCount = pieces.filter((p) => p.stock === 0 || p.stock <= p.seuil).length;
+
+    const groups = [];
+    SCREENS.forEach((s) => {
+      let g = groups.find((x) => x.title === s.group);
+      if (!g) { g = { title: s.group, items: [] }; groups.push(g); }
+      const lockd = !(s.roles[0] === "*" || s.roles.indexOf(st.role) >= 0);
+      const active = s.key === st.screen;
+      g.items.push({
+        key: s.key, label: s.label, num: s.num, onClick: () => this.go(s.key),
+        current: active ? "page" : "false", lock: lockd ? "🔒" : "",
+        lockStyle: "font-size:11px;opacity:" + (lockd ? "1" : "0"),
+        numStyle: "font-family:'IBM Plex Mono',monospace;font-size:10px;width:26px;color:" + (active ? "oklch(0.45 0.13 258)" : "oklch(0.58 0.02 255)"),
+        style: this.navItemStyle(active, lockd),
+      });
+    });
+
+    const appNavKeys = ["dashboard", "kanban", "affectation", "facturation", "clients", "inventaire", "fournisseurs", "iot", "rapports", "comptes"];
+    const appNav = appNavKeys.map((k) => SCREENS.find((s) => s.key === k)).map((s) => {
+      const active = s.key === st.screen || (st.screen === "dossier" && s.key === "kanban") || (st.screen === "client" && s.key === "clients") || (st.screen === "appareil" && s.key === "clients");
+      const lockd = s.roles.indexOf(st.role) < 0;
+      const badge = s.key === "inventaire" && alertCount ? String(alertCount) : "";
+      return {
+        label: s.label.replace(" des réparations", "").replace(" & comparaison", "").replace("Alertes capteurs ", "").replace(" des pièces", "").replace(" des comptes", ""),
+        icon: s.icon, onClick: () => this.go(s.key), current: active ? "page" : "false",
+        badge: lockd ? "🔒" : badge,
+        badgeStyle: badge || lockd ? "font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;background:" + (lockd ? "transparent" : "oklch(0.58 0.18 25)") + ";color:" + (lockd ? "oklch(0.66 0.02 258)" : "#fff") : "display:none",
+        appStyle: "display:flex;align-items:center;gap:9px;width:100%;padding:9px 10px;border-radius:9px;font-size:12.5px;font-weight:" + (active ? "700" : "500") + ";color:" + (active ? "#fff" : "oklch(0.78 0.02 258)") + ";background:" + (active ? "oklch(0.42 0.13 258)" : "transparent") + ";opacity:" + (lockd ? "0.55" : "1"),
+      };
+    });
+
+    const mobileKeys = st.role === "Technicien" ? ["kanban", "dossier", "facturation", "clients", "inventaire"] : ["dashboard", "kanban", "affectation", "clients", "inventaire"];
+    const mobileNav = mobileKeys.map((k) => SCREENS.find((s) => s.key === k)).map((s) => {
+      const active = s.key === st.screen;
+      return {
+        short: s.short, icon: s.icon, onClick: () => this.go(s.key), current: active ? "page" : "false",
+        tabStyle: "flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:7px 2px;border-radius:10px;color:" + (active ? PRIMARY : "oklch(0.52 0.02 255)") + ";background:" + (active ? "oklch(0.96 0.025 258)" : "transparent"),
+      };
+    });
+
+    const chip = (bg, fg, bd) => "display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:8px;font-size:12px;font-weight:600;background:" + bg + ";color:" + fg + ";border:1px solid " + bd;
+
+    return {
+      role: st.role, screen: st.screen, state: effState, db, actions: {
+        go: (k) => this.go(k), select: (k, id, s) => this.select(k, id, s), sel: st.sel,
+        patchRep: (id, p) => this.patchRep(id, p), moveRep: (id, s) => this.moveRep(id, s),
+        addClient: (c) => this.addClient(c), addAppareil: (a) => this.addAppareil(a),
+        addRep: (p) => this.addRep(p),
+        guessIA: (s, appareilId) => guessIA(s, (this.state.db || {}).pieces || [], ((this.state.db || {}).appareils || []).find((x) => x.id === appareilId)),
+        adjustStock: (p, d, r) => this.adjustStock(p, d, r), toggleUser: (id) => this.toggleUser(id), addUser: (u) => this.addUser(u),
+        setState: (s) => this.set({ uiState: s }), a11y: st.a11y, role: st.role,
+      },
+      screenMeta: m, screenKind: m.kind, screenTitle: m.label, screenNum: m.num, routeLabel: m.route, breadcrumb: m.crumb,
+      hasChrome: m.chrome !== false, noChrome: m.chrome === false,
+      showEtat: effState !== "nominal",
+      showCoeur: effState === "nominal" && m.grp === "coeur",
+      showGestion: effState === "nominal" && m.grp === "gestion",
+      showStocks: effState === "nominal" && m.grp === "stocks",
+      showPilotage: effState === "nominal" && m.grp === "pilotage",
+      showExtra: effState === "nominal" && m.grp === "extra",
+      navGroups: groups, appNav, mobileNav, alertCount: String(alertCount),
+      userName: roleInfo.user, userInitials: roleInfo.init,
+      goBack: () => this.go(st.screen === "dossier" ? "kanban" : st.screen === "client" || st.screen === "appareil" ? "clients" : "kanban"),
+      mobileBarBg: m.chrome === false ? "oklch(0.975 0.004 258)" : "oklch(0.21 0.025 258)",
+      mobileBarFg: m.chrome === false ? "oklch(0.30 0.02 255)" : "#fff",
+      a11yFlag: st.a11y ? "1" : "0", a11yPressed: st.a11y ? "true" : "false",
+      a11yLabel: st.a11y ? "Mode accessibilité activé" : "Mode accessibilité",
+      a11yBtnStyle: "display:flex;align-items:center;gap:8px;padding:11px 16px;border-radius:10px;font-size:13px;font-weight:700;border:1px solid " + (st.a11y ? "oklch(0.44 0.14 258)" : "oklch(0.86 0.008 258)") + ";background:" + (st.a11y ? PRIMARY : "#fff") + ";color:" + (st.a11y ? "#fff" : "oklch(0.34 0.02 255)"),
+      toggleA11y: () => this.set({ a11y: !st.a11y }),
+      resetAll: () => { try { localStorage.removeItem(STORE); } catch (e) {} window.location.reload(); },
+      roleBtns: ROLES.map((r) => ({
+        label: r.label, icon: r.icon, checked: r.key === st.role ? "true" : "false",
+        onClick: () => { const nm = this.meta(); this.set({ role: r.key, uiState: (nm.roles[0] === "*" || nm.roles.indexOf(r.key) >= 0) ? "nominal" : "locked" }); },
+        style: "display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:9px;font-size:13px;font-weight:" + (r.key === st.role ? "700" : "500") + ";background:" + (r.key === st.role ? "#fff" : "transparent") + ";color:" + (r.key === st.role ? "oklch(0.26 0.02 255)" : "oklch(0.44 0.02 255)") + ";box-shadow:" + (r.key === st.role ? "0 1px 3px oklch(0.22 0.02 255 / 0.18)" : "none"),
+      })),
+      stateBtns: STATES.map((s) => ({
+        label: s.label, checked: s.key === effState ? "true" : "false",
+        onClick: () => this.set({ uiState: s.key }),
+        style: "padding:8px 13px;border-radius:9px;font-size:12.5px;font-weight:" + (s.key === effState ? "700" : "500") + ";font-family:'IBM Plex Mono',monospace;background:" + (s.key === effState ? "#fff" : "transparent") + ";color:" + (s.key === effState ? "oklch(0.26 0.02 255)" : "oklch(0.46 0.02 255)") + ";box-shadow:" + (s.key === effState ? "0 1px 3px oklch(0.22 0.02 255 / 0.18)" : "none"),
+      })),
+      legendStock: [
+        { label: "En stock", icon: "●", style: chip("oklch(0.965 0.03 152)", "oklch(0.38 0.10 152)", "oklch(0.86 0.06 152)") },
+        { label: "Seuil bas", icon: "▲", style: chip("oklch(0.965 0.05 70)", "oklch(0.42 0.11 62)", "oklch(0.86 0.09 70)") },
+        { label: "Rupture", icon: "■", style: chip("oklch(0.96 0.04 25)", "oklch(0.42 0.14 25)", "oklch(0.86 0.08 25)") },
+      ],
+      legendStatuts: (db.statuts || []).map((s) => ({ label: s.label, icon: s.icon, style: chip(s.soft, s.hue, s.hue + " / 0.35") })),
+      legendIA: [
+        { label: "Confiance haute ≥ 80 %", style: chip("oklch(0.965 0.03 152)", "oklch(0.38 0.10 152)", "oklch(0.86 0.06 152)") },
+        { label: "Confiance moyenne 50–79 %", style: chip("oklch(0.965 0.05 70)", "oklch(0.42 0.11 62)", "oklch(0.86 0.09 70)") },
+        { label: "Indéterminée < 50 %", style: chip("oklch(0.95 0.005 258)", "oklch(0.40 0.02 255)", "oklch(0.86 0.008 258)") },
+      ],
+    };
+  }
+}
+
+</script>
+
+
+<div id="__claude_design_branding"><style>#__claude_design_branding{position:fixed;right:16px;bottom:16px;z-index:2147483646;display:flex;align-items:center;gap:7px;height:30px;padding:0 5px 0 10px;border-radius:999px;font-family:"Anthropic Sans",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:12.5px;font-weight:400;line-height:1;letter-spacing:normal;text-transform:none;color:#141413;background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);box-shadow:0 0 0 .5px rgba(31,30,29,.14),0 2px 10px rgba(0,0,0,.09)}
+#__claude_design_branding *{box-sizing:border-box;margin:0}
+#__claude_design_branding a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+#__claude_design_branding a:hover span{text-decoration:underline}
+#__claude_design_branding svg{flex:none}
+#__claude_design_branding a svg{color:#D97757}
+#__claude_design_branding button{width:20px;height:20px;padding:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:currentColor;opacity:.55;border:0;background:none;cursor:pointer;flex:none;font:inherit;transition:opacity .14s}
+#__claude_design_branding button:hover{opacity:1;background:rgba(127,127,127,.22)}
+@media print{#__claude_design_branding{display:none}}</style><a href="https://claude.com/product/design" target="_blank" rel="noopener noreferrer"><svg width="14" height="14" viewBox="0 0 20 21" fill="none" aria-hidden="true"><path fill="currentColor" d="M9.99902 0C15.5258 0.000170936 19.999 4.50643 19.999 10.0547C19.999 11.7656 19.5863 12.9976 18.7861 13.8203C17.9924 14.6362 16.9465 14.9138 15.9854 15.0078C15.05 15.0993 14.0097 15.0262 13.2549 15.0186C12.8524 15.0145 12.5177 15.0267 12.2441 15.0703C11.9682 15.1144 11.8143 15.1813 11.7305 15.2432C11.4745 15.4322 11.3353 15.7121 11.2656 16.1602C11.2303 16.3875 11.2168 16.6362 11.209 16.9131C11.2017 17.1715 11.1986 17.4893 11.1807 17.7705C11.1469 18.2975 11.0495 19.0865 10.4199 19.5908C9.7846 20.0996 8.88652 20.1057 7.85449 19.877C7.36399 19.7682 6.88652 19.6232 6.42578 19.4453C2.66989 17.9949 0.000187748 14.3414 0 10.0547C0 4.50643 4.47223 0.000171048 9.99902 0ZM9.99902 1.60547C5.36781 1.60564 1.60547 5.38391 1.60547 10.0547C1.60566 13.6582 3.84823 16.7296 7.00391 17.9482C7.39027 18.0974 7.79085 18.2184 8.20215 18.3096C9.1375 18.5169 9.384 18.3633 9.41602 18.3379C9.4524 18.3087 9.54558 18.1915 9.5791 17.668C9.5947 17.4239 9.59473 17.1786 9.60352 16.8672C9.61179 16.5742 9.62831 16.2435 9.67969 15.9131C9.78359 15.2455 10.0474 14.4906 10.7764 13.9521C11.1479 13.6778 11.5842 13.5493 11.9912 13.4844C12.4007 13.4191 12.8434 13.4088 13.2705 13.4131C14.1753 13.4222 15.0071 13.4905 15.8291 13.4102C16.6257 13.3322 17.2249 13.1235 17.6357 12.7012C18.0401 12.2855 18.3935 11.5261 18.3936 10.0547C18.3936 5.38391 14.6302 1.60564 9.99902 1.60547ZM5.11621 9.86719C5.86386 9.91468 6.45486 10.5348 6.45508 11.2939C6.45506 12.0838 5.81519 12.7245 5.02539 12.7246C4.28481 12.7246 3.67573 12.1617 3.60254 11.4404L3.59473 11.2939L3.60156 11.1533C3.66942 10.4596 4.23282 9.91186 4.93359 9.86719H5.11621ZM14.9814 7.19141C15.729 7.23889 16.3199 7.85919 16.3203 8.61816C16.3203 9.40801 15.6804 10.0487 14.8906 10.0488C14.1501 10.0487 13.5409 9.48586 13.4678 8.76465L13.46 8.61816L13.4668 8.47754C13.5348 7.78403 14.0983 7.23618 14.7988 7.19141H14.9814ZM6.4541 4.93457C7.20161 4.9822 7.79275 5.60231 7.79297 6.36133C7.79288 7.151 7.15291 7.7917 6.36328 7.79199C5.62274 7.79199 5.01369 7.22903 4.94043 6.50781L4.93262 6.36133L4.93945 6.2207C5.00731 5.52698 5.5707 4.97922 6.27148 4.93457H6.4541ZM11.3867 3.59668C12.1343 3.64419 12.7253 4.26436 12.7256 5.02344C12.7256 5.81326 12.0857 6.45393 11.2959 6.4541C10.5553 6.4541 9.94622 5.89123 9.87305 5.16992L9.86523 5.02344L9.87207 4.88281C9.93996 4.18912 10.5033 3.64133 11.2041 3.59668H11.3867Z"></path></svg><span>Made with Claude Design</span></a><button type="button" aria-label="Dismiss" onclick="this.parentElement.remove()"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></button></div></body></html>

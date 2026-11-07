@@ -1,0 +1,950 @@
+
+
+===== 5.1 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/connexion
+reparu.fr/connexion
+Ʀ
+Repar U
+
+« Donner à l'atelier la précision d'un diagnostic assisté et la rigueur d'un pilotage data-driven. »
+
+−50 %
+temps de diagnostic
++20 %
+marge maîtrisée
+−30 %
+ruptures de stock
+Connexion à l'atelier
+
+Accès réservé au personnel — authentification JWT, session de 8 h.
+
+Adresse e-mail
+Mot de passe
+Mot de passe oublié ?
+Se souvenir de ce poste (30 jours)
+Se connecter
+COMPTES DE DÉMONSTRATION
+🔧
+l.marchand@reparu.fr
+Technicien
+📊
+c.vasseur@reparu.fr
+Administrateur
+
+
+===== 5.2 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/tableau-de-bord
+reparu.fr/tableau-de-bord
+Ʀ
+Repar U
+Atelier Montpellier
+◧
+Tableau de bord
+🛠
+Kanban
+⧉
+Affectation & planning
+€
+Devis & facturation
+👤
+Liste des clients
+📦
+Inventaire
+🤝
+Fournisseurs
+◉
+IoT
+📊
+Rapports & exports
+🛡
+Gestion
+CV
+Claire Vasseur
+Administrateur
+⏻
+Se déconnecter
+PILOTAGE
+Tableau de bord
+⌕
+⚠
+0
+7 jours
+Ce mois
+Trimestre
+12 mois
+⤓
+Exporter
+📊
+Rapport détaillé
+🛠
+RÉPARATIONS / MOIS
+—
+↗
+vs juin
+💶
+MARGE GÉNÉRÉE
+0 €
+↗
+vs juin
+⚠
+RUPTURES IMMINENTES
+0
+■
+action requise
+◷
+DÉLAI MOYEN
+—
+↘
+objectif 2 j
+◷
+0 dossier dépasse l'engagement de 48 h
+Le délai court depuis la réception ; les dossiers clôturés et ceux en attente d'une pièce en rupture sont exclus du calcul.
+Évolution des réparations
+nombre de dossiers clôturés / mois
+Mois en cours
+Mois précédents
+Alertes de rupture
+■
+0 à traiter
+Voir tout l'inventaire →
+Répartition des interventions
+Derniers dossiers clôturés
+Charge par technicien
+dossiers ouverts
+Rééquilibrer les affectations →
+
+
+===== 5.3 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/reparations
+reparu.fr/reparations
+Ʀ
+Repar U
+Atelier Montpellier
+◧
+Tableau de bord
+🛠
+Kanban
+⧉
+Affectation & planning
+€
+Devis & facturation
+👤
+Liste des clients
+📦
+Inventaire
+🤝
+Fournisseurs
+◉
+IoT
+📊
+Rapports & exports
+🛡
+Gestion
+CV
+Claire Vasseur
+Administrateur
+⏻
+Se déconnecter
+RÉPARATIONS
+Kanban des réparations
+⌕
+⚠
+0
+Tous les dossiers
+Mes dossiers
+Priorité haute
+0 dossiers ouverts
++
+Nouveau dossier
+⌨
+Glisser-déposer pour changer de statut — ou les boutons ◀ ▶ de chaque carte, accessibles au clavier (Tab puis Entrée). Chaque changement est journalisé dans l'historique du dossier.
+
+
+===== 5.4 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/reparations/REP-0451
+reparu.fr/reparations/REP-0451
+Ʀ
+Repar U
+Atelier Montpellier
+◧
+Tableau de bord
+🛠
+Kanban
+⧉
+Affectation & planning
+€
+Devis & facturation
+👤
+Liste des clients
+📦
+Inventaire
+🤝
+Fournisseurs
+◉
+IoT
+📊
+Rapports & exports
+🛡
+Gestion
+CV
+Claire Vasseur
+Administrateur
+⏻
+Se déconnecter
+RÉPARATIONS · DOSSIER
+Dossier de réparation
+⌕
+⚠
+0
+—
+●
+recu
+NORMALE
+undefined undefined
+IMEI — · reçu le — · technicien non affecté
+CLIENT
+◀
+Début
+Clôturé
+▶
+🏷
+Imprimer l'étiquette
+✉
+Notifier le client (SMS)
+📷
+Ajouter une photo
+👤
+Affecter un technicien
+◷
+TEMPS PASSÉ
+0 h 32
+Démarrer
+Symptômes constatés
+saisi à l'accueil · modifiable
+🧠
+Lancer le diagnostic assisté
+Le modèle compare les symptômes aux 1 284 interventions historisées. Il propose, il ne décide pas.
+🧠
+Suggestion IA
+lecture seule · modèle v1.4
+○
+Confiance indéterminée · 0 %
+↓
+Reprendre cette hypothèse dans le diagnostic final
+Constat photo
+horodaté · valeur probante
+▣
+État général
+—
+▣
+Zone endommagée
+—
+＋
+Après intervention
+à prendre
+Deux clichés minimum sont exigés à l'accueil (état général + zone endommagée). Ils protègent l'atelier en cas de litige sur un dommage préexistant.
+✎
+Valeur retenue par le technicien
+éditable · fait foi pour le devis
+Diagnostic final
+Coût des pièces
+SUGGESTION IA
+0,00 €
+VALEUR RETENUE
+Prix client
+SUGGESTION IA
+0,00 €
+VALEUR RETENUE
+Marge brute
+SUGGESTION IA
+0,00 €
+EN ATTENTE
+à valider
+Enregistrer le dossier
+Éditer le devis
+Pièces engagées
++ Ajouter
+Aucune pièce engagée — les pièces suggérées par l'IA apparaîtront ici après validation.
+Checklist d'intervention
+2 / 5 étapes
+✓
+Réception et constat photo
+5 min
+✓
+Diagnostic et devis validé client
+15 min
+Démontage et remplacement pièce
+30 min
+Remontage et nettoyage
+10 min
+Test de sortie complet
+10 min
+Le passage au statut « Prêt à facturer » exige que le test de sortie soit coché.
+Devis client
+◷
+En attente client
+Pièces
+0,00 €
+Main-d'œuvre (0,5 h × 45 €)
+22,50 €
+Total TTC
+à valider
+Marge nette
+à valider
+Ouvrir le devis / la facture →
+Historique des statuts
+
+
+===== 5.13 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/planning
+reparu.fr/planning
+Ʀ
+Repar U
+Atelier Montpellier
+◧
+Tableau de bord
+🛠
+Kanban
+⧉
+Affectation & planning
+€
+Devis & facturation
+👤
+Liste des clients
+📦
+Inventaire
+🤝
+Fournisseurs
+◉
+IoT
+📊
+Rapports & exports
+🛡
+Gestion
+CV
+Claire Vasseur
+Administrateur
+⏻
+Se déconnecter
+RÉPARATIONS · PLANNING
+Affectation & planning
+⌕
+⚠
+0
+⧉
+Aucun dossier en attente d'affectation — sélectionnez un dossier puis un technicien, ou utilisez le menu de chaque carte. La charge se recalcule immédiatement.
+●
+Charge équilibrée
+◌
+Non affectés
+0
+Tous les dossiers sont affectés.
+Capacité de la semaine
+7 h de production nette par technicien et par jour
+72 %
+Lun
+88 %
+Mar
+94 %
+Mer
+66 %
+Jeu
+81 %
+Ven
+45 %
+Sam
+Au-delà de 85 % la file d'attente s'allonge mécaniquement : refuser ou reprogrammer les dépôts non urgents.
+
+
+===== 5.14 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/reparations/REP-0451/facture
+reparu.fr/reparations/REP-0451/facture
+Ʀ
+Repar U
+Atelier Montpellier
+◧
+Tableau de bord
+🛠
+Kanban
+⧉
+Affectation & planning
+€
+Devis & facturation
+👤
+Liste des clients
+📦
+Inventaire
+🤝
+Fournisseurs
+◉
+IoT
+📊
+Rapports & exports
+🛡
+Gestion
+CV
+Claire Vasseur
+Administrateur
+⏻
+Se déconnecter
+RÉPARATIONS · FACTURATION
+Devis & facturation
+⌕
+⚠
+0
+Ʀ
+Repar U
+14 rue des Ateliers · 34000 Montpellier · SIRET 902 118 447
+DEVIS
+DV-2026-—
+émis le 26/07/2026
+CLIENT
+·
+APPAREIL
+undefined undefined
+IMEI
+DOSSIER
+—
+technicien non affecté
+DÉSIGNATION	QTÉ	P.U. HT	TOTAL HT
+
+Main-d'œuvre atelier
+45 min · taux horaire 45 € HT
+	0,75 h	45,00 €	33,75 €
+
+Forfait diagnostic
+déduit si réparation acceptée
+	1	0,00 €	offert
+Total HT
+33,75 €
+TVA 20 %
+6,75 €
+Total TTC
+40,50 €
+Marge nette atelier
+33,75 €
+Garantie pièce et main-d'œuvre : 6 mois à compter de la date de restitution, hors casse et oxydation. TVA 20 % — TVA acquittée sur les débits. Pénalités de retard : 3 × le taux d'intérêt légal.
+Statut du règlement
+◷
+Devis en attente
+Devis émis
+envoyé par SMS le 24/07 à 10:12
+Accepté par le client
+en attente de réponse
+Réparation terminée
+en cours
+Règlement encaissé
+en attente
+Mode de règlement
+▭
+Carte
+◫
+Espèces
+⇄
+Virement
+⋯
+3 fois
+Encaisser 40,50 €
+Actions
+⤓
+Télécharger le PDF
+›
+✉
+Envoyer au client par e-mail
+›
+🏷
+Imprimer le bon de restitution
+›
+◍
+Revenir au dossier de réparation
+›
+
+
+===== 5.6 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/clients
+reparu.fr/clients
+Ʀ
+Repar U
+Atelier Montpellier
+◧
+Tableau de bord
+🛠
+Kanban
+⧉
+Affectation & planning
+€
+Devis & facturation
+👤
+Liste des clients
+📦
+Inventaire
+🤝
+Fournisseurs
+◉
+IoT
+📊
+Rapports & exports
+🛡
+Gestion
+CV
+Claire Vasseur
+Administrateur
+⏻
+Se déconnecter
+CLIENTS
+Liste des clients
+⌕
+⚠
+0
+⌕
++
+Ajouter un client
+CLIENT	TÉLÉPHONE	VILLE	APPAREILS	RÉPARATIONS	TOTAL FACTURÉ
+0 clients · tri par nom
+‹ Précédent
+Suivant ›
+
+
+===== 5.5 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/clients/c1
+reparu.fr/clients/c1
+Ʀ
+Repar U
+Atelier Montpellier
+◧
+Tableau de bord
+🛠
+Kanban
+⧉
+Affectation & planning
+€
+Devis & facturation
+👤
+Liste des clients
+📦
+Inventaire
+🤝
+Fournisseurs
+◉
+IoT
+📊
+Rapports & exports
+🛡
+Gestion
+CV
+Claire Vasseur
+Administrateur
+⏻
+Se déconnecter
+CLIENTS · FICHE
+Fiche client
+⌕
+⚠
+0
+client depuis ·
+RÉPARATIONS
+0
+TOTAL FACTURÉ
+0,00 €
+APPAREILS
+0
+✎ Éditer
++ Appareil
+Coordonnées
+Téléphone
+E-mail
+Ville
+Identifiant
+Données personnelles — conservation 3 ans après la dernière intervention (registre RGPD).
+Appareils rattachés
+0 appareil
+Aucun appareil rattaché — ajoutez-en un pour ouvrir un dossier.
+Historique des réparations
+Aucune intervention pour ce client.
+
+
+===== 5.7 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/appareils/nouveau
+reparu.fr/appareils/nouveau
+Ʀ
+Repar U
+Atelier Montpellier
+◧
+Tableau de bord
+🛠
+Kanban
+⧉
+Affectation & planning
+€
+Devis & facturation
+👤
+Liste des clients
+📦
+Inventaire
+🤝
+Fournisseurs
+◉
+IoT
+📊
+Rapports & exports
+🛡
+Gestion
+CV
+Claire Vasseur
+Administrateur
+⏻
+Se déconnecter
+CLIENTS · APPAREIL
+Ajout / édition appareil
+⌕
+⚠
+0
+Rattacher un appareil
+Un appareil appartient obligatoirement à un client (intégrité référentielle).
+Client *
+Marque *
+Apple, Samsung, Xiaomi, Google…
+Modèle *
+Tel qu'indiqué par le constructeur.
+IMEI *
+15 chiffres — *#06# sur l'appareil.
+Couleur
+Facultatif, aide à l'identification.
+Enregistrer l'appareil
+Annuler
+APERÇU DE LA FICHE
+Apple modèle
+IMEI —
+Propriétaire : —
+L'IMEI est unique et sert de clé de rapprochement avec l'historique des interventions. Il est vérifié par l'algorithme de Luhn côté serveur.
+Modèles fréquents
+iPhone 13
+iPhone 12
+Galaxy S22
+Galaxy S21
+Redmi Note 11
+Pixel 7
+
+
+===== 5.8 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/stocks
+reparu.fr/stocks
+Ʀ
+Repar U
+Atelier Montpellier
+◧
+Tableau de bord
+🛠
+Kanban
+⧉
+Affectation & planning
+€
+Devis & facturation
+👤
+Liste des clients
+📦
+Inventaire
+🤝
+Fournisseurs
+◉
+IoT
+📊
+Rapports & exports
+🛡
+Gestion
+CV
+Claire Vasseur
+Administrateur
+⏻
+Se déconnecter
+STOCKS
+Inventaire des pièces
+⌕
+⚠
+0
+▤
+Toutes
+0
+●
+En stock
+0
+▲
+Seuil bas
+0
+■
+Rupture
+0
+⇄
+Générer un bon de commande
+PIÈCE DÉTACHÉE	COMPATIBILITÉ	NIVEAU DE STOCK	STATUT	DERNIER MOUVEMENT	PRIX ACHAT	
+Mouvements récents
+◉
+capteur
+✎
+manuel
+Prévision de consommation
+moyennes mobiles · 30 j
+
+
+===== 5.9 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/fournisseurs
+reparu.fr/fournisseurs
+Ʀ
+Repar U
+Atelier Montpellier
+◧
+Tableau de bord
+🛠
+Kanban
+⧉
+Affectation & planning
+€
+Devis & facturation
+👤
+Liste des clients
+📦
+Inventaire
+🤝
+Fournisseurs
+◉
+IoT
+📊
+Rapports & exports
+🛡
+Gestion
+CV
+Claire Vasseur
+Administrateur
+⏻
+Se déconnecter
+STOCKS · FOURNISSEURS
+Fournisseurs & comparaison
+⌕
+⚠
+0
+Pièce à comparer
++
+Ajouter un fournisseur
+Offres pour —
+prix unitaire HT · 0 fournisseurs référencés
+🧠
+Recommandation d'achat. Aucune offre référencée.
+FOURNISSEUR	LOCALISATION	DÉLAI (J)	RÉFÉRENCES	FIABILITÉ
+
+
+===== 5.10 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/stocks/capteurs
+reparu.fr/stocks/capteurs
+Ʀ
+Repar U
+Atelier Montpellier
+◧
+Tableau de bord
+🛠
+Kanban
+⧉
+Affectation & planning
+€
+Devis & facturation
+👤
+Liste des clients
+📦
+Inventaire
+🤝
+Fournisseurs
+◉
+IoT
+📊
+Rapports & exports
+🛡
+Gestion
+CV
+Claire Vasseur
+Administrateur
+⏻
+Se déconnecter
+STOCKS · CAPTEURS
+Alertes capteurs IoT
+⌕
+⚠
+0
+◉
+CAPTEURS ACTIFS
+0/0
+MQTT sécurisé (TLS)
+▲
+ANOMALIES OUVERTES
+0
+à vérifier par l'administrateur
+◷
+DERNIÈRE REMONTÉE
+06:00
+26/07/2026 · toutes les 6 h
+Les lectures capteurs alimentent la prévision mais ne remplacent jamais le stock comptable : toute correction passe par un mouvement tracé et nominatif.
+
+
+===== 5.11 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/rapports
+reparu.fr/rapports
+Ʀ
+Repar U
+Atelier Montpellier
+◧
+Tableau de bord
+🛠
+Kanban
+⧉
+Affectation & planning
+€
+Devis & facturation
+👤
+Liste des clients
+📦
+Inventaire
+🤝
+Fournisseurs
+◉
+IoT
+📊
+Rapports & exports
+🛡
+Gestion
+CV
+Claire Vasseur
+Administrateur
+⏻
+Se déconnecter
+PILOTAGE · RAPPORTS
+Rapports & exports
+⌕
+⚠
+0
+Période du rapport
+7 jours
+Mois en cours
+Trimestre
+12 mois
+Du
+Au
+CHIFFRE D'AFFAIRES
+0 €
+undefined vs période précédente
+MARGE BRUTE
+0 €
+undefined vs période précédente
+RÉPARATIONS
+0
+undefined vs période précédente
+DÉLAI MOYEN
+—
+undefined · objectif 2 j
+TAUX DE RETOUR
+—
+sous le seuil de 5 %
+PANIER MOYEN
+0 €
+par dossier clôturé
+Aperçu — marge par mois
+Rentabilité par type de panne
+Écran cassé
+48 dossiers
++ 2 640 €
+Batterie
+31 dossiers
++ 1 420 €
+Connecteur de charge
+18 dossiers
++ 820 €
+Carte mère / logique
+13 dossiers
++ 960 €
+Autres (caméra, HP…)
+18 dossiers
++ 400 €
+Exporter le rapport
+Période : juillet 2026 · 6 indicateurs · graphiques inclus
+⤓
+PDF
+▤
+CSV
+✉
+Programmer l'envoi
+
+
+===== 5.12 =====
+Web — 1440 × 900
+navigateur, poste de l'atelier
+/administration/comptes
+reparu.fr/administration/comptes
+Ʀ
+Repar U
+Atelier Montpellier
+◧
+Tableau de bord
+🛠
+Kanban
+⧉
+Affectation & planning
+€
+Devis & facturation
+👤
+Liste des clients
+📦
+Inventaire
+🤝
+Fournisseurs
+◉
+IoT
+📊
+Rapports & exports
+🛡
+Gestion
+CV
+Claire Vasseur
+Administrateur
+⏻
+Se déconnecter
+ADMINISTRATION
+Gestion des comptes
+⌕
+⚠
+0
+0 comptes · 0 actifs
++
+Créer un compte
+UTILISATEUR	E-MAIL	RÔLE	STATUT	DERNIÈRE CONNEXION	
+Journal des accès sensibles
+Connexion réussie — c.vasseur@reparu.fr (Administrateur)
+26/07 09:58
+Tentative d'accès refusée au dashboard — l.marchand@reparu.fr (Technicien)
+26/07 09:12
+Correction de stock après anomalie capteur — f.haddad@reparu.fr
+22/07 10:05
+Compte désactivé — t.aubry@reparu.fr
+02/04 15:12
