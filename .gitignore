@@ -12,3 +12,4 @@ certs/
 !infra/
 test-results/
 playwright-report/
+backups/

@@ -71,14 +71,32 @@ services:
         condition: service_healthy
     volumes:
       - mqtt_ca:/certs:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import os,sys,time; sys.exit(0 if time.time()-os.path.getmtime('/tmp/pouls') < 3*max(60,float(os.environ.get('IOT_PERIODE_S','60'))) else 1)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
 
   frontend:
     build: ./frontend
     restart: unless-stopped
+
+  # Point d'entrée HTTPS unique (TLS, en-têtes de sécurité, routage /api → backend)
+  proxy:
+    build: ./infra/proxy
+    restart: unless-stopped
+    environment:
+      REPARU_HOST: ${REPARU_HOST:-localhost}
     depends_on:
-      - backend
+      frontend:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
     ports:
-      - "5180:80"
+      - "5180:5180"
+    volumes:
+      - proxy_data:/data
 
   # Vérification visuelle (hors démarrage normal) : docker compose --profile tests run --rm e2e
   e2e:
@@ -90,7 +108,7 @@ services:
     env_file: .env
     environment:
       HOME: /tmp
-      BASE_URL: ${E2E_BASE_URL:-http://localhost:5180}
+      BASE_URL: ${E2E_BASE_URL:-https://localhost:5180}
     volumes:
       - ./:/work
     command: ["npx", "playwright", "test"]
@@ -101,3 +119,4 @@ volumes:
   mqtt_certs:
   mqtt_ca:
   mqtt_data:
+  proxy_data:

@@ -1,0 +1,34 @@
+# Point d'entrée unique en HTTPS sur 5180 (80/443 déjà utilisés sur le VPS, DECISIONS D-C1).
+# Certificat émis par l'autorité interne de Caddy (« tls internal ») : à remplacer par un certificat
+# public (ACME) le jour où un nom de domaine est attribué.
+{
+	admin off
+	auto_https disable_redirects
+	default_sni {$REPARU_HOST:localhost}
+}
+
+https://{$REPARU_HOST:localhost}:5180, https://127.0.0.1:5180 {
+	tls internal
+	encode gzip
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "same-origin"
+		Permissions-Policy "camera=(self), geolocation=(), microphone=()"
+		Content-Security-Policy "default-src 'self'; img-src 'self' blob: data:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+		-Server
+	}
+	handle /api/* {
+		reverse_proxy backend:8000 {
+			header_up X-Forwarded-Proto https
+		}
+	}
+	handle {
+		reverse_proxy frontend:8080
+	}
+	log {
+		output stdout
+		format console
+	}
+}

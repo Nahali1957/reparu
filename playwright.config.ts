@@ -7,7 +7,7 @@ export default defineConfig({
   workers: 1,
   reporter: [["list"]],
   use: {
-    baseURL: process.env.BASE_URL ?? "http://localhost:5180",
+    baseURL: process.env.BASE_URL ?? "https://localhost:5180",
     viewport: { width: 1440, height: 900 },
     locale: "fr-FR",
     timezoneId: "Europe/Paris",

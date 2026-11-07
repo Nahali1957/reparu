@@ -108,6 +108,7 @@ def main() -> None:
     while not stop.is_set():
         for cap in actifs:
             cap.publier()
+        open("/tmp/pouls", "w").close()  # battement de cœur lu par le healthcheck Docker
         stop.wait(PERIODE)
 
 

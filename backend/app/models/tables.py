@@ -326,6 +326,8 @@ class Facture(TimestampMixin, Base):
     numero: Mapped[str] = mapped_column(String(20), unique=True)
     devis_id: Mapped[int] = fk("devis.id")
     reparation_id: Mapped[int] = fk("reparations.id")
+    # identité figée à l'émission : la facture (obligation légale 10 ans) survit à l'anonymisation RGPD du client
+    client_nom: Mapped[str | None] = mapped_column(String(120))
     emise_le: Mapped[datetime] = mapped_column(DateTime, index=True)
     total_ht: Mapped[Decimal] = mapped_column(MONEY)
     tva: Mapped[Decimal] = mapped_column(MONEY)

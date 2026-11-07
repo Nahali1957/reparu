@@ -1,11 +1,11 @@
-:80 {
+# Sert le build statique (SPA). Le TLS et le routage /api sont assurés par le service « proxy ».
+{
+	admin off
+}
+
+:8080 {
 	encode gzip
-	handle /api/* {
-		reverse_proxy backend:8000
-	}
-	handle {
-		root * /srv
-		try_files {path} /index.html
-		file_server
-	}
+	root * /srv
+	try_files {path} /index.html
+	file_server
 }

@@ -6,7 +6,7 @@ import { expect, test, type Page } from "@playwright/test";
  * Résultat : docs/screens/*.png, à comparer à docs/maquette/screens/*.png (écarts : docs/ECARTS_MAQUETTE.md).
  */
 const MDP = process.env.DEMO_PASSWORD ?? "";
-const API = (process.env.BASE_URL ?? "http://localhost:5180") + "/api";
+const API = (process.env.BASE_URL ?? "https://localhost:5180") + "/api";
 
 async function jeton(page: Page, email: string): Promise<string> {
   const r = await page.request.post(`${API}/auth/login`, { data: { email, password: MDP } });

@@ -134,7 +134,7 @@ def encaisser(db: Session, rep: Reparation, mode, auteur: User) -> Facture:
         raise refus_metier(raison)
     now = maintenant()
     facture = Facture(numero=prochain_numero(db, Facture.numero, "FA", now.year), devis_id=devis.id, reparation_id=rep.id,
-                      emise_le=now, total_ht=devis.total_ht, tva=devis.tva, total_ttc=devis.total_ttc, acquittee=True)
+                      client_nom=rep.client.nom, emise_le=now, total_ht=devis.total_ht, tva=devis.tva, total_ttc=devis.total_ttc, acquittee=True)
     facture.lignes = [LigneFacture(designation=li.designation, detail=li.detail, qte=li.qte, pu_ht=li.pu_ht, type=li.type)
                       for li in devis.lignes]
     facture.reglements = [Reglement(mode=mode, montant=devis.total_ttc, encaisse_le=now, par_user_id=auteur.id)]
@@ -175,7 +175,7 @@ def document(db: Session, rep: Reparation) -> s.FacturationOut:
     a = rep.appareil
     return s.FacturationOut(dossier=rep.numero, raison_absence=None, document=s.DocumentOut(
         type=type_doc, numero=source.numero, emis_le=facture.emise_le if facture else devis.emis_le, dossier=rep.numero,
-        client_nom=rep.client.nom, client_telephone=rep.client.telephone, client_email=rep.client.email,
+        client_nom=(facture.client_nom if facture and facture.client_nom else rep.client.nom), client_telephone=rep.client.telephone, client_email=rep.client.email,
         client_ville=rep.client.ville, appareil=f"{a.modele.marque} {a.modele.modele}", imei=a.imei,
         technicien=rep.technicien.nom if rep.technicien else None, lignes=lignes, total_ht=source.total_ht, tva=source.tva,
         total_ttc=source.total_ttc, marge_nette=marge_nette, statut_reglement=statut, etapes=etapes,
