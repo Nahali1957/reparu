@@ -1,0 +1,11 @@
+{
+  "name": "reparu-e2e",
+  "private": true,
+  "description": "Captures Playwright 1440 × 900 des écrans (vérification visuelle contre la maquette)",
+  "scripts": {
+    "captures": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.49.1"
+  }
+}

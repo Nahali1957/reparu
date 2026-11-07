@@ -80,6 +80,21 @@ services:
     ports:
       - "5180:80"
 
+  # Vérification visuelle (hors démarrage normal) : docker compose --profile tests run --rm e2e
+  e2e:
+    image: mcr.microsoft.com/playwright:v1.49.1-noble
+    profiles: ["tests"]
+    network_mode: host
+    user: "1000:1000"
+    working_dir: /work
+    env_file: .env
+    environment:
+      HOME: /tmp
+      BASE_URL: ${E2E_BASE_URL:-http://localhost:5180}
+    volumes:
+      - ./:/work
+    command: ["npx", "playwright", "test"]
+
 volumes:
   db_data:
   app_data:

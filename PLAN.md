@@ -61,12 +61,12 @@ Les numéros d'écran (5.x) renvoient à `docs/maquette/`.
 - Acceptation : un brute force simulé est signalé
 
 ## M8 · Frontend fidèle à la maquette (vue web uniquement)
-- [ ] Tokens (couleurs oklch, Public Sans, IBM Plex Mono, rayons, ombres) extraits de `docs/maquette/src/` vers `frontend/src/styles/tokens.css`
-- [ ] Coquille : barre latérale, en-tête avec recherche globale et cloche d'alertes, menu filtré par rôle
-- [ ] Les 14 écrans : 5.1 Connexion, 5.2 Tableau de bord, 5.3 Kanban, 5.4 Dossier, 5.13 Planning, 5.14 Devis et facturation, 5.6 Clients, 5.5 Fiche client, 5.7 Appareil, 5.8 Inventaire, 5.9 Fournisseurs, 5.10 Capteurs IoT, 5.11 Rapports, 5.12 Comptes
-- [ ] F-11 Fiabilité des modèles : pas d'écran dédié dans la maquette, l'ajouter comme section de 5.11 dans le même style
-- [ ] États Loading / Empty / Error / Verrouillé sur chaque écran, mode accessibilité
-- [ ] Kanban : glisser-déposer + boutons clavier ◀ ▶
+- [x] Tokens (couleurs oklch, Public Sans, IBM Plex Mono, rayons, ombres) extraits de `docs/maquette/src/` vers `frontend/src/styles/tokens.css`
+- [x] Coquille : barre latérale, en-tête avec recherche globale et cloche d'alertes, menu filtré par rôle
+- [x] Les 14 écrans : 5.1 Connexion, 5.2 Tableau de bord, 5.3 Kanban, 5.4 Dossier, 5.13 Planning, 5.14 Devis et facturation, 5.6 Clients, 5.5 Fiche client, 5.7 Appareil, 5.8 Inventaire, 5.9 Fournisseurs, 5.10 Capteurs IoT, 5.11 Rapports, 5.12 Comptes
+- [x] F-11 Fiabilité des modèles : pas d'écran dédié dans la maquette, l'ajouter comme section de 5.11 dans le même style
+- [x] États Loading / Empty / Error / Verrouillé sur chaque écran, mode accessibilité
+- [x] Kanban : glisser-déposer + boutons clavier ◀ ▶
 - Acceptation : captures Playwright 1440 × 900 de chaque écran dans `docs/screens/`, comparées à `docs/maquette/screens/`, écarts listés dans `docs/ECARTS_MAQUETTE.md`
 
 ## M9 · Déploiement et durcissement

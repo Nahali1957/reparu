@@ -1,0 +1,191 @@
+/* Jetons de design repris à l'identique de la maquette (docs/maquette/src). Couleurs en oklch. */
+@import "@fontsource/public-sans/300.css";
+@import "@fontsource/public-sans/400.css";
+@import "@fontsource/public-sans/500.css";
+@import "@fontsource/public-sans/600.css";
+@import "@fontsource/public-sans/700.css";
+@import "@fontsource/public-sans/800.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+@import "@fontsource/ibm-plex-mono/600.css";
+
+:root {
+  --f-sans: "Public Sans", "Helvetica Neue", Helvetica, sans-serif;
+  --f-mono: "IBM Plex Mono", monospace;
+
+  /* primaire (bleu 258) */
+  --c-primary: oklch(0.52 0.15 258);
+  --c-primary-hover: oklch(0.42 0.15 258);
+  --c-primary-strong: oklch(0.42 0.13 258);
+  --c-primary-text: oklch(0.36 0.12 258);
+  --c-primary-text-2: oklch(0.38 0.12 258);
+  --c-primary-logo: oklch(0.55 0.16 258);
+  --c-primary-soft: oklch(0.96 0.025 258);
+  --c-primary-soft-2: oklch(0.95 0.02 258);
+  --c-primary-soft-3: oklch(0.95 0.03 258);
+  --c-primary-border: oklch(0.84 0.05 258);
+  --c-primary-border-2: oklch(0.82 0.06 258);
+  --c-primary-border-3: oklch(0.88 0.04 258);
+  --c-focus: oklch(0.55 0.16 258);
+
+  /* barre latérale (chrome sombre) */
+  --c-chrome: oklch(0.21 0.025 258);
+  --c-chrome-2: oklch(0.27 0.025 258);
+  --c-chrome-3: oklch(0.30 0.02 258);
+  --c-chrome-text: oklch(0.78 0.02 258);
+  --c-chrome-muted: oklch(0.70 0.02 258);
+  --c-chrome-role: oklch(0.72 0.03 258);
+  --c-chrome-avatar: oklch(0.45 0.10 258);
+  --c-chrome-fg: oklch(0.96 0.005 258);
+
+  /* textes neutres (255) */
+  --c-text: oklch(0.22 0.02 255);
+  --c-text-2: oklch(0.26 0.02 255);
+  --c-text-3: oklch(0.30 0.02 255);
+  --c-text-4: oklch(0.34 0.02 255);
+  --c-text-5: oklch(0.36 0.02 255);
+  --c-text-6: oklch(0.40 0.02 255);
+  --c-text-7: oklch(0.44 0.02 255);
+  --c-text-8: oklch(0.46 0.02 255);
+  --c-muted: oklch(0.50 0.02 255);
+  --c-muted-2: oklch(0.52 0.02 255);
+  --c-muted-3: oklch(0.55 0.02 255);
+  --c-muted-4: oklch(0.58 0.02 255);
+
+  /* surfaces et bordures (258) */
+  --c-page: oklch(0.93 0.006 258);
+  --c-app: oklch(0.975 0.004 258);
+  --c-surface: #fff;
+  --c-surface-2: oklch(0.985 0.003 258);
+  --c-surface-3: oklch(0.965 0.005 258);
+  --c-surface-4: oklch(0.96 0.005 258);
+  --c-surface-5: oklch(0.94 0.006 258);
+  --c-border: oklch(0.91 0.008 258);
+  --c-border-2: oklch(0.89 0.008 258);
+  --c-border-3: oklch(0.88 0.008 258);
+  --c-border-4: oklch(0.90 0.008 258);
+  --c-border-5: oklch(0.92 0.008 258);
+  --c-border-6: oklch(0.86 0.008 258);
+  --c-border-7: oklch(0.84 0.01 258);
+
+  /* succès (152) */
+  --c-ok-bg: oklch(0.965 0.03 152);
+  --c-ok-text: oklch(0.38 0.10 152);
+  --c-ok-text-2: oklch(0.34 0.10 152);
+  --c-ok-border: oklch(0.86 0.06 152);
+  --c-ok-solid: oklch(0.50 0.12 152);
+  --c-ok-solid-2: oklch(0.46 0.11 152);
+  --c-ok-dot: oklch(0.55 0.13 152);
+  --c-ok-on-dark: oklch(0.78 0.11 152);
+
+  /* alerte (70 / 62) */
+  --c-warn-bg: oklch(0.965 0.05 70);
+  --c-warn-text: oklch(0.42 0.11 62);
+  --c-warn-border: oklch(0.86 0.09 70);
+  --c-warn-solid: oklch(0.66 0.13 62);
+  --c-warn-solid-2: oklch(0.62 0.14 62);
+
+  /* danger (25) */
+  --c-danger-bg: oklch(0.96 0.04 25);
+  --c-danger-bg-2: oklch(0.98 0.02 25);
+  --c-danger-text: oklch(0.42 0.15 25);
+  --c-danger-text-2: oklch(0.40 0.14 25);
+  --c-danger-border: oklch(0.86 0.08 25);
+  --c-danger-border-2: oklch(0.86 0.07 25);
+  --c-danger-input: oklch(0.66 0.14 25);
+  --c-danger-strong: oklch(0.48 0.16 25);
+  --c-danger-icon: oklch(0.48 0.17 25);
+  --c-danger-solid: oklch(0.53 0.18 25);
+  --c-danger-badge: oklch(0.58 0.18 25);
+
+  /* IA / information (195, teal) — jamais de rouge pour la confiance IA */
+  --c-ia-bg: oklch(0.965 0.025 195);
+  --c-ia-bg-2: oklch(0.975 0.008 195);
+  --c-ia-text: oklch(0.36 0.08 195);
+  --c-ia-text-2: oklch(0.32 0.06 195);
+  --c-ia-solid: oklch(0.52 0.10 195);
+  --c-ia-solid-2: oklch(0.55 0.10 195);
+  --c-ia-border: oklch(0.86 0.04 195);
+  --c-ia-border-2: oklch(0.88 0.04 195);
+  --c-ia-dashed: oklch(0.82 0.04 195);
+
+  /* confiance indéterminée (neutre) */
+  --c-neutral-bg: oklch(0.95 0.005 258);
+  --c-neutral-text: oklch(0.40 0.02 255);
+  --c-neutral-border: oklch(0.86 0.008 258);
+
+  --r-xs: 6px;
+  --r-sm: 7px;
+  --r-8: 8px;
+  --r-9: 9px;
+  --r-md: 10px;
+  --r-12: 12px;
+  --r-lg: 14px;
+  --r-xl: 16px;
+
+  --sh-card: 0 1px 2px oklch(0.22 0.02 255 / 0.06);
+  --sh-card-2: 0 1px 3px oklch(0.22 0.02 255 / 0.06);
+  --sh-seg: 0 1px 3px oklch(0.22 0.02 255 / 0.18);
+  --sh-primary: 0 2px 8px oklch(0.52 0.15 258 / 0.28);
+  --sh-primary-lg: 0 6px 18px oklch(0.52 0.15 258 / 0.35);
+  --sh-select: 0 0 0 3px oklch(0.55 0.15 258 / 0.16);
+  --sh-nav-active: inset 0 0 0 1px oklch(0.84 0.06 258);
+  --sh-modal: 0 20px 50px oklch(0.22 0.02 255 / 0.22);
+
+  --sidebar-w: 226px;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  min-width: 1280px;
+  background: var(--c-app);
+  color: var(--c-text);
+  font-family: var(--f-sans);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--c-primary); text-decoration: none; }
+a:hover { color: var(--c-primary-hover); text-decoration: underline; }
+button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+button:disabled { cursor: not-allowed; }
+input, select, textarea { font: inherit; color: inherit; }
+table { border-collapse: collapse; }
+:focus-visible { outline: 3px solid var(--c-focus); outline-offset: 2px; }
+.mono { font-family: var(--f-mono); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+@keyframes shimmer { 0% { background-position: -460px 0; } 100% { background-position: 460px 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+/* Mode accessibilité (maquette) : contraste renforcé, tailles plus grandes */
+[data-a11y-only] { display: none !important; }
+[data-a11y="1"] [data-muted] { color: var(--c-text-5) !important; }
+[data-a11y="1"] [data-tiny] { font-size: 13px !important; }
+[data-a11y="1"] [data-badge] { border-width: 2px !important; font-weight: 700 !important; }
+[data-a11y="1"] [data-a11y-only] { display: flex !important; }
+[data-a11y="1"] [data-hide-a11y] { display: none !important; }
+[data-a11y="1"] button { min-height: 40px; }
+[data-a11y="1"] :focus-visible { outline: 4px solid oklch(0.50 0.20 25); outline-offset: 3px; }
+[data-a11y="1"] [data-table] tbody tr:nth-child(even) { background: var(--c-surface-3) !important; }
+[data-a11y="1"] [data-underline] { text-decoration: underline !important; }
+
+/* Primitives réutilisées par les écrans (mêmes valeurs que les styles en ligne de la maquette) */
+.card { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--r-lg); box-shadow: var(--sh-card); }
+.kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-muted-3); }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: var(--r-md); font-size: 13px; font-weight: 600; }
+.btn-primary { background: var(--c-primary); color: #fff; font-weight: 700; box-shadow: var(--sh-primary); }
+.btn-primary:hover:not(:disabled) { background: var(--c-primary-hover); }
+.btn-primary:disabled { opacity: 0.55; box-shadow: none; }
+.btn-secondary { background: #fff; border: 1px solid var(--c-border-3); color: var(--c-text-5); }
+.btn-secondary:hover:not(:disabled) { background: var(--c-surface-2); }
+.btn-ia { background: var(--c-ia-solid); color: #fff; font-weight: 700; }
+.input { width: 100%; padding: 10px 12px; border-radius: var(--r-md); border: 1px solid var(--c-border-3); background: #fff; font-size: 13.5px; outline: none; }
+.input:focus { border-color: var(--c-primary); box-shadow: var(--sh-select); }
+.input[aria-invalid="true"] { border-color: var(--c-danger-input); }
+.skeleton {
+  background: linear-gradient(100deg, var(--c-surface-5) 8%, var(--c-app) 18%, var(--c-surface-5) 33%);
+  background-size: 460px 100%;
+  animation: shimmer 1.3s linear infinite;
+}
