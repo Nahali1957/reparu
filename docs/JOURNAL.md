@@ -49,3 +49,8 @@ Captures Playwright 1440 × 900 dans `docs/screens/` (16 images, dont l'état Ve
 Proxy Caddy en HTTPS sur 5180 (HSTS, CSP), conteneurs applicatifs non root, healthchecks sur les 6 services, scripts de sauvegarde et restauration MySQL (aller-retour vérifié), RGPD (purge à 3 ans, factures préservées, droits d'accès et d'effacement), `docs/SECURITE.md`.
 Acceptation : un clone propre démarre en une commande (`docker compose up -d --build`) : 6 services sur 6 `healthy` en 86 s, migrations, seed et entraînement des 5 modèles automatiques, application fonctionnelle via HTTPS.
 Le test de clone a révélé que `ml/data/generate.py` n'était pas versionné (motif .gitignore) : corrigé. 79 tests verts, captures Playwright refaites via HTTPS.
+
+## M10 · Livrables pour le rapport (2026-11-07)
+`docs/ARCHITECTURE.md` (déploiement et flux de données en Mermaid, recréant le schéma absent du cahier des charges ; backend, IA, IoT, commandes) et `docs/GUIDE_UTILISATEUR.md` (support de formation par rôle, lecture de la confiance IA).
+`docs/RNCP_MAPPING.md` : les 30 compétences BC01 à BC04 de la fiche officielle, chacune avec une preuve du dépôt ou la mention « hors projet » (3 cas en BC01, plus la haute disponibilité multi-nœuds en BC03).
+Écart relevé : le cahier des charges présentait le Bloc 4 comme « Données » alors que le BC04 officiel porte sur l'IoT sécurisé (D-M10-1). Tous les jalons sont cochés ; 79 tests verts.

@@ -75,5 +75,5 @@ Les numéros d'écran (5.x) renvoient à `docs/maquette/`.
 - Acceptation : déploiement en une commande depuis un clone propre
 
 ## M10 · Livrables pour le rapport
-- [ ] `docs/ARCHITECTURE.md`, `docs/GUIDE_UTILISATEUR.md` (formation des utilisateurs, Bloc 2 compétence 10)
-- [ ] `docs/RNCP_MAPPING.md` : chaque compétence des blocs BC01 à BC04 → preuve concrète (fichier, capture, métrique) ou mention « couvert hors projet »
+- [x] `docs/ARCHITECTURE.md`, `docs/GUIDE_UTILISATEUR.md` (formation des utilisateurs, Bloc 2 compétence 10)
+- [x] `docs/RNCP_MAPPING.md` : chaque compétence des blocs BC01 à BC04 → preuve concrète (fichier, capture, métrique) ou mention « couvert hors projet »
