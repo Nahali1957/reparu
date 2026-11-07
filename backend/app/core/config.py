@@ -20,6 +20,14 @@ class Settings(BaseSettings):
 
     data_dir: str = "/data"
 
+    # IoT (M6) : client MQTT désactivé si mqtt_host est vide (tests)
+    mqtt_host: str | None = None
+    mqtt_port: int = 8883
+    mqtt_user: str = "backend"
+    mqtt_backend_password: str = ""
+    mqtt_ca: str = "/certs/ca.crt"
+    iot_periode_s: int = 21600
+
     @property
     def sqlalchemy_url(self) -> str:
         if self.database_url:

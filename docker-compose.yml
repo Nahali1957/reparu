@@ -30,13 +30,47 @@ services:
     environment:
       TZ: Europe/Paris
       MYSQL_HOST: db
+      MQTT_HOST: mqtt
     depends_on:
       db:
+        condition: service_healthy
+      mqtt:
         condition: service_healthy
     ports:
       - "127.0.0.1:8010:8000"
     volumes:
       - app_data:/data
+      - mqtt_ca:/certs:ro
+
+  mqtt:
+    build: ./infra/mqtt
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "8883:8883"
+    volumes:
+      - mqtt_certs:/mosquitto/certs
+      - mqtt_ca:/mosquitto/ca-public
+      - mqtt_data:/mosquitto/data
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /mosquitto/ca-public/ca.crt && pidof mosquitto"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+  iot-sim:
+    build: ./iot-sim
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MQTT_HOST: mqtt
+    depends_on:
+      mqtt:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    volumes:
+      - mqtt_ca:/certs:ro
 
   frontend:
     build: ./frontend
@@ -49,3 +83,6 @@ services:
 volumes:
   db_data:
   app_data:
+  mqtt_certs:
+  mqtt_ca:
+  mqtt_data:

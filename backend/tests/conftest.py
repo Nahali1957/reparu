@@ -1,3 +1,7 @@
+import os
+
+os.environ["MQTT_HOST"] = ""  # jamais de vrai broker pendant les tests (avant tout import de l'application)
+
 import pytest
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker

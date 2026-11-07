@@ -29,3 +29,8 @@ Règles serveur : Luhn et unicité de l'IMEI, 2 photos avant diagnostic, devis a
 Trois modèles comparés à une baseline sur découpage temporel : diagnostic (régression logistique retenue, top-3 97,7 % contre 77,7 %), estimation (Ridge, MAE 9,45 min contre 9,6) et prévision (moyenne mobile 30 j, MAE 0,355 contre 0,380). Sélection automatique, Joblib versionné (`v1.x`), métriques JSON, `ml/reports/evaluation.md`.
 Temps de réponse mesurés sur MySQL : diagnostic 59 ms, estimation 23 ms, prévision des 56 pièces 1,15 s, recommandation 74 ms, fiabilité 18 ms (exigence < 3 s).
 61 tests verts, couverture `services` + `ml` 91 %. Un bug de pickle (`__main__.Colonne`) a été corrigé en isolant les baselines dans un module.
+
+## M6 · IoT sécurisé (2026-11-07)
+Mosquitto en TLS 8883 (CA auto-signée générée au démarrage), un compte par capteur et ACL par topic ; simulateur de 6 bacs en jumeau numérique (consigne retenue + bruit, dérive, valeur aberrante, capteur muet) ; client paho côté backend.
+Vérifié en réel : 5 capteurs actifs sur 6, l'écart injecté (`iot-cap-002`, 1 lu pour 7) et le capteur muet (`iot-cap-006`) apparaissent en anomalies ; anonyme, mauvais mot de passe, sans TLS, port 1883 et usurpation de topic sont refusés.
+70 tests verts : une lecture ne modifie jamais le stock, correction nominative `source=capteur`, faux positifs ; la prévision (modèle 3) utilise le minimum entre le stock comptable et la lecture récente.

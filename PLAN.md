@@ -48,10 +48,10 @@ Les numéros d'écran (5.x) renvoient à `docs/maquette/`.
 - Acceptation : `ml/reports/evaluation.md` avec tableaux de métriques, chaque appel < 3 s
 
 ## M6 · IoT sécurisé (Bloc 4, écran 5.10)
-- [ ] Mosquitto en MQTT/TLS (certificats auto-signés générés par script), un compte par capteur, ACL par topic
-- [ ] Simulateur : capteurs de bacs de pièces (poids ou comptage) qui publient toutes les 6 h (accéléré en démo), avec anomalies injectées
-- [ ] Le backend consomme les lectures, les stocke, les rapproche du stock comptable ; les lectures ne modifient jamais le stock : toute correction est un mouvement tracé et nominatif
-- [ ] Les lectures alimentent le modèle 3
+- [x] Mosquitto en MQTT/TLS (certificats auto-signés générés par script), un compte par capteur, ACL par topic
+- [x] Simulateur : capteurs de bacs de pièces (poids ou comptage) qui publient toutes les 6 h (accéléré en démo), avec anomalies injectées
+- [x] Le backend consomme les lectures, les stocke, les rapproche du stock comptable ; les lectures ne modifient jamais le stock : toute correction est un mouvement tracé et nominatif
+- [x] Les lectures alimentent le modèle 3
 - Acceptation : écran 5.10 avec capteurs actifs, anomalies ouvertes, dernière remontée ; un écart injecté apparaît comme anomalie
 
 ## M7 · IA appliquée à la sécurité (Bloc 2 compétence 8, Bloc 3 compétence 4)
