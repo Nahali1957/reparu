@@ -72,3 +72,63 @@ def login(client, role: str, remember: bool = False) -> dict:
 @pytest.fixture
 def auth(client):
     return lambda role: login(client, role)
+
+
+# ---------------------------------------------------------------- base remplie (données synthétiques)
+
+import sqlite3  # noqa: E402
+from datetime import date  # noqa: E402
+
+from app.seed import charger  # noqa: E402
+
+_SEED_CACHE: dict[str, sqlite3.Connection] = {}
+
+
+def _base_seed() -> sqlite3.Connection:
+    """Génère une fois par session une base SQLite complète, copiée ensuite en mémoire pour chaque test."""
+    if "conn" not in _SEED_CACHE:
+        eng = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
+        Base.metadata.create_all(eng)
+        with sessionmaker(bind=eng)() as session:
+            charger(session, date.today(), mot_de_passe=MDP, data_dir="/tmp/reparu-test")
+        _SEED_CACHE["conn"] = eng.raw_connection().driver_connection
+        _SEED_CACHE["engine"] = eng
+    return _SEED_CACHE["conn"]
+
+
+@pytest.fixture
+def seeded_engine():
+    source = _base_seed()
+    eng = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
+    dest = eng.raw_connection().driver_connection
+    source.backup(dest)
+    dest.execute("PRAGMA foreign_keys=ON")
+    yield eng
+    eng.dispose()
+
+
+@pytest.fixture
+def sdb(seeded_engine):
+    session = sessionmaker(bind=seeded_engine, autoflush=False, expire_on_commit=False)()
+    yield session
+    session.close()
+
+
+@pytest.fixture
+def api(seeded_engine, tmp_path, monkeypatch):
+    """Client HTTP sur la base remplie ; `api.h(role)` renvoie les en-têtes d'un compte de démo."""
+    from app.core.config import get_settings
+    monkeypatch.setattr(get_settings(), "data_dir", str(tmp_path))
+    fastapi_app.state.session_factory = sessionmaker(bind=seeded_engine, autoflush=False, expire_on_commit=False)
+    fastapi_app.state.auth_limiter.reset()
+    with TestClient(fastapi_app) as c:
+        cache = {}
+
+        def h(role: str) -> dict:
+            if role not in cache:
+                cache[role] = login(c, role)
+                fastapi_app.state.auth_limiter.reset()
+            return cache[role]
+
+        c.h = h
+        yield c

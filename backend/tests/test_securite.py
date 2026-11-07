@@ -25,8 +25,8 @@ def test_login_ok_renvoie_jeton_et_permissions(client, db):
 def test_session_8h_ou_30j(client):
     court = client.post("/api/auth/login", json={"email": COMPTES["admin"][1], "password": MDP}).json()
     long = client.post("/api/auth/login", json={"email": COMPTES["admin"][1], "password": MDP, "se_souvenir": True}).json()
-    d_court = datetime.fromisoformat(court["expire_le"]) - datetime.utcnow()
-    d_long = datetime.fromisoformat(long["expire_le"]) - datetime.utcnow()
+    d_court = datetime.fromisoformat(court["expire_le"]) - datetime.now()
+    d_long = datetime.fromisoformat(long["expire_le"]) - datetime.now()
     assert timedelta(hours=7, minutes=59) < d_court <= timedelta(hours=8)
     assert timedelta(days=29, hours=23) < d_long <= timedelta(days=30)
 

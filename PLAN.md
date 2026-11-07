@@ -26,15 +26,15 @@ Les numéros d'écran (5.x) renvoient à `docs/maquette/`.
 - Acceptation : base remplie, `ml/reports/data_profile.md` décrivant la distribution
 
 ## M4 · API métier
-- [ ] Clients et appareils (F-01) : CRUD, IMEI validé par Luhn, pagination, tri par nom
-- [ ] Dossier de réparation (F-02) : symptômes, diagnostic final, photos (2 minimum à l'accueil, stockées sur volume), chronomètre de temps passé, checklist (test de sortie obligatoire avant « Prêt à facturer »), historique des statuts
-- [ ] Kanban (F-03) : statuts Reçu, En diagnostic, En réparation, Prêt, Livré ; filtres « Mes dossiers », « Priorité haute »
-- [ ] Affectation et planning (5.13) : charge par technicien, capacité 7 h par jour, alerte au delà de 85 %
-- [ ] Devis et facturation (5.14) : lignes, main-d'œuvre 45 € HT, TVA 20 %, statut du règlement, modes de paiement, PDF
-- [ ] Stocks (F-06) : mouvements, seuils, statut En stock / Seuil bas / Rupture, bon de commande
-- [ ] Fournisseurs (F-08) : offres par pièce, délai, fiabilité, comparaison
-- [ ] Rapports (F-09, 5.11) : CA, marge brute, réparations, délai moyen, taux de retour, panier moyen, rentabilité par type de panne, export PDF et CSV
-- [ ] Gestion des comptes (5.12) : création, désactivation, journal des accès sensibles
+- [x] Clients et appareils (F-01) : CRUD, IMEI validé par Luhn, pagination, tri par nom
+- [x] Dossier de réparation (F-02) : symptômes, diagnostic final, photos (2 minimum à l'accueil, stockées sur volume), chronomètre de temps passé, checklist (test de sortie obligatoire avant « Prêt à facturer »), historique des statuts
+- [x] Kanban (F-03) : statuts Reçu, En diagnostic, En réparation, Prêt, Livré ; filtres « Mes dossiers », « Priorité haute »
+- [x] Affectation et planning (5.13) : charge par technicien, capacité 7 h par jour, alerte au delà de 85 %
+- [x] Devis et facturation (5.14) : lignes, main-d'œuvre 45 € HT, TVA 20 %, statut du règlement, modes de paiement, PDF
+- [x] Stocks (F-06) : mouvements, seuils, statut En stock / Seuil bas / Rupture, bon de commande
+- [x] Fournisseurs (F-08) : offres par pièce, délai, fiabilité, comparaison
+- [x] Rapports (F-09, 5.11) : CA, marge brute, réparations, délai moyen, taux de retour, panier moyen, rentabilité par type de panne, export PDF et CSV
+- [x] Gestion des comptes (5.12) : création, désactivation, journal des accès sensibles
 - Acceptation : Swagger complet, couverture tests ≥ 70 % sur `services/`
 
 ## M5 · Pipeline IA (F-04, F-05, F-07, F-11)

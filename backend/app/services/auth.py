@@ -1,10 +1,11 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from fastapi import HTTPException, status
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.audit import audit
+from app.core.clock import maintenant
 from app.core.security import create_token, verify_password
 from app.models.enums import Canal
 from app.models.tables import Outbox, User
@@ -16,7 +17,7 @@ ECHEC_GENERIQUE = "Identifiants incorrects."
 
 
 def login(db: Session, email: str, password: str, remember: bool, ip: str | None, user_agent: str | None):
-    now = datetime.utcnow()
+    now = maintenant()
     user = db.scalar(select(User).where(func.lower(User.email) == email.lower()))
 
     if user is None:

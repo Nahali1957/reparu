@@ -290,6 +290,8 @@ class LigneBonCommande(TimestampMixin, Base):
     qte: Mapped[int] = mapped_column(Integer)
     prix_ht: Mapped[Decimal] = mapped_column(MONEY)
 
+    piece: Mapped[Piece] = relationship()
+
 
 # ---------------------------------------------------------------- Devis et facturation (5.14)
 

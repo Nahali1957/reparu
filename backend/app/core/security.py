@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, timezone
 import bcrypt
 import jwt
 
+from app.core.clock import maintenant
 from app.core.config import get_settings
 
 ALGO = "HS256"
@@ -26,11 +27,12 @@ def session_duration(remember: bool) -> timedelta:
 
 
 def create_token(user_id: int, role: str, remember: bool) -> tuple[str, str, datetime]:
-    """Renvoie (jeton, jti, expiration naïve UTC)."""
+    """Renvoie (jeton, jti, expiration en heure locale naïve)."""
     jti = secrets.token_hex(16)
-    exp = datetime.now(timezone.utc) + session_duration(remember)
+    duree = session_duration(remember)
+    exp = datetime.now(timezone.utc) + duree
     token = jwt.encode({"sub": str(user_id), "role": role, "jti": jti, "exp": exp}, get_settings().jwt_secret, algorithm=ALGO)
-    return token, jti, exp.replace(tzinfo=None)
+    return token, jti, maintenant() + duree
 
 
 def decode_token(token: str) -> dict | None:

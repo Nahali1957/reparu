@@ -5,6 +5,7 @@ services:
     image: mysql:8.0
     restart: unless-stopped
     environment:
+      TZ: Europe/Paris
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
@@ -27,6 +28,7 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
+      TZ: Europe/Paris
       MYSQL_HOST: db
     depends_on:
       db:

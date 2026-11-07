@@ -1,11 +1,10 @@
-from datetime import datetime
-
 from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.audit import audit
+from app.core.clock import maintenant
 from app.core.db import get_db
 from app.core.rbac import LIBELLES_ROLES, MATRICE, autorise
 from app.core.security import decode_token
@@ -28,7 +27,7 @@ def get_current_user(
     if not payload:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Session absente ou expirée : reconnectez-vous.")
     session = db.scalar(select(SessionModel).where(SessionModel.jti == payload["jti"]))
-    if session is None or session.revoquee or session.expire_le < datetime.utcnow():
+    if session is None or session.revoquee or session.expire_le < maintenant():
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Session révoquée ou expirée : reconnectez-vous.")
     user = db.get(User, int(payload["sub"]))
     if user is None or not user.actif:

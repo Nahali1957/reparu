@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, comptes, health
+from app.api import auth, clients, comptes, health, pilotage, reparations, stocks
 from app.core.config import get_settings
 from app.core.db import SessionLocal
 from app.core.middleware import RateLimiter, SecurityMiddleware
@@ -27,5 +27,5 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"],
 )
 
-for module in (health, auth, comptes):
+for module in (health, auth, comptes, clients, reparations, stocks, pilotage):
     app.include_router(module.router, prefix="/api")

@@ -19,3 +19,8 @@ Matrice RBAC unique (`core/rbac.py`) et dépendance `require_role` : 403 explici
 `ml/data/generate.py` (graine 42) simule 18 mois : 1 308 réparations dont 41 retours, saisonnalité, symptômes conditionnés par la panne, stock avec réapprovisionnement au seuil, devis, factures et règlements, lectures capteurs (un écart injecté, un capteur muet), historique de connexions.
 `app.seed` charge la base en ~3 s ; profil dans `ml/reports/data_profile.md`, clairement signalé comme synthétique.
 25 tests verts (reproductibilité, Luhn, test de sortie, 2 photos, cohérence devis = somme des lignes ; ce dernier test a corrigé un arrondi de main-d'œuvre).
+
+## M4 · API métier (2026-11-07)
+62 opérations REST typées (clients/appareils, dossiers, Kanban, planning, devis/factures/PDF, stocks, bons de commande, fournisseurs, tableau de bord, rapports CSV/PDF, recherche, cloche), chacune protégée par `require_role`.
+Règles serveur : Luhn et unicité de l'IMEI, 2 photos avant diagnostic, devis avant intervention, test de sortie avant « Prêt », encaissement avant restitution, mouvements de stock nominatifs, numérotation DV/FA/BC continue.
+54 tests verts, couverture `services/` 91 %. Tous les endpoints répondent en moins de 0,6 s sur la base MySQL (PDF compris). Les tests ont corrigé le score fournisseur (ratio au lieu de min-max) et le planning (jours passés = temps pointé).
