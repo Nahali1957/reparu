@@ -14,10 +14,10 @@ Les numéros d'écran (5.x) renvoient à `docs/maquette/`.
 - Acceptation : `alembic upgrade head` sur base vide sans erreur
 
 ## M2 · Sécurité (F-10)
-- [ ] Login JWT (session 8 h, option « se souvenir de ce poste » 30 jours), hash bcrypt, verrouillage après 5 échecs
-- [ ] RBAC centralisé, dépendance FastAPI `require_role` ; une route refusée renvoie 403 avec un message explicite (l'écran affiche l'état « Verrouillé »)
-- [ ] Audit log : connexions (succès et échecs), refus d'accès, écritures, corrections de stock, (dés)activation de comptes
-- [ ] En-têtes de sécurité, CORS restreint, rate limiting sur /auth
+- [x] Login JWT (session 8 h, option « se souvenir de ce poste » 30 jours), hash bcrypt, verrouillage après 5 échecs
+- [x] RBAC centralisé, dépendance FastAPI `require_role` ; une route refusée renvoie 403 avec un message explicite (l'écran affiche l'état « Verrouillé »)
+- [x] Audit log : connexions (succès et échecs), refus d'accès, écritures, corrections de stock, (dés)activation de comptes
+- [x] En-têtes de sécurité, CORS restreint, rate limiting sur /auth
 - Acceptation : tests pytest prouvant qu'un technicien reçoit 403 sur les routes admin
 
 ## M3 · Données synthétiques

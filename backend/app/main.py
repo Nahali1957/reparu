@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import health
+from app.api import auth, comptes, health
 from app.core.config import get_settings
+from app.core.db import SessionLocal
+from app.core.middleware import RateLimiter, SecurityMiddleware
 
 settings = get_settings()
 
@@ -13,7 +15,10 @@ app = FastAPI(
     docs_url="/api/docs",
     openapi_url="/api/openapi.json",
 )
+app.state.session_factory = SessionLocal
+app.state.auth_limiter = RateLimiter(max_requests=10, window_s=60)
 
+app.add_middleware(SecurityMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origin_list,
@@ -22,4 +27,5 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"],
 )
 
-app.include_router(health.router, prefix="/api")
+for module in (health, auth, comptes):
+    app.include_router(module.router, prefix="/api")
