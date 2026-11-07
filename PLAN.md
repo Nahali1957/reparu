@@ -70,8 +70,8 @@ Les numéros d'écran (5.x) renvoient à `docs/maquette/`.
 - Acceptation : captures Playwright 1440 × 900 de chaque écran dans `docs/screens/`, comparées à `docs/maquette/screens/`, écarts listés dans `docs/ECARTS_MAQUETTE.md`
 
 ## M9 · Déploiement et durcissement
-- [ ] Reverse proxy Caddy en TLS, conteneurs non root, healthchecks, sauvegarde MySQL (script)
-- [ ] `docs/SECURITE.md` : analyse de risques (actifs, menaces, mesures), RGPD (finalité, conservation 3 ans, droits, purge automatique)
+- [x] Reverse proxy Caddy en TLS, conteneurs non root, healthchecks, sauvegarde MySQL (script)
+- [x] `docs/SECURITE.md` : analyse de risques (actifs, menaces, mesures), RGPD (finalité, conservation 3 ans, droits, purge automatique)
 - Acceptation : déploiement en une commande depuis un clone propre
 
 ## M10 · Livrables pour le rapport

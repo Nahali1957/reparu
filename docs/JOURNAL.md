@@ -44,3 +44,8 @@ Acceptation vérifiée en réel : `python -m app.simulation brute-force` (30 ess
 Socle commun (tokens oklch, polices embarquées, coquille avec recherche globale, cloche et mode accessibilité, 4 états, types générés depuis l'OpenAPI) et 14 écrans, plus la section F-11 dans 5.11 ; Kanban en glisser-déposer et ◀ ▶ au clavier.
 Captures Playwright 1440 × 900 dans `docs/screens/` (16 images, dont l'état Verrouillé et le mode accessibilité), via un conteneur Playwright ; typecheck propre.
 Écarts listés dans `docs/ECARTS_MAQUETTE.md` : surtout des champs d'API manquants (confiance IA sur les cartes, marge des clôtures) et des taux de charge réels faibles.
+
+## M9 · Déploiement et durcissement (2026-11-07)
+Proxy Caddy en HTTPS sur 5180 (HSTS, CSP), conteneurs applicatifs non root, healthchecks sur les 6 services, scripts de sauvegarde et restauration MySQL (aller-retour vérifié), RGPD (purge à 3 ans, factures préservées, droits d'accès et d'effacement), `docs/SECURITE.md`.
+Acceptation : un clone propre démarre en une commande (`docker compose up -d --build`) : 6 services sur 6 `healthy` en 86 s, migrations, seed et entraînement des 5 modèles automatiques, application fonctionnelle via HTTPS.
+Le test de clone a révélé que `ml/data/generate.py` n'était pas versionné (motif .gitignore) : corrigé. 79 tests verts, captures Playwright refaites via HTTPS.
