@@ -21,8 +21,8 @@ Les numéros d'écran (5.x) renvoient à `docs/maquette/`.
 - Acceptation : tests pytest prouvant qu'un technicien reçoit 403 sur les routes admin
 
 ## M3 · Données synthétiques
-- [ ] `ml/data/generate.py` : 18 mois d'historique, environ 1 300 réparations (la maquette annonce 1 284 interventions), saisonnalité, corrélations symptômes vers pannes plausibles, modèles fréquents (iPhone 13, iPhone 12, Galaxy S22, Galaxy S21, Redmi Note 11, Pixel 7), techniciens, fournisseurs, pièces
-- [ ] Script de seed de la base, avec les deux comptes de démo
+- [x] `ml/data/generate.py` : 18 mois d'historique, environ 1 300 réparations (la maquette annonce 1 284 interventions), saisonnalité, corrélations symptômes vers pannes plausibles, modèles fréquents (iPhone 13, iPhone 12, Galaxy S22, Galaxy S21, Redmi Note 11, Pixel 7), techniciens, fournisseurs, pièces
+- [x] Script de seed de la base, avec les deux comptes de démo
 - Acceptation : base remplie, `ml/reports/data_profile.md` décrivant la distribution
 
 ## M4 · API métier
