@@ -7,9 +7,6 @@ htmlcov/
 node_modules/
 frontend/dist/
 ml/models/*.joblib
-data/
-certs/
-!infra/
 test-results/
 playwright-report/
 backups/
