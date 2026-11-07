@@ -8,9 +8,9 @@ Les numéros d'écran (5.x) renvoient à `docs/maquette/`.
 - Acceptation : `docker compose up -d --build` puis `curl localhost:8010/api/health` renvoie `{"status":"ok"}`
 
 ## M1 · Modèle de données
-- [ ] Tables : users, clients, appareils (IMEI unique), reparations (numéro REP-xxxx), symptomes, pannes, historique_statuts, checklist_etapes, photos, temps_passe, pieces, compatibilites, mouvements_stock (source : manuel ou capteur), fournisseurs, offres_fournisseur, devis, factures, lignes_facture, reglements, capteurs, lectures_capteurs, outbox, audit_log
-- [ ] Migrations Alembic, index sur les dates, intégrité référentielle
-- [ ] `docs/MCD.md` avec diagramme Mermaid
+- [x] Tables : users, clients, appareils (IMEI unique), reparations (numéro REP-xxxx), symptomes, pannes, historique_statuts, checklist_etapes, photos, temps_passe, pieces, compatibilites, mouvements_stock (source : manuel ou capteur), fournisseurs, offres_fournisseur, devis, factures, lignes_facture, reglements, capteurs, lectures_capteurs, outbox, audit_log
+- [x] Migrations Alembic, index sur les dates, intégrité référentielle
+- [x] `docs/MCD.md` avec diagramme Mermaid
 - Acceptation : `alembic upgrade head` sur base vide sans erreur
 
 ## M2 · Sécurité (F-10)

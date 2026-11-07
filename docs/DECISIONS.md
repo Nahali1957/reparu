@@ -35,3 +35,9 @@ Format : date · question · choix · raison. Les décisions D-A*, D-B* et D-C* 
 | D-C4 | Les captures de référence font 1122 × 872 et sont vides. | Captures Playwright en 1440 × 900 ; l'écart est noté dans ECARTS_MAQUETTE.md. | PLAN.md M8. |
 
 ## Décisions d'exécution
+
+| Réf | Question | Choix | Raison |
+|---|---|---|---|
+| D-M1-1 (2026-11-07) | Sur quelle base tourner les tests pytest ? | SQLite en mémoire, schéma créé par `Base.metadata.create_all`. Les types sont compatibles (variante `Integer` pour les ID). La conformité MySQL est vérifiée par `alembic upgrade`, `downgrade`, `check`. | Tests rapides et isolés, sans dépendre de l'état de la base de démo. |
+| D-M1-2 (2026-11-07) | Le cadrage annonçait 34 tables, il y en a 35. | 35 tables (erreur de comptage dans le plan ; aucune table ajoutée hors liste). | Exactitude. |
+| D-M1-3 (2026-11-07) | Quand appliquer les migrations ? | Le conteneur backend lance `alembic upgrade head` à chaque démarrage. | Déploiement en une commande. |
