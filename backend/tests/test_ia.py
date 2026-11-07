@@ -42,7 +42,7 @@ def ia(tmp_path_factory):
 
 def test_comparaison_et_selection(ia):
     noms = {r.nom for r, _ in ia["sortie"]}
-    assert noms == {"diagnostic", "estimation", "prevision"}
+    assert noms == {"diagnostic", "estimation", "prevision", "securite", "capteurs"}
     for r, m in ia["sortie"]:
         assert len(r.candidats) >= 3 and r.baseline in r.candidats  # ≥ 2 algorithmes + baseline naïve
         algos = {k: v[r.metrique] for k, v in r.candidats.items() if k != r.baseline}
@@ -121,13 +121,13 @@ def test_fiabilite_et_reentrainement(ia):
     c = ia["client"]
     assert c.get("/api/ia/fiabilite", headers=ia["tech"]).status_code == 403
     f = c.get("/api/ia/fiabilite", headers=ia["admin"]).json()
-    assert {m["nom"] for m in f["modeles"]} == {"diagnostic", "estimation", "prevision"}
+    assert {m["nom"] for m in f["modeles"]} == {"diagnostic", "estimation", "prevision", "securite", "capteurs"}
     assert f["donnees_synthetiques"] is True
     assert f["suivi_diagnostic"]["suggestions_evaluees"] >= 1  # le diagnostic historisé plus haut
     f2 = c.post("/api/ia/entrainer", headers=ia["admin"]).json()
     assert all(m["version"] == "v1.1" and m["versions"] == ["v1.0", "v1.1"] for m in f2["modeles"])
     with ia["factory"]() as db:
-        assert db.query(ModeleIA).filter(ModeleIA.actif.is_(True)).count() == 3
+        assert db.query(ModeleIA).filter(ModeleIA.actif.is_(True)).count() == 5
 
 
 def test_niveaux_de_confiance():

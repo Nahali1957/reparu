@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     mqtt_backend_password: str = ""
     mqtt_ca: str = "/certs/ca.crt"
     iot_periode_s: int = 21600
+    surveillance_auto: bool = True  # détection d'anomalies par IA en tâche de fond (M7)
 
     @property
     def sqlalchemy_url(self) -> str:

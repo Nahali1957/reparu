@@ -1,6 +1,7 @@
 import os
 
 os.environ["MQTT_HOST"] = ""  # jamais de vrai broker pendant les tests (avant tout import de l'application)
+os.environ["SURVEILLANCE_AUTO"] = "false"  # pas de tâche de fond pendant les tests
 
 import pytest
 from sqlalchemy import create_engine, event

@@ -1,0 +1,44 @@
+{
+  "nom": "securite",
+  "version": "v1.0",
+  "tache": "détection d'anomalies dans le journal d'audit",
+  "metrique_selection": "f1",
+  "plus_grand_est_meilleur": true,
+  "baseline": "baseline_seuil_echecs",
+  "retenu": "local_outlier_factor",
+  "gain_vs_baseline": 0.4927,
+  "candidats": {
+    "baseline_seuil_echecs": {
+      "f1": 0.4382,
+      "precision": 1.0,
+      "rappel": 0.2806,
+      "taux_fausses_alertes": 0.0
+    },
+    "isolation_forest": {
+      "f1": 0.4245,
+      "precision": 0.8489,
+      "rappel": 0.283,
+      "taux_fausses_alertes": 0.005
+    },
+    "local_outlier_factor": {
+      "f1": 0.9309,
+      "precision": 0.9412,
+      "rappel": 0.9209,
+      "taux_fausses_alertes": 0.0057
+    }
+  },
+  "n_train": 16712,
+  "n_test": 4596,
+  "colonnes": [
+    "echecs",
+    "succes",
+    "refus",
+    "exports",
+    "ecritures",
+    "nb_ip",
+    "hors_horaires",
+    "heure_sin",
+    "heure_cos"
+  ],
+  "anomalies_synthetiques_test": 417
+}

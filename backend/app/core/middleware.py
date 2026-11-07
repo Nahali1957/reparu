@@ -48,6 +48,12 @@ class SecurityMiddleware(BaseHTTPMiddleware):
         ip = request.client.host if request.client else "?"
         if path.startswith("/api/auth/") and request.method == "POST":
             if not request.app.state.auth_limiter.allow(ip):
+                if path == "/api/auth/login":  # un brute force bloqué reste visible pour la détection d'anomalies (M7)
+                    db = request.app.state.session_factory()
+                    try:
+                        audit(db, "login_bloque", ressource=path, details={"motif": "limitation de débit"}, ip=ip)
+                    finally:
+                        db.close()
                 return JSONResponse({"detail": "Trop de tentatives : réessayez dans une minute."}, status_code=429)
 
         response = await call_next(request)

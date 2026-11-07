@@ -30,7 +30,8 @@ from app.services.regles import main_oeuvre, money, parametre, prix_conseille, s
 
 Z_SERVICE = 1.65  # niveau de service ≈ 95 % pour le stock de sécurité
 LIBELLES_MODELES = {"diagnostic": "Diagnostic des pannes", "estimation": "Estimation du temps et du prix",
-                    "prevision": "Prévision des besoins en pièces"}
+                    "prevision": "Prévision des besoins en pièces", "securite": "Détection d'anomalies (sécurité)",
+                    "capteurs": "Détection de lectures capteurs atypiques"}
 
 
 def niveau_confiance(score: float) -> str:

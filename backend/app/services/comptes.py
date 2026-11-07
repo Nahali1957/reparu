@@ -10,7 +10,7 @@ from app.schemas.comptes import CompteIn, JournalEntreeOut
 
 ACTIONS_SENSIBLES = (
     "login_ok", "login_echec", "acces_refuse", "stock_correction", "compte_creation", "compte_toggle",
-    "export", "alerte_securite",
+    "export", "alerte_securite", "login_bloque",
 )
 
 
@@ -59,6 +59,8 @@ def _libelle(log: AuditLog, roles: dict[int, str]) -> tuple[str, str]:
             return f"Correction de stock{' après anomalie capteur' if d.get('anomalie_id') else ''} — {qui}", "info"
         case "compte_toggle":
             return f"Compte {'réactivé' if d.get('actif') else 'désactivé'} — {qui}", "info"
+        case "login_bloque":
+            return f"Connexions bloquées par limitation de débit — IP {log.ip}", "alerte"
         case "compte_creation":
             return f"Compte créé — {qui}", "info"
         case "export":

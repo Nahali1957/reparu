@@ -1,0 +1,39 @@
+{
+  "nom": "capteurs",
+  "version": "v1.0",
+  "tache": "détection de lectures capteurs atypiques",
+  "metrique_selection": "f1",
+  "plus_grand_est_meilleur": true,
+  "baseline": "baseline_seuil_delta_rel",
+  "retenu": "isolation_forest",
+  "gain_vs_baseline": 0.2571,
+  "candidats": {
+    "baseline_seuil_delta_rel": {
+      "f1": 0.4286,
+      "precision": 0.75,
+      "rappel": 0.3,
+      "taux_fausses_alertes": 0.0137
+    },
+    "isolation_forest": {
+      "f1": 0.6857,
+      "precision": 0.8,
+      "rappel": 0.6,
+      "taux_fausses_alertes": 0.0205
+    },
+    "local_outlier_factor": {
+      "f1": 0.25,
+      "precision": 0.2143,
+      "rappel": 0.3,
+      "taux_fausses_alertes": 0.1507
+    }
+  },
+  "n_train": 580,
+  "n_test": 166,
+  "colonnes": [
+    "niveau_rel",
+    "delta_rel",
+    "ecart_mediane_rel",
+    "silence_rel"
+  ],
+  "anomalies_synthetiques_test": 20
+}

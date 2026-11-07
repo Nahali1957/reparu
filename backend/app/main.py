@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, clients, comptes, health, ia, iot, pilotage, reparations, stocks
+from app.api import auth, clients, comptes, health, ia, iot, pilotage, reparations, securite, stocks
 from app.core.config import get_settings
 from app.core.db import SessionLocal
 from app.core.middleware import RateLimiter, SecurityMiddleware
@@ -18,9 +18,16 @@ async def lifespan(app: FastAPI):
         from app.services.mqtt_client import ConsommateurMQTT
         consommateur = ConsommateurMQTT(app.state.session_factory)
         consommateur.demarrer()
+    surveillance = None
+    if settings.surveillance_auto:
+        from app.services.surveillance import Surveillance
+        surveillance = Surveillance(app.state.session_factory)
+        surveillance.demarrer()
     yield
     if consommateur:
         consommateur.arreter()
+    if surveillance:
+        surveillance.arreter()
 
 
 app = FastAPI(
@@ -43,5 +50,5 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"],
 )
 
-for module in (health, auth, comptes, clients, reparations, stocks, pilotage, ia, iot):
+for module in (health, auth, comptes, clients, reparations, stocks, pilotage, ia, iot, securite):
     app.include_router(module.router, prefix="/api")

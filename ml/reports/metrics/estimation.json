@@ -1,6 +1,6 @@
 {
   "nom": "estimation",
-  "version": "v1.1",
+  "version": "v1.0",
   "tache": "régression du temps de réparation (minutes)",
   "metrique_selection": "mae_min",
   "plus_grand_est_meilleur": false,

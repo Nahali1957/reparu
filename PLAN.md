@@ -55,9 +55,9 @@ Les numéros d'écran (5.x) renvoient à `docs/maquette/`.
 - Acceptation : écran 5.10 avec capteurs actifs, anomalies ouvertes, dernière remontée ; un écart injecté apparaît comme anomalie
 
 ## M7 · IA appliquée à la sécurité (Bloc 2 compétence 8, Bloc 3 compétence 4)
-- [ ] Détection d'anomalies (IsolationForest) sur `audit_log` : horaires inhabituels, rafales d'échecs, refus d'accès répétés, volume d'exports anormal
-- [ ] Même approche sur les lectures capteurs (capteur muet, valeurs aberrantes)
-- [ ] Alertes affichées dans le journal des accès sensibles (5.12) et la cloche de notifications
+- [x] Détection d'anomalies (IsolationForest) sur `audit_log` : horaires inhabituels, rafales d'échecs, refus d'accès répétés, volume d'exports anormal
+- [x] Même approche sur les lectures capteurs (capteur muet, valeurs aberrantes)
+- [x] Alertes affichées dans le journal des accès sensibles (5.12) et la cloche de notifications
 - Acceptation : un brute force simulé est signalé
 
 ## M8 · Frontend fidèle à la maquette (vue web uniquement)

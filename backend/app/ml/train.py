@@ -29,10 +29,12 @@ from sqlalchemy.orm import Session
 
 from app.core.clock import maintenant
 from app.core.config import get_settings
+from app.ml import anomalies as A
 from app.ml import features as F
 from app.ml.baselines import Colonne, MedianeParPanne, PanneFrequenteParModele
 from app.models.tables import ModeleIA
 
+NOMS_MODELES = ("diagnostic", "estimation", "prevision", "securite", "capteurs")
 PART_TEST = 0.2
 SEMAINES_TEST = 12
 GRAINE = 42
@@ -47,6 +49,13 @@ LECTURES = {
     "prevision": "La demande par pièce et par semaine est faible et intermittente (souvent 0 ou 1) : les erreurs relatives "
                  "hebdomadaires (WAPE) sont donc mécaniquement élevées pour tous les algorithmes. La décision d'achat se prend "
                  "sur 30 jours avec un stock de sécurité (1,65 σ √délai), ce qui absorbe cette variabilité.",
+    "securite": "Fenêtres d'une heure par identité (échecs, succès, refus, exports, écritures, IP distinctes, heure). Jeu de "
+                "test = fenêtres réelles récentes + attaques SYNTHÉTIQUES étiquetées (brute force, connexion nocturne, refus "
+                "répétés, exports massifs, bourrage d'identifiants). La baseline « ≥ 5 échecs/h » ne voit que le brute force ; "
+                "un détecteur non supervisé couvre les autres scénarios.",
+    "capteurs": "Variables relatives au capteur (niveau / médiane, variation, écart à la médiane glissante, silence / rythme "
+                "habituel). Test = lectures réelles récentes + pics, chutes et silences synthétiques. Complète les règles "
+                "explicites de M6 (écart persistant, valeur aberrante, capteur muet).",
 }
 
 
@@ -183,6 +192,35 @@ def entrainer_prevision(serie: pd.DataFrame) -> Resultat:
     return r
 
 
+# ---------------------------------------------------------------- détection d'anomalies (M7)
+
+
+def _entrainer_detecteur(nom: str, tache: str, jeu, baseline: A.SeuilUnique) -> Resultat:
+    X_train, X_test, y_test = jeu
+    estimateurs = A.candidats(baseline)
+    r = Resultat(nom, tache, "f1", True, baseline=next(iter(estimateurs)), n_train=len(X_train), n_test=len(X_test))
+    for k, est in estimateurs.items():
+        r.candidats[k] = A.evaluer(est, X_train, X_test, y_test)
+    r.choisir(estimateurs)
+    # mise en production : apprentissage sur toutes les fenêtres réelles (normales), jamais sur les attaques synthétiques
+    normal = pd.concat([X_train, X_test[y_test == 0]])
+    r.estimateur.fit(normal)
+    r.extra["colonnes"] = list(X_train.columns)
+    r.extra["_reference_scores"] = np.sort(-r.estimateur.score_samples(normal))
+    r.extra["anomalies_synthetiques_test"] = int(y_test.sum())
+    return r
+
+
+def entrainer_securite(db: Session) -> Resultat:
+    return _entrainer_detecteur("securite", "détection d'anomalies dans le journal d'audit", A.jeu_securite(db),
+                                A.SeuilUnique("echecs", 5))
+
+
+def entrainer_capteurs(db: Session) -> Resultat:
+    return _entrainer_detecteur("capteurs", "détection de lectures capteurs atypiques", A.jeu_capteurs(db),
+                                A.SeuilUnique("delta_rel", 1.0))
+
+
 # ---------------------------------------------------------------- enregistrement et rapport
 
 
@@ -201,7 +239,9 @@ def enregistrer(db: Session, r: Resultat, ref: dict) -> ModeleIA:
     version = _prochaine_version(db, r.nom)
     base = dossier_modeles() / f"{r.nom}-{version}"
     metriques = r.metriques()
-    joblib.dump({"estimateur": r.estimateur, "version": version, "ref": ref, "metriques": metriques}, f"{base}.joblib")
+    # les clés « _… » (tableaux volumineux) vont dans le bundle Joblib, pas dans les métriques JSON
+    prive = {k: metriques.pop(k) for k in list(metriques) if k.startswith("_")}
+    joblib.dump({"estimateur": r.estimateur, "version": version, "ref": ref, "metriques": metriques, **prive}, f"{base}.joblib")
     Path(f"{base}.json").write_text(json.dumps({"nom": r.nom, "version": version, **metriques}, ensure_ascii=False, indent=2))
     db.execute(update(ModeleIA).where(ModeleIA.nom == r.nom).values(actif=False))
     m = ModeleIA(nom=r.nom, version=version, algorithme_retenu=r.retenu, metriques=metriques, chemin_joblib=f"{base}.joblib",
@@ -214,7 +254,8 @@ def enregistrer(db: Session, r: Resultat, ref: dict) -> ModeleIA:
 def entrainer_tout(db: Session) -> list[tuple[Resultat, ModeleIA]]:
     ref = F.referentiels(db)
     df = F.dossiers(db)
-    resultats = [entrainer_diagnostic(df, ref), entrainer_estimation(df, ref), entrainer_prevision(F.consommation_hebdo(db))]
+    resultats = [entrainer_diagnostic(df, ref), entrainer_estimation(df, ref), entrainer_prevision(F.consommation_hebdo(db)),
+                 entrainer_securite(db), entrainer_capteurs(db)]
     out = [(r, enregistrer(db, r, ref)) for r in resultats]
     from app.ml import registry
     registry.vider_cache()
@@ -255,7 +296,8 @@ def main() -> None:
     parser.add_argument("--rapport", type=Path, default=None)
     args = parser.parse_args()
     with SessionLocal() as db:
-        if args.si_absent and db.scalar(select(func.count()).select_from(ModeleIA).where(ModeleIA.actif.is_(True))):
+        actifs = set(db.scalars(select(ModeleIA.nom).where(ModeleIA.actif.is_(True))))
+        if args.si_absent and actifs >= set(NOMS_MODELES):
             print("Modèles déjà entraînés : rien à faire.")
             return
         t0 = time.perf_counter()

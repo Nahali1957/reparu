@@ -34,3 +34,8 @@ Temps de réponse mesurés sur MySQL : diagnostic 59 ms, estimation 23 ms, prév
 Mosquitto en TLS 8883 (CA auto-signée générée au démarrage), un compte par capteur et ACL par topic ; simulateur de 6 bacs en jumeau numérique (consigne retenue + bruit, dérive, valeur aberrante, capteur muet) ; client paho côté backend.
 Vérifié en réel : 5 capteurs actifs sur 6, l'écart injecté (`iot-cap-002`, 1 lu pour 7) et le capteur muet (`iot-cap-006`) apparaissent en anomalies ; anonyme, mauvais mot de passe, sans TLS, port 1883 et usurpation de topic sont refusés.
 70 tests verts : une lecture ne modifie jamais le stock, correction nominative `source=capteur`, faux positifs ; la prévision (modèle 3) utilise le minimum entre le stock comptable et la lecture récente.
+
+## M7 · IA appliquée à la sécurité (2026-11-07)
+Détection d'anomalies sur des fenêtres horaires du journal d'audit et sur les lectures capteurs : LOF retenu pour la sécurité (F1 0,93, 0,57 % de fausses alertes, contre 0,44 pour la baseline), IsolationForest pour les capteurs (F1 0,69 contre 0,43), sélection automatique et versionnage comme en M5.
+Acceptation vérifiée en réel : `python -m app.simulation brute-force` (30 essais : 401, puis 423 compte verrouillé, puis 429) déclenche 2 alertes `brute_force` (par compte et par IP, score 1,0), visibles dans le journal 5.12 et la cloche ; aucune alerte sur l'activité normale.
+76 tests verts. Corrigés au passage : 429 non journalisés, boucle de rétroaction des alertes, historique synthétique trop étroit, seuil trop bruyant.

@@ -1,6 +1,6 @@
 {
   "nom": "prevision",
-  "version": "v1.1",
+  "version": "v1.0",
   "tache": "consommation hebdomadaire par pièce",
   "metrique_selection": "mae",
   "plus_grand_est_meilleur": false,
